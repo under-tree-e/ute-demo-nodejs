@@ -1,0 +1,27 @@
+services:
+  ute-demo-nodejs:
+    container_name: ute-demo-nodejs
+    image: node:24
+    working_dir: /var/www/ute-demo-nodejs
+    ports:
+      - "8110:3000"
+    volumes:
+      - /mnt/T7/projects/under_tree_e/else/ute-demo-nodejs:/var/www/ute-demo-nodejs
+    command: >
+      sh -c "
+        # tail -f /dev/null
+        test -d /var/www/ute-demo-nodejs/node_modules || npm i &&
+        make run
+      "
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.utdn.entrypoints=https
+      - traefik.http.routers.utdn.rule=Host(`utdn.order.home.under-tree-e.com`)
+      - traefik.http.routers.utdn.tls=true
+      - traefik.http.services.utdn.loadbalancer.server.port=3000
+    networks:
+      - dev_network
+
+networks:
+  dev_network:
+    external: true
