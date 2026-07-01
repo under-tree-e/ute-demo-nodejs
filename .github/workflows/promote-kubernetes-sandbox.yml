@@ -1,0 +1,22 @@
+name: Promote Image to UTE Sandbox GitOps
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_ref:
+        description: Immutable ghcr image reference including @sha256 digest
+        required: true
+        type: string
+
+jobs:
+  promote:
+    uses: under-tree-e/ute-ci-templates/.github/workflows/gitops-image-promotion.yml@v1
+    with:
+      deployment-environment: ute-sandbox
+      gitops-repository: under-tree-e/ute-gitops
+      gitops-ref: main
+      kustomization-path: apps/ute-demo-nodejs/overlays/ute-sandbox
+      image-name: ghcr.io/under-tree-e/ute-demo-nodejs
+      image-ref: ${{ inputs.image_ref }}
+    secrets:
+      GITOPS_REPOSITORY_TOKEN: ${{ secrets.UTE_GITOPS_WRITE_TOKEN }}

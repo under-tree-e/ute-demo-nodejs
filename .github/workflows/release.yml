@@ -1,0 +1,20 @@
+name: Release Container
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  packages: write
+  attestations: write
+  id-token: write
+
+jobs:
+  release:
+    uses: under-tree-e/ute-ci-templates/.github/workflows/node-container-release.yml@v1
+    with:
+      image-name: under-tree-e/ute-demo-nodejs
+      node-version: "20"
+      working-directory: src
+      dockerfile: Dockerfile
