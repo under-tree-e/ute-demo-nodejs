@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: under-tree-e/ute-ci-templates/.github/workflows/node-ci.yml@v1
+    with:
+      node-version: "20"
+      working-directory: src
