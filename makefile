@@ -1,72 +1,52 @@
-# Used by `image`, `push` & `deploy` targets, override as required
 IMAGE_REG ?= ghcr.io
-IMAGE_REPO ?= benc-uk/nodejs-demoapp
-IMAGE_TAG ?= latest
-
-# Used by `deploy` target, sets Azure deployment defaults, override as required
-AZURE_RES_GROUP ?= demoapps
-AZURE_REGION ?= northeurope
-AZURE_APP_NAME ?= nodejs-demoapp
-
-# Used by test targets
-TEST_BASE_URL ?= http://localhost:3000
-TEST_FILES ?= base-tests.http
-
-# Don't change
+IMAGE_REPO ?= under-tree-e/ute-demo-nodejs
+IMAGE_TAG ?= dev
+IMAGE := $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 SRC_DIR := src
+TEST_BASE_URL ?= http://127.0.0.1:3000
 
-.EXPORT_ALL_VARIABLES:
-.PHONY: help lint lint-fix image push run deploy undeploy clean test test-report .EXPORT_ALL_VARIABLES
+.PHONY: help install lint test test-health image image-smoke push run clean
 .DEFAULT_GOAL := help
 
-help: ## 💬 This help message
+help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-lint: $(SRC_DIR)/node_modules ## 🔎 Lint & format, will not fix but sets exit code on error 
-	cd $(SRC_DIR); npm run lint
+install: ## Install exact Node dependencies from package-lock.json
+	cd $(SRC_DIR) && npm ci
 
-lint-fix: $(SRC_DIR)/node_modules ## 📜 Lint & format, will try to fix errors and modify code
-	cd $(SRC_DIR); npm run lint-fix
+lint: install ## Check JavaScript formatting
+	cd $(SRC_DIR) && npm run lint
 
-image: ## 🔨 Build container image from Dockerfile 
-	docker build . --file build/Dockerfile \
-	--tag $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
+test: install ## Run baseline HTTP integration tests against a running app
+	$(SRC_DIR)/node_modules/.bin/httpyac $(SRC_DIR)/tests/base-tests.http --all --output short --var baseUrl=$(TEST_BASE_URL)
 
-push: ## 📤 Push container image to registry 
-	docker push $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
+test-health: install ## Verify liveness and readiness endpoints against a running app
+	$(SRC_DIR)/node_modules/.bin/httpyac $(SRC_DIR)/tests/health-tests.http --all --output short --var baseUrl=$(TEST_BASE_URL)
 
-run: $(SRC_DIR)/node_modules ## 🏃 Run locally using Node.js
-	cd $(SRC_DIR); npm run watch
-	
-deploy: ## 🚀 Deploy to Azure Container App 
-	az group create --resource-group $(AZURE_RES_GROUP) --location $(AZURE_REGION) -o table
-	az deployment group create --template-file deploy/container-app.bicep \
-		--resource-group $(AZURE_RES_GROUP) \
-		--parameters appName=$(AZURE_APP_NAME) \
-		--parameters image=$(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG) -o table 
-	@sleep 5
-	@echo "### 🚀 App deployed & available here: $(shell az deployment group show --resource-group $(AZURE_RES_GROUP) --name container-app --query "properties.outputs.appURL.value" -o tsv)/"
+image: ## Build a local OCI image (override IMAGE_TAG or IMAGE)
+	docker build --pull --file Dockerfile --tag $(IMAGE) \
+		--build-arg VERSION=$(IMAGE_TAG) \
+		--build-arg VCS_REF=$$(git rev-parse --short HEAD) .
 
-undeploy: ## 💀 Remove from Azure 
-	@echo "### WARNING! Going to delete $(AZURE_RES_GROUP) 😲"
-	az group delete -n $(AZURE_RES_GROUP) -o table --no-wait
+image-smoke: ## Start the local image and wait for its Docker healthcheck
+	@name=ute-demo-nodejs-smoke-$$RANDOM; \
+	docker run --detach --rm --name $$name --publish 127.0.0.1::3000 $(IMAGE) >/dev/null; \
+	trap 'docker rm -f $$name >/dev/null 2>&1 || true' EXIT; \
+	for attempt in $$(seq 1 30); do \
+		status=$$(docker inspect --format '{{.State.Health.Status}}' $$name); \
+		if [ "$$status" = healthy ]; then exit 0; fi; \
+		if [ "$$status" = unhealthy ]; then docker logs $$name; exit 1; fi; \
+		sleep 2; \
+	done; \
+	docker logs $$name; \
+	echo 'Timed out waiting for container healthcheck' >&2; \
+	exit 1
 
-test: $(SRC_DIR)/node_modules ## 🚦 Run integration tests, server must be running 
-	$(SRC_DIR)/node_modules/.bin/httpyac $(SRC_DIR)/tests/$(TEST_FILES) --all --output short --var baseUrl=$(TEST_BASE_URL)
+push: ## Push a previously built image
+	docker push $(IMAGE)
 
-test-report: $(SRC_DIR)/node_modules ## 🤡 Tests but with JUnit output, server must be running 
-	$(SRC_DIR)/node_modules/.bin/httpyac $(SRC_DIR)/tests/$(TEST_FILES) --all --junit --var baseUrl=$(TEST_BASE_URL) > test-results.xml
+run: install ## Start the app locally with the development environment
+	cd $(SRC_DIR) && npm run watch
 
-clean: ## 🧹 Clean up project
-	rm -rf $(SRC_DIR)/node_modules
-	rm -rf src/*.xml
-	rm -rf *.xml
-
-# ============================================================================
-
-$(SRC_DIR)/node_modules: $(SRC_DIR)/package.json
-	cd $(SRC_DIR); npm install
-	touch -m $(SRC_DIR)/node_modules
-
-$(SRC_DIR)/package.json: 
-	@echo "package.json was modified"
+clean: ## Remove local dependency and CI output directories
+	rm -rf $(SRC_DIR)/node_modules artifacts reports coverage *.log *.pid *.xml deployment-request.json

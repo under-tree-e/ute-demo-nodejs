@@ -1,0 +1,14 @@
+@baseUrl={{ this.baseUrl ?? 'http://localhost:3000' }}
+
+### Liveness probe
+GET {{baseUrl}}/healthz
+
+?? status == 200
+?? body status == 'ok'
+?? body version isString
+
+### Readiness probe without optional Redis
+GET {{baseUrl}}/readyz
+
+?? status == 200
+?? body status == 'ready'

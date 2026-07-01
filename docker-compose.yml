@@ -1,27 +1,39 @@
+# Local development manifest. Production-like delivery uses
+# deploy/compose/docker-compose.release.yml through Semaphore/Ansible.
 services:
   ute-demo-nodejs:
-    container_name: ute-demo-nodejs
-    image: node:24
-    working_dir: /var/www/ute-demo-nodejs
+    image: node:22-alpine
+    working_dir: /app
     ports:
-      - "8110:3000"
+      - "${UTE_DEMO_NODEJS_DEV_PORT:-8110}:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      SESSION_COOKIE_SECURE: "false"
+      TRUST_PROXY: "false"
+    env_file:
+      - .env
     volumes:
-      - /mnt/T7/projects/under_tree_e/else/ute-demo-nodejs:/var/www/ute-demo-nodejs
+      - ./src:/app
+      - ute-demo-nodejs-node-modules:/app/node_modules
     command: >
       sh -c "
-        # tail -f /dev/null
-        test -d /var/www/ute-demo-nodejs/node_modules || npm i &&
-        make run
+        test -d /app/node_modules || npm install &&
+        npm run watch
       "
     labels:
       - traefik.enable=true
-      - traefik.http.routers.utdn.entrypoints=https
-      - traefik.http.routers.utdn.rule=Host(`utdn.order.home.under-tree-e.com`)
-      - traefik.http.routers.utdn.tls=true
-      - traefik.http.services.utdn.loadbalancer.server.port=3000
+      - traefik.http.routers.ute-demo-nodejs-dev.entrypoints=https
+      - traefik.http.routers.ute-demo-nodejs-dev.rule=Host(`${UTE_DEMO_NODEJS_DEV_HOST:-utdn.order.home.under-tree-e.com}`)
+      - traefik.http.routers.ute-demo-nodejs-dev.tls=true
+      - traefik.http.services.ute-demo-nodejs-dev.loadbalancer.server.port=3000
     networks:
       - dev_network
+
+volumes:
+  ute-demo-nodejs-node-modules:
 
 networks:
   dev_network:
     external: true
+    name: ${UTE_DEMO_NODEJS_DEV_TRAEFIK_NETWORK:-dev_network}

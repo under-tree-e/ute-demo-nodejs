@@ -1,0 +1,15 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+node_modules
+src/node_modules
+coverage
+reports
+artifacts
+*.log
+*.md
+deploy/kubernetes
+deploy/container-app.bicep
+deploy/readme.md

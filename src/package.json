@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/benc-uk/nodejs-demoapp.git"
+    "url": "https://github.com/under-tree-e/ute-demo-nodejs.git"
   },
   "private": true,
   "scripts": {

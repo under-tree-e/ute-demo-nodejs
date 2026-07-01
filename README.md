@@ -210,3 +210,10 @@ See [deployment folder](./deploy) for deploying into Kubernetes with Helm or int
 - Aug 2017 - Minor changes and fixes for CRLF stuff
 - July 2017 - Updated Dockerfile to use super tiny Alpine Node 6 image
 - June 2017 - Moved repo to Github
+
+## UTE delivery path
+
+This repository is also the reference implementation for the UTE delegated Docker
+Compose release path. Local development uses the root `docker-compose.yml`;
+release delivery uses `deploy/compose/docker-compose.release.yml` and an immutable
+GHCR image digest. See `docs/ci-cd.md`, `docs/deployment.md` and `docs/rollback.md`.

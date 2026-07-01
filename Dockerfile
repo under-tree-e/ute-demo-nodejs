@@ -1,19 +1,30 @@
-ARG ARCH=
-ARG IMAGE_BASE=20-alpine
+# syntax=docker/dockerfile:1
+FROM node:22-alpine
 
-FROM ${ARCH}node:$IMAGE_BASE
-LABEL Name="Node.js Demo App" Version=4.9.9
-LABEL org.opencontainers.image.source = "https://github.com/benc-uk/nodejs-demoapp"
-ENV NODE_ENV production
-WORKDIR /app 
+ARG VERSION=dev
+ARG VCS_REF=unknown
 
-# For Docker layer caching do this BEFORE copying in rest of app
-COPY src/package*.json ./
-RUN npm install --production --silent
+LABEL org.opencontainers.image.title="UTE Demo Node.js" \
+      org.opencontainers.image.description="Demo Node.js service used to validate the UTE release path" \
+      org.opencontainers.image.source="https://github.com/under-tree-e/ute-demo-nodejs" \
+      org.opencontainers.image.version="$VERSION" \
+      org.opencontainers.image.revision="$VCS_REF"
 
-# NPM is done, now copy in the rest of the project to the workdir
-COPY src/. .
+ENV NODE_ENV=production \
+    PORT=3000
 
-# Port 3000 for our Express server 
+WORKDIR /app
+
+# Keep production dependencies in a cacheable layer and respect package-lock.json.
+COPY --chown=node:node src/package.json src/package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund
+
+COPY --chown=node:node src/ ./
+
+USER node
 EXPOSE 3000
-ENTRYPOINT ["npm", "start"]
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD node -e "const http=require('http');const req=http.get('http://127.0.0.1:'+(process.env.PORT||3000)+'/healthz',res=>process.exit(res.statusCode===200?0:1));req.on('error',()=>process.exit(1));req.setTimeout(4000,()=>{req.destroy();process.exit(1)})"
+
+CMD ["npm", "start"]
