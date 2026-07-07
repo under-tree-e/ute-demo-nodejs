@@ -17,7 +17,11 @@ The server must already have:
 
 - Docker Engine with Docker Compose v2;
 - the external Traefik network declared by inventory;
-- a `deploy` account used only by Semaphore/Ansible;
-- Vault Agent rendering `/opt/ute/runtime/ute-demo-nodejs/runtime.env`;
-- the runtime file containing a valid `SESSION_SECRET` and readable by the
-  deployment account.
+- a `deploy` account used only by Semaphore/Ansible.
+
+`ute-demo-nodejs` currently declares no secrets, so no Vault Agent, AppRole
+or Vault policy is required for its first deploy: the `ute_compose_release`
+Ansible role renders the deployment's `nonSecretEnv` values itself into the
+canonical `/opt/runtime/ute-demo-nodejs.env` (mode `0600`). If a future
+version of the service needs real secrets, Vault Agent would render them
+into that same path separately, as its own follow-on step.
