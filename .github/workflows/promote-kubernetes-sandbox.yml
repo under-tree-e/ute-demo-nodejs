@@ -10,10 +10,10 @@ on:
 
 jobs:
   promote:
-    uses: under-tree-e/ute-ci-templates/.github/workflows/gitops-image-promotion.yml@v1
+    uses: ute-homelab/ute-ci-templates/.github/workflows/gitops-image-promotion.yml@v1
     with:
       deployment-environment: ute-sandbox
-      gitops-repository: under-tree-e/ute-gitops
+      gitops-repository: ute-homelab/ute-gitops
       gitops-ref: main
       kustomization-path: apps/ute-demo-nodejs/overlays/ute-sandbox
       image-name: ghcr.io/under-tree-e/ute-demo-nodejs

@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   release:
-    uses: under-tree-e/ute-ci-templates/.github/workflows/node-container-release.yml@v1
+    uses: ute-homelab/ute-ci-templates/.github/workflows/node-container-release.yml@v1
     with:
       image-name: under-tree-e/ute-demo-nodejs
       node-version: "20"

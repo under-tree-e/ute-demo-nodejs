@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   ci:
-    uses: under-tree-e/ute-ci-templates/.github/workflows/node-ci.yml@v1
+    uses: ute-homelab/ute-ci-templates/.github/workflows/node-ci.yml@v1
     with:
       node-version: "20"
       working-directory: src
