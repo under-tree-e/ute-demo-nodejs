@@ -1,0 +1,10 @@
+agentStandards:
+  source: ute-agent-standards
+  version: v0.1
+  agents:
+    - claude
+    - codex
+  notes:
+    scriptsAreExternal: true
+    ciCdOwnedByDedicatedRepos: true
+    coreInstalledAt: .agents/core
