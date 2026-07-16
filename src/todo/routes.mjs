@@ -5,128 +5,135 @@
 // Updated June, 2019
 //
 
-import express from 'express'
-const router = express.Router()
-import { MongoClient, ObjectId } from 'mongodb'
-import appInsights from 'applicationinsights'
+import express from "express";
+const router = express.Router();
+import { MongoClient, ObjectId } from "mongodb";
+import appInsights from "applicationinsights";
 
-const DBNAME = process.env.TODO_MONGO_DB || 'todoDb'
-const COLLECTION = 'todos'
-let db
+const DBNAME = process.env.TODO_MONGO_DB || "todoDb";
+const COLLECTION = "todos";
+let db;
 
-  //
-  // Connect to MongoDB server
-  //
-;(async function () {
-  if (!process.env.TODO_MONGO_CONNSTR) return
+//
+// Connect to MongoDB server
+//
+(async function () {
+  if (!process.env.TODO_MONGO_CONNSTR) return;
   try {
-    const client = await MongoClient.connect(process.env.TODO_MONGO_CONNSTR, {})
-    db = client.db(DBNAME)
-    console.log('### ✅ Enabled Todo app. Connected to MongoDB!')
+    const client = await MongoClient.connect(
+      process.env.TODO_MONGO_CONNSTR,
+      {},
+    );
+    db = client.db(DBNAME);
+    console.log("### ✅ Enabled Todo app. Connected to MongoDB!");
   } catch (err) {
     if (appInsights.defaultClient) {
-      appInsights.defaultClient.trackException({ exception: err })
+      appInsights.defaultClient.trackException({ exception: err });
     }
-    console.log(`### 💥 ERROR! ${err.toString()}`)
+    console.log(`### 💥 ERROR! ${err.toString()}`);
   }
-})()
+})();
 
 //
 // Render Todo page
 //
-router.get('/todo', function (req, res, next) {
-  res.render('todo', {
-    title: 'Node DemoApp: Todo',
-  })
-})
+router.get("/todo", function (req, res, next) {
+  res.render("todo", {
+    title: "Node DemoApp: Todo",
+  });
+});
 
 //
 // Todo API: GET  - return array of all todos, probably should have pagination at some point
 //
-router.get('/api/todo', async function (req, res, next) {
+router.get("/api/todo", async function (req, res, next) {
   try {
-    const result = await db.collection(COLLECTION).find({}).toArray()
+    const result = await db.collection(COLLECTION).find({}).toArray();
     if (!result) {
-      sendData(res, [])
+      sendData(res, []);
     } else {
-      sendData(res, result)
+      sendData(res, result);
     }
   } catch (err) {
-    sendError(res, err)
+    sendError(res, err);
   }
-})
+});
 
 //
 // Todo API: POST - create or edit a new todo
 //
-router.post('/api/todo', async function (req, res, next) {
-  const todo = req.body
+router.post("/api/todo", async function (req, res, next) {
+  const todo = req.body;
   try {
-    const result = await db.collection(COLLECTION).insertOne(todo)
+    const result = await db.collection(COLLECTION).insertOne(todo);
     if (result) {
       sendData(res, {
         newId: result.insertedId,
-      })
+      });
     } else {
-      throw 'Error POSTing todo'
+      throw "Error POSTing todo";
     }
   } catch (err) {
-    sendError(res, err)
+    sendError(res, err);
   }
-})
+});
 
 //
 // Todo API: PUT - update a todo
 //
-router.put('/api/todo/:id', async function (req, res, next) {
-  const todo = req.body
-  delete todo._id
+router.put("/api/todo/:id", async function (req, res, next) {
+  const todo = req.body;
+  delete todo._id;
   try {
-    const result = await db.collection(COLLECTION).findOneAndReplace({ _id: new ObjectId(req.params.id) }, todo)
+    const result = await db
+      .collection(COLLECTION)
+      .findOneAndReplace({ _id: new ObjectId(req.params.id) }, todo);
     if (result) {
-      sendData(res, result)
+      sendData(res, result);
     } else {
-      throw 'Error PUTing todo'
+      throw "Error PUTing todo";
     }
   } catch (err) {
-    sendError(res, err)
+    sendError(res, err);
   }
-})
+});
 
 //
 // Todo API: DELETE - remove a todo from DB
 //
-router.delete('/api/todo/:id', async function (req, res, next) {
+router.delete("/api/todo/:id", async function (req, res, next) {
   try {
-    const result = await db.collection(COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) })
+    const result = await db
+      .collection(COLLECTION)
+      .deleteOne({ _id: new ObjectId(req.params.id) });
     if (result && result.deletedCount) {
-      sendData(res, { msg: `Deleted doc ${req.params.id} ok` })
+      sendData(res, { msg: `Deleted doc ${req.params.id} ok` });
     } else {
-      throw 'Error DELETEing todo'
+      throw "Error DELETEing todo";
     }
   } catch (err) {
-    sendError(res, err)
+    sendError(res, err);
   }
-})
+});
 
 //
 // Helper to send standard error and track it
 //
 function sendError(res, err, code = 500) {
-  console.dir(err)
-  console.log(`### Error with API ${JSON.stringify(err)}`)
-  let statuscode = code
+  console.dir(err);
+  console.log(`### Error with API ${JSON.stringify(err)}`);
+  let statuscode = code;
   if (err.code > 1) {
-    statuscode = err.code
+    statuscode = err.code;
   }
 
   // App Insights
   if (appInsights.defaultClient) {
-    appInsights.defaultClient.trackException({ exception: err })
+    appInsights.defaultClient.trackException({ exception: err });
   }
 
-  res.status(statuscode).send(err)
-  return
+  res.status(statuscode).send(err);
+  return;
 }
 
 //
@@ -135,12 +142,15 @@ function sendError(res, err, code = 500) {
 function sendData(res, data) {
   // App Insights
   if (appInsights.defaultClient) {
-    appInsights.defaultClient.trackEvent({ name: 'dataEvent', properties: { data: JSON.stringify(data) } })
+    appInsights.defaultClient.trackEvent({
+      name: "dataEvent",
+      properties: { data: JSON.stringify(data) },
+    });
   }
 
-  res.type('application/json')
-  res.status(200).send(data)
-  return
+  res.type("application/json");
+  res.status(200).send(data);
+  return;
 }
 
-export default router
+export default router;
