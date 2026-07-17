@@ -1,3 +1,41 @@
+## Release v0.1.1
+
+Adds the `deploy/secrets/` SOPS-encrypted runtime secret convention (no
+application code change) so the image can carry a real `SESSION_SECRET`
+into production — `v0.1.0` was tagged before that convention existed, so
+its checkout never contains `deploy/secrets/runtime.env.sops`, which real
+`ute-workspace` F017 deployment attempts against `ute-sandbox-01` need at
+the pinned release tag.
+
+### Added
+
+- `deploy/secrets/README.md` and `deploy/secrets/runtime.env.sops`: the
+  SOPS-encrypted-file secret-delivery convention (`ute-workspace` F016
+  Mode B / Option B — the encrypted file lives in this repo, not
+  `ute-gitops`), including a mandatory rotation-on-handoff policy.
+
+### Fixed
+
+- Nothing application-level; this release exists solely to publish an
+  image/tag whose checkout includes the `deploy/secrets/` convention
+  added after `v0.1.0` was cut.
+
+### Changed
+
+- Nothing in `src/`; only `deploy/secrets/` and this changelog/version
+  bump.
+
+### Known issues
+
+- Still not deployed anywhere as of this release being cut — the actual
+  deploy attempt against `ute-sandbox-01` is `ute-workspace` F017,
+  tracked separately.
+
+### Deployment notes
+
+- Not applicable — no deployment performed as part of cutting this
+  release itself.
+
 ## Release v0.1.0
 
 First UTE-controlled release of this demo Node.js app. Version reset from
