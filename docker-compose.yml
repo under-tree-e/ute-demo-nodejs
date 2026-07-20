@@ -15,7 +15,7 @@ services:
       - .env
     volumes:
       - ./src:/app
-      - ute-demo-nodejs-node-modules:/app/node_modules
+      - demo_nodejs_node_modules_volume:/app/node_modules
     command: >
       sh -c "
         test -d /app/node_modules || npm install &&
@@ -31,7 +31,7 @@ services:
       - dev_network
 
 volumes:
-  ute-demo-nodejs-node-modules:
+  demo_nodejs_node_modules_volume:
 
 networks:
   dev_network:
