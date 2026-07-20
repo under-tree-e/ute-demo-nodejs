@@ -1,6 +1,7 @@
 services:
   ute-demo-nodejs:
     image: ${UTE_IMAGE_REF:?UTE_IMAGE_REF must be an immutable GHCR digest}
+    container_name: ute-demo-nodejs
     restart: unless-stopped
     env_file:
       - ${UTE_RUNTIME_ENV_FILE:?UTE_RUNTIME_ENV_FILE must point to the Vault Agent rendered file}
