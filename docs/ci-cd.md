@@ -20,7 +20,7 @@ Set these **non-secret environment variables** at the folder or job level:
 | `UTE_INVENTORY_REPOSITORY` | `ute-homelab/ute-inventory` while the temporary organization remains in use |
 | `UTE_INVENTORY_REF` | `main` |
 | `SEMAPHORE_URL` | Semaphore base URL without a trailing slash |
-| `SEMAPHORE_PROJECT_ID` | numeric project ID for the UTE automation project |
+| `SEMAPHORE_PROJECT_ID` | numeric project ID for the automation project |
 | `SEMAPHORE_TEMPLATE_ID` | numeric Ansible deployment task-template ID |
 | `UTE_SONARQUBE_ENABLED` | `true` only after scanner/tool configuration exists |
 | `UTE_SONARQUBE_SERVER` | Jenkins SonarQube installation name when enabled |
