@@ -1,5 +1,11 @@
 # CI/CD contract
 
+The `Jenkinsfile` itself is a thin call into `ute-jenkins-library`'s
+`uteNodeContainerRelease` shared step (`@Library('ute-jenkins-library') _`)
+— stage logic lives there, not in this repo. All folder/job-level env vars
+and credential IDs below are unchanged by that: the shared step reads them
+exactly the same way the previous inline pipeline did.
+
 The Jenkins multibranch pipeline has two boundaries:
 
 - every branch and pull request: exact dependency install, lint, HTTP tests,
