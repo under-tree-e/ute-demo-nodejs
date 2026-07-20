@@ -1,8 +1,8 @@
 ---
 name: post-release-review
-description: Capture what happened after a release and turn lessons into follow-up tasks and standards updates. Use shortly after a release/deployment has gone out, as the closing step of the UTE SDLC loop.
+description: Capture what happened after a release and turn lessons into follow-up tasks and standards updates. Use shortly after a release/deployment has gone out, as the closing step of the SDLC loop.
 ---
-# UTE Post-Release Review
+# Post-Release Review
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/post-release-review/SKILL.md`, `adapters/codex/skills/post-release-review/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -59,7 +59,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

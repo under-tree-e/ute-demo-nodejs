@@ -1,8 +1,8 @@
 ---
 name: implementation-pass
-description: Implement an approved UTE feature folder. Use when the user points to a feature directory or asks to implement an existing feature plan/spec.
+description: Implement an approved feature folder. Use when the user points to a feature directory or asks to implement an existing feature plan/spec.
 ---
-# UTE Implementation Pass
+# Implementation Pass
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/implementation-pass/SKILL.md`, `adapters/codex/skills/implementation-pass/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -69,7 +69,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

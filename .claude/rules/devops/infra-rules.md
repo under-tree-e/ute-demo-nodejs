@@ -9,7 +9,7 @@ paths:
   - "docker-compose*.yml"
   - "semaphore/**"
 ---
-# UTE DevOps / Infrastructure Rules
+# DevOps / Infrastructure Rules
 
 Before infrastructure, CI/CD, Docker, Jenkins, Semaphore, Ansible, or Terraform changes:
 

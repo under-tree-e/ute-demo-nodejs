@@ -1,8 +1,8 @@
 ---
 name: pr-summary
-description: Prepare a concise Pull Request summary for UTE projects, including purpose, changed areas, validation, risks, docs impact, and rollback notes.
+description: Prepare a concise Pull Request summary for projects, including purpose, changed areas, validation, risks, docs impact, and rollback notes.
 ---
-# UTE PR Summary
+# PR Summary
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/pr-summary/SKILL.md`, `adapters/codex/skills/pr-summary/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -71,7 +71,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

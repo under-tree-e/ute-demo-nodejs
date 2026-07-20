@@ -113,7 +113,7 @@ not covered.
 - Must not skip audit logging for a security-sensitive action on the
   grounds that it's "internal only" or "just for now."
 - Must not invent alerting thresholds, SLOs, or paging rules and present
-  them as an established UTE standard — none are grounded in source
+  them as an established standard — none are grounded in source
   material; flag as a gap instead (see Open Questions).
 
 ## Related Skills
@@ -129,7 +129,7 @@ not covered.
 
 - N/A — no archetype-specific observability overlays exist yet.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` — own any
   log-shipping, metrics-backend, or tracing infrastructure; this standard
@@ -150,7 +150,7 @@ not covered.
   caveat.
 - No named owning repo/system is specified for where logs, metrics, or
   audit logs are actually stored/queried (e.g. a log aggregator, a SIEM,
-  Vault audit device) — needs a decision or mapping to a UTE repo.
+  Vault audit device) — needs a decision or mapping to a repo.
 - `core/standards/api-integration.md` is referenced here but does not yet
   exist in this repo as of this writing (see
   `features/F003-source-standards-ingestion/mapping.md`) — update this

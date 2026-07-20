@@ -1,4 +1,4 @@
-# UTE Workflow Standard
+# Workflow Standard
 
 Agent-neutral version of the mandatory workflow. Adapters translate this into
 their own rule-loading mechanism (`adapters/claude/.claude/rules/workflow.md`,

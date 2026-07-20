@@ -3,7 +3,7 @@
 ## Purpose
 
 Define how application configuration (non-secret) is classified,
-committed, and structured across UTE repos, so an agent can tell "safe to
+committed, and structured across repos, so an agent can tell "safe to
 commit as an example" from "must never appear in the repo" without
 guessing. Secret storage, rotation, and access control are a separate
 concern — see [Does Not Cover](#does-not-cover).
@@ -154,7 +154,7 @@ keys, secrets in README/PR/chat) are defined once in
 - `core/archetypes/nodejs-worker/`, `core/archetypes/docker-compose-app/` —
   same `.env.example` requirement as backend services.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` / `ute-jenkins-library` / `ute-jenkins` — own secret
   injection into pipeline runs; not config classification.

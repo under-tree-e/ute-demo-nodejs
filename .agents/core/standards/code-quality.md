@@ -10,7 +10,7 @@ can understand it without asking the author to explain it out loud.
 
 ## Applies To
 
-Any code change in any UTE repo, evaluated by a human reviewer or by an
+Any code change in any repo, evaluated by a human reviewer or by an
 agent doing review/audit work (`change-audit`, `code-review` skill).
 
 ## Does Not Cover
@@ -125,7 +125,7 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
 N/A — quality expectations here are stack-agnostic; stack-specific
 layering conventions live in `core/archetypes/<type>/`.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — owns the CI checks (build, lint, static analysis)
   this standard defers to; see `core/standards/ci-cd.md`.

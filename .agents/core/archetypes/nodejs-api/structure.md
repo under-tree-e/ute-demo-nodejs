@@ -27,7 +27,7 @@ src/middlewares/       # auth, error handling, logging, etc.
 src/validators/        # request/input validation schemas
 src/tests/             # unit + integration tests
 docs/
-features/              # UTE feature folders (see feature-plan)
+features/              # feature folders (see feature-plan)
 ```
 
 ## Notes

@@ -2,7 +2,7 @@
 paths:
   - "**/*"
 ---
-# UTE Testing Rules
+# Testing Rules
 
 > Canonical agent-neutral text: `core/standards/testing.md`. Keep both in
 > sync.

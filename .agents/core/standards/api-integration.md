@@ -10,8 +10,8 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 ## Applies To
 
 - Public APIs (external consumers).
-- Internal APIs (service-to-service within UTE).
-- Frontend-facing APIs (backend serving a UTE frontend).
+- Internal APIs (service-to-service within this platform).
+- Frontend-facing APIs (backend serving this platform's frontend).
 - Admin APIs.
 - SDK/client-library APIs.
 - Webhook receivers and senders.
@@ -29,7 +29,7 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 
 ## Source Documents
 
-- API & Integration Standard (UTE standard; naming, HTTP methods,
+- API & Integration Standard (internal standard; naming, HTTP methods,
   request/response shape, error format, status codes, validation,
   authorization, pagination, versioning, DTOs/mappers, integration
   adapters, secrets/config, timeouts/retries/idempotency, webhooks,
@@ -294,7 +294,7 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
   frontend consumers; apply the "Frontend contract dependency" rules
   above.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` / `ute-jenkins-library` / `ute-jenkins` — own any
   pipeline that builds/tests/publishes an API or SDK; this standard does

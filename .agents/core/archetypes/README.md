@@ -1,7 +1,7 @@
 # Archetypes
 
 `core/archetypes/<type>/` are optional, stack-specific overlays on top of the
-generic UTE workflow (`core/sdlc/README.md`) and `core/standards/`. They are
+generic workflow (`core/sdlc/README.md`) and `core/standards/`. They are
 agent-neutral recommendations and checks — a project is never required to
 restructure itself to match one, and using either the Claude or Codex adapter
 does not require picking an archetype at all.

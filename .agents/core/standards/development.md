@@ -136,7 +136,7 @@ for the stack in play.
 - `angular-app`, `angular-library` — component vs. service separation.
 - `npm-package` — module-vs-package extraction boundary in practice.
 
-## Related UTE Repositories
+## Related Repositories
 
 - N/A — this standard governs in-repo code organization; it does not
   allocate ownership to any pipeline/infra repo.

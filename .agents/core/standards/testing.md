@@ -1,15 +1,15 @@
-# UTE Testing Standard
+# Testing Standard
 
 ## Purpose
 
-Define what tests a UTE repo must have, where they live, what blocks merge,
+Define what tests a repo must have, where they live, what blocks merge,
 and how testing connects to CI/CD — so tests verify important system
 behavior (critical logic, auth, payments, data transforms, API contracts,
 regression-prone areas), not just raise a coverage number.
 
 ## Applies To
 
-- Every UTE repo with test infrastructure: backend services, Angular apps,
+- Every repo with test infrastructure: backend services, Angular apps,
   packages/libraries, SDK/API clients, infrastructure repos.
 - Both human and agent-authored changes.
 - Backend- and Angular-specific depth lives in the matching archetype's
@@ -30,7 +30,7 @@ regression-prone areas), not just raise a coverage number.
 
 ## Source Documents
 
-- "Testing Standard" (UTE, status: Draft, dated 2026-05-21) — normalized
+- "Testing Standard" (status: Draft, dated 2026-05-21) — normalized
   extract used to build this file. Treat rules below as binding once the
   source is confirmed finalized (see Open Questions).
 
@@ -217,7 +217,7 @@ regression-prone areas), not just raise a coverage number.
   `core/archetypes/erpnext-frappe-app` — infra/compose/Frappe testing
   expectations.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — owns GitHub Actions pipeline stages that run these
   test gates.

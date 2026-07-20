@@ -15,7 +15,7 @@ publishes without the required gates.
 - Naming, scoping, and `package.json` metadata for npm packages, Angular
   libraries, Node.js packages/SDKs/CLIs, and internal config/contracts
   packages.
-- `.npmrc` handling and publish gating for any UTE package.
+- `.npmrc` handling and publish gating for any package.
 - `project-discovery` and `architecture-review` when a module-vs-package
   extraction is proposed.
 
@@ -76,7 +76,7 @@ publishes without the required gates.
 | `sdk` | Client SDK for an external/internal API | `@ute/sdk-billing` |
 | `ui` | UI component library (non-Angular-specific) | `@ute/ui-icons` |
 | `cli` | Command-line tool | `@ute/cli-scaffold` |
-| `internal` | Internal-only tooling/library, not for reuse outside UTE | `@under-tree-e/internal-build-tools` |
+| `internal` | Internal-only tooling/library, not for reuse outside this project | `@under-tree-e/internal-build-tools` |
 | `config` | Shared config (lint, TS, build config) | `@ute/config-eslint` |
 | `contracts` | Shared types/API contracts/schemas | `@ute/contracts-billing` |
 
@@ -247,7 +247,7 @@ Before proposing/approving a package extraction or a publish, verify:
   (e.g. `projects/<library-name>/src/public-api.ts`).
 - `core/archetypes/nodejs-cli/` — CLI package structure.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — owns GitHub Actions publish workflows.
 - `ute-jenkins-library` — owns Jenkins shared publish steps.

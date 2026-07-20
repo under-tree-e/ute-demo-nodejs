@@ -8,7 +8,7 @@ paths:
   - "src/**/*.css"
   - "src/**/*.html"
 ---
-# UTE Frontend Rules
+# Frontend Rules
 
 - Follow the project’s existing framework and style conventions.
 - Do not migrate framework/style architecture as a side effect of a feature.

@@ -4,7 +4,7 @@ paths:
   - "features/**"
   - "**/*.md"
 ---
-# UTE Documentation Rules
+# Documentation Rules
 
 > Canonical agent-neutral text: `core/standards/documentation.md`. Keep both
 > in sync.

@@ -2,7 +2,7 @@
 paths:
   - "**/*"
 ---
-# UTE Security Rules
+# Security Rules
 
 > Canonical agent-neutral text: `core/standards/security.md`. Keep both in
 > sync.

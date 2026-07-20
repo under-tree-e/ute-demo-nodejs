@@ -146,7 +146,7 @@ was done poorly.
 
 - N/A
 
-## Related UTE Repositories
+## Related Repositories
 
 - N/A — this standard governs PR/branch process, not any pipeline or
   infrastructure repo.
@@ -162,6 +162,6 @@ was done poorly.
   artifact belongs to the consuming project or its CI/template repo, not
   this governance repo).
 - No guidance on handover across multiple repos/services for a single task
-  — relevant to UTE's multi-repo architecture but not addressed by source.
+  — relevant to this repo's multi-repo architecture but not addressed by source.
 - "1 working day" thresholds (pause-before-handover, Draft PR staleness)
   are not quantified against a business-day calendar or timezone.

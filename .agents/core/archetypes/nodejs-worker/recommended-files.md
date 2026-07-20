@@ -1,6 +1,6 @@
 # Recommended Files — Node.js Worker
 
-Every UTE project is expected to have the base doc set described in
+Every the project is expected to have the base doc set described in
 `core/sdlc/project-discovery.md` (`product-overview.md`, `architecture.md`,
 `environments.md`, `ci-cd.md`) filled in.
 Add the following for a worker project:

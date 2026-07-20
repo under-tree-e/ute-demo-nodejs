@@ -8,7 +8,7 @@ PR description, merge gating, and author/reviewer/CI-CD responsibilities.
 
 ## Applies To
 
-- Every UTE repo where `main`/`master` is the protected integration branch.
+- Every repo where `main`/`master` is the protected integration branch.
 - Every change to `main`, regardless of size, and regardless of whether the
   author is a human or an agent.
 - Both GitHub Actions and Jenkins delivery paths (this standard governs the
@@ -192,7 +192,7 @@ The PR description (and the PR template that produces it) MUST cover:
 
 N/A — this standard applies uniformly regardless of project archetype.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — owns the GitHub Actions checks a PR's CI status
   reflects.

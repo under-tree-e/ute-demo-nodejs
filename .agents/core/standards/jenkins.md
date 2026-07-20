@@ -3,7 +3,7 @@
 ## Purpose
 
 Define how Jenkins is used as a quality gate and deployment orchestrator
-across UTE projects. This is governance only — rules, naming conventions,
+across projects. This is governance only — rules, naming conventions,
 and checklists an agent must follow/check. It does not implement, ship, or
 template any Jenkinsfile.
 
@@ -203,7 +203,7 @@ Pipeline-readiness checklist — before treating a repo's Jenkins setup as
 - N/A — no archetype currently encodes Jenkins-specific overlays; if one is
   added, it must follow the same no-pipeline-code rule as this file.
 
-## Related UTE Repositories
+## Related Repositories
 
 | Repo | Owns |
 | --- | --- |

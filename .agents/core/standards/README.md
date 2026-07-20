@@ -1,6 +1,6 @@
 # Core Standards
 
-Agent-neutral standards every UTE project follows, regardless of which AI
+Agent-neutral standards every project follows, regardless of which AI
 coding agent is in use.
 
 | Standard | Purpose | Main users / skills |

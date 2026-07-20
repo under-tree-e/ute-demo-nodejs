@@ -1,4 +1,4 @@
-# UTE AI-Assisted SDLC Workflow
+# AI-Assisted SDLC Workflow
 
 The full lifecycle both the Claude and Codex adapters are built around, from
 idea to lessons learned. Every stage below is agent-neutral process — each
@@ -37,7 +37,7 @@ Ad hoc stages — not fixed pipeline steps, invoke whenever relevant:
 - `core/sdlc/standards-gap-audit.md` (`standards-gap-audit` skill) — when a
   skill's Agent Run Report shows non-trivial gaps/assumptions, or a run's
   output is unclear; classifies whether the gap is in the project, a skill,
-  a standard, an archetype, or belongs to a different UTE repo — see
+  a standard, an archetype, or belongs to a different repo — see
   `docs/evaluation-loop.md`.
 
 ## Stage details

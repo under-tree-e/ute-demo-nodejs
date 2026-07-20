@@ -2,7 +2,7 @@
 name: architecture-review
 description: Review architecture and deployment impact before major implementation or infrastructure changes — modules, boundaries, data flow, scaling, security-sensitive areas. Use before starting non-trivial implementation or infra work, not for routine small changes.
 ---
-# UTE Architecture Review
+# Architecture Review
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/architecture-review/SKILL.md`, `adapters/codex/skills/architecture-review/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -70,7 +70,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

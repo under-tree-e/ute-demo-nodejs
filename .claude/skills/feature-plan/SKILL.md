@@ -1,8 +1,8 @@
 ---
 name: feature-plan
-description: Create a UTE-compatible feature folder from an idea, change request, bug, refactor, documentation task, infrastructure task, or CI/CD task. Use before implementation when work needs planning, requirements, acceptance criteria, risks, and documentation impact.
+description: Create a compatible feature folder from an idea, change request, bug, refactor, documentation task, infrastructure task, or CI/CD task. Use before implementation when work needs planning, requirements, acceptance criteria, risks, and documentation impact.
 ---
-# UTE Feature Plan
+# Feature Plan
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/feature-plan/SKILL.md`, `adapters/codex/skills/feature-plan/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -78,7 +78,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

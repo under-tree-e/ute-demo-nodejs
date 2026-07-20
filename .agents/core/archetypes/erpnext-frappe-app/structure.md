@@ -23,7 +23,7 @@ high-level shape, not a strict template to force onto legacy code.
     public/                    # static assets served by the app
   requirements.txt
 docs/
-features/                      # UTE feature folders (see feature-plan)
+features/                      # feature folders (see feature-plan)
 ```
 
 ## Notes

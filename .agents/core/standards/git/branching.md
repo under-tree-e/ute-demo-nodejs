@@ -6,8 +6,8 @@ glance, never landing on `main` except through a reviewed, squashed PR.
 
 ## Applies To
 - Every branch created for `feature`, `fix`, `hotfix`, `refactor`, `chore`,
-  `docs`, `test`, or `infra` work in a UTE repository.
-- Any developer or agent pushing branches to a UTE-managed remote.
+  `docs`, `test`, or `infra` work in a repository.
+- Any developer or agent pushing branches to a managed remote.
 
 ## Does Not Cover
 - Commit message format, scope, secrets-in-git — see
@@ -46,17 +46,17 @@ glance, never landing on `main` except through a reviewed, squashed PR.
 - Allowed branch types: `feature` (new functionality), `fix` (defect fix),
   `hotfix` (critical production fix), `refactor` (behavior-preserving
   refactor), `chore` (technical/config/deps changes), `docs`
-  (documentation), `test` (tests) — plus `infra` (existing UTE convention,
+  (documentation), `test` (tests) — plus `infra` (existing convention,
   retained).
-- Ticket: any tracker reference works (`GP-123`, `UTE-123`, `#123`). Use a
+- Ticket: any tracker reference works (`GP-123`, `PROJ-123`, `#123`). Use a
   real ticket when the work is tied to one. `NO-TICKET` is allowed only for
   small internal maintenance, throwaway experiments, or initial repo setup.
 - Examples:
   ```
-  feature/UTE-451-add-oauth-login
+  feature/PROJ-451-add-oauth-login
   fix/GP-88-null-pointer-on-checkout
   docs/NO-TICKET-fix-readme-typo
-  hotfix/UTE-999-rollback-broken-migration
+  hotfix/PROJ-999-rollback-broken-migration
   ```
 - Never push directly to `main`.
 - Never force-push without explicit permission.
@@ -115,7 +115,7 @@ glance, never landing on `main` except through a reviewed, squashed PR.
 ## Related Archetypes
 - N/A
 
-## Related UTE Repositories
+## Related Repositories
 - N/A — branch naming and its validation script are agent-standards-owned
   and CI-agnostic. See `core/standards/ci-cd.md` for pipeline ownership
   boundaries (`ute-ci-templates`, `ute-jenkins-library`, etc.).

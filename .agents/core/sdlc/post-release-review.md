@@ -5,7 +5,7 @@ Canonical procedure behind the `post-release-review` skill.
 ## Purpose
 
 Capture what actually happened after a release went out, and convert lessons
-into concrete follow-ups — the closing stage of the UTE SDLC loop (idea →
+into concrete follow-ups — the closing stage of the SDLC loop (idea →
 discovery → architecture review → feature plan → implementation → change
 audit → test strategy → docs sync → release readiness → PR summary → CI/CD →
 deployment → **post-release review**), feeding back into

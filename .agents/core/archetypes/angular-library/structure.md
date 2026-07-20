@@ -12,7 +12,7 @@ projects/<lib-name>/
   package.json            # published package metadata, peerDependencies
 projects/demo/            # optional sandbox app consuming the library locally
 docs/
-features/                 # UTE feature folders (see feature-plan)
+features/                 # feature folders (see feature-plan)
 ```
 
 ## Notes

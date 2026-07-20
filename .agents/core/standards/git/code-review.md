@@ -2,13 +2,13 @@
 
 ## Purpose
 
-Defines the human (and agent-assisted) code-review process for UTE PRs:
+Defines the human (and agent-assisted) code-review process for PRs:
 what a reviewer checks, how review comments are tagged and formatted, and
 where reviewer responsibility ends and CI/CD responsibility begins.
 
 ## Applies To
 
-- Every PR into a protected/main branch in a UTE repo.
+- Every PR into a protected/main branch in a repo.
 - Human reviewers, and any agent (`change-audit`, `/review`, `/code-review`)
   assisting with or auditing a review.
 - Any PR size/risk level — depth of review scales with risk zone, not with
@@ -33,7 +33,7 @@ where reviewer responsibility ends and CI/CD responsibility begins.
 ## Source Documents
 
 - Code Review Memo (Memo) — human code-review process and reviewer role at
-  UTE: reviewer responsibility vs CI/CD responsibility, pre-review
+  Scope: reviewer responsibility vs CI/CD responsibility, pre-review
   readiness, general checklist, blocking/non-blocking taxonomy, risk-zone
   table, domain checklists, split-PR and approval rules, forbidden
   practices.
@@ -305,7 +305,7 @@ skipping silently.
   package/library domain checklist (SemVer, public API, changelog).
 - `core/archetypes/devops-infra` — CI/CD & config domain checklist.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — owns GitHub Actions pipeline implementation;
   CI/CD & config review checks for duplicated pipeline logic point here.

@@ -2,7 +2,7 @@
 name: standards-gap-audit
 description: Analyze the result of an agent run (typically another skill's Agent Run Report) to classify why it was incomplete, guessed, or unclear — project doc gap, weak skill, missing standard, missing archetype, CI/CD boundary confusion, or not a standards gap at all. Use when a skill's output is unclear or its Agent Run Report lists non-trivial gaps/assumptions, not as a routine pipeline step.
 ---
-# UTE Standards Gap Audit
+# Standards Gap Audit
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/standards-gap-audit/SKILL.md`, `adapters/codex/skills/standards-gap-audit/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -30,13 +30,13 @@ no report exists), the skill outputs themselves, the project's own
 
 1. Read `.agents/core/sdlc/standards-gap-audit.md` in full.
 2. Pull every "Missing input", "Assumption made", "Project documentation
-   gap", and "UTE standards gap" line out of the Agent Run Report(s) under
+   gap", and "standards gap" line out of the Agent Run Report(s) under
    audit.
 3. Classify each item against the gap types below — check the file a gap
    type points at before writing the finding; don't guess whether it
    already covers the case.
 4. Separate anything that isn't a standards gap: it belongs to the project
-   itself, or to a different UTE repository (CI/CD template repo,
+   itself, or to a different repository (CI/CD template repo,
    deployment/infra repo — see `.agents/core/standards/ci-cd.md`).
 5. Do not edit `skills/`, `.agents/core/`, or `.agents/core/archetypes/` as part of this
    audit unless explicitly asked to apply a fix afterward.
@@ -57,7 +57,7 @@ no report exists), the skill outputs themselves, the project's own
 - `vendor-skill-gap` — a third-party skill/pattern would close it and is
   worth reviewing for import. Fix: `docs/vendor-skill-mapping.md`,
   `vendor-skills/`.
-- `not-agent-standards` — belongs to the project or a different UTE
+- `not-agent-standards` — belongs to the project or a different repository
   repository entirely. No fix here — note only.
 
 ## Required outputs
@@ -103,10 +103,10 @@ followed by:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps: only true `core-standard-gap`/`archetype-gap` findings,
+- Standards gaps: only true `core-standard-gap`/`archetype-gap` findings,
   not project or CI/CD items
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories: project/CI/CD/infra ownership,
+- Items that belong to other repositories: project/CI/CD/infra ownership,
   kept separate from agent-standard ownership
 - Follow-up questions, if any:
 

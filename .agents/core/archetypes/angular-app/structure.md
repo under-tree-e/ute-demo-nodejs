@@ -15,7 +15,7 @@ src/assets/           # icons, images, i18n, mock data
 src/environments/     # environment.ts, environment.prod.ts (build-time config)
 src/styles/           # base, themes, utilities, index.scss — global styles only
 docs/
-features/             # UTE feature folders (see feature-plan) — repo-root planning
+features/             # feature folders (see feature-plan) — repo-root planning
                        # docs, not the same thing as src/app/features/ below
 ```
 

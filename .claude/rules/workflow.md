@@ -2,7 +2,7 @@
 paths:
   - "**/*"
 ---
-# UTE Workflow Rules
+# Workflow Rules
 
 > Canonical agent-neutral text: `core/standards/workflow.md`. Keep both in
 > sync — this file exists as a real, loaded copy because Claude Code reads

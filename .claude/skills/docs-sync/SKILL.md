@@ -2,7 +2,7 @@
 name: docs-sync
 description: Check whether documentation must be updated after code, infrastructure, deployment, CI/CD, API, configuration, or behavior changes. Use near the end of a task or before PR creation.
 ---
-# UTE Docs Sync
+# Docs Sync
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/docs-sync/SKILL.md`, `adapters/codex/skills/docs-sync/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -57,7 +57,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

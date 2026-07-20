@@ -2,7 +2,7 @@
 name: project-discovery
 description: Analyze a new or existing project to establish baseline understanding of its stack, structure, and docs. Entry-point skill — run first on any project this repo is installed into, before planning or implementing anything.
 ---
-# UTE Project Discovery
+# Project Discovery
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/project-discovery/SKILL.md`, `adapters/codex/skills/project-discovery/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -75,7 +75,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

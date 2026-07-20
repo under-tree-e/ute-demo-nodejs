@@ -2,7 +2,7 @@
 name: change-audit
 description: Independently audit implemented changes against a feature folder/spec. Use after implementation or when the user asks to review/check/audit another agent's changes.
 ---
-# UTE Change Audit
+# Change Audit
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/change-audit/SKILL.md`, `adapters/codex/skills/change-audit/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -64,7 +64,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

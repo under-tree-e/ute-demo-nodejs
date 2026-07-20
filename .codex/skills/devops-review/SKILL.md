@@ -2,7 +2,7 @@
 name: devops-review
 description: Review Terraform, Ansible, Docker, Jenkins, GitHub Actions, Semaphore, deployment, infrastructure, or server operation changes for correctness, risk, validation, and rollback.
 ---
-# UTE DevOps Review
+# DevOps Review
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/devops-review/SKILL.md`, `adapters/codex/skills/devops-review/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -88,7 +88,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

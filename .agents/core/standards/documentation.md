@@ -1,4 +1,4 @@
-# UTE Documentation Standard
+# Documentation Standard
 
 ## Purpose
 
@@ -8,7 +8,7 @@ explanation, private notes, or undocumented manual steps.
 
 ## Applies To
 
-- Root `README.md` of every UTE repository.
+- Root `README.md` of every repository.
 - Repository-level docs (`docs/`, `CONTRIBUTING.md`, `CHANGELOG.md`,
   `SECURITY.md`, decision records).
 - Keeping docs in sync with code, architecture, environment, CI/CD,
@@ -123,10 +123,10 @@ explanation, private notes, or undocumented manual steps.
 N/A — archetype-specific README/doc scaffolding lives under
 `core/archetypes/<type>/`, not in this standard.
 
-## Related UTE Repositories
+## Related Repositories
 
 N/A — documentation practices apply within each repository; this standard
-does not delegate ownership to another UTE repo.
+does not delegate ownership to another repo.
 
 ## Open Questions
 

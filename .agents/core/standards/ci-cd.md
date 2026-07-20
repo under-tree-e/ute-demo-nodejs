@@ -17,7 +17,7 @@ reading the diff.
 
 ## Applies To
 
-- Every consuming UTE project with a CI/CD pipeline (GitHub Actions,
+- Every consuming project with a CI/CD pipeline (GitHub Actions,
   Jenkins, or a documented project-specific exception).
 - Pull requests, branch pushes, merges to `main`, release-tag creation, and
   deploys in those projects.
@@ -64,7 +64,7 @@ skill) — this standard cross-references both, it doesn't restate them.
 
 ## Source Documents
 
-- CI-CD memo (internal UTE memo, status: **On Review** at time of ingestion)
+- CI-CD memo (internal memo, status: **On Review** at time of ingestion)
   — day-to-day rulebook defining CI triggers, required checks, merge/deploy
   gates, release-tag convention, standard workflow, readiness checklist, and
   forbidden practices. Diagrams in the source (PR flow, release flow) are
@@ -244,7 +244,7 @@ N/A — CI/CD gating rules in this standard apply uniformly across
 may add stack-specific required checks (e.g. a linter for that language) on
 top of, not instead of, this standard.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — GitHub Actions reusable workflows
 - `ute-jenkins-library` — Jenkins shared library / pipeline primitives

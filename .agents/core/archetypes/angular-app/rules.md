@@ -153,7 +153,7 @@
 
 ## CI/CD expectations
 
-Use dedicated CI/CD templates from approved UTE repositories
+Use dedicated CI/CD templates from approved repositories
 (`ute-ci-templates` for GitHub Actions, `ute-jenkins-library` for Jenkins)
 instead of hand-rolling build/test/deploy pipeline logic in this repo.
 Document the selected delivery model in `docs/ci-cd.md` — see

@@ -2,7 +2,7 @@
 name: production-readiness
 description: Assess a service/app's operational posture for production-like usage — health checks, logging, metrics, alerts, backup/restore, failure handling. Use for a periodic or pre-go-live operational check, not for gating a single change.
 ---
-# UTE Production Readiness
+# Production Readiness
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/production-readiness/SKILL.md`, `adapters/codex/skills/production-readiness/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -75,7 +75,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

@@ -8,7 +8,7 @@ paths:
   - "src/**/*.js"
   - "src/**/*.go"
 ---
-# UTE Backend / API Rules
+# Backend / API Rules
 
 - Keep API contracts explicit.
 - Validate input at boundaries.

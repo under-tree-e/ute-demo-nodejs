@@ -2,7 +2,7 @@
 paths:
   - "**/*"
 ---
-# UTE Git Workflow Rules
+# Git Workflow Rules
 
 > Canonical agent-neutral text: `core/standards/git/`. Keep both in sync.
 

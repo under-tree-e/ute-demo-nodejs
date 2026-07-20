@@ -1,6 +1,6 @@
 # Core
 
-Agent-neutral source of truth for the UTE AI Agent Standards. Nothing in
+Agent-neutral source of truth for the AI Agent Standards. Nothing in
 this directory assumes a specific AI coding agent — `adapters/claude/` and
 `adapters/codex/` translate this content into agent-specific mechanisms
 (Claude skills/rules/hooks, Codex `AGENTS.md`/skills) instead of duplicating

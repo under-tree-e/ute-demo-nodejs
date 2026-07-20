@@ -12,7 +12,7 @@ into a classified, actionable list.
 ## When to run
 
 - A skill's Agent Run Report lists non-trivial "Missing inputs",
-  "Assumptions made", "Project documentation gaps", or "UTE standards gaps".
+  "Assumptions made", "Project documentation gaps", or "standards gaps".
 - A skill's output was unclear, thin, or inconsistent and it isn't obvious
   why.
 - During a pilot/evaluation pass after installing agent standards into a
@@ -33,7 +33,7 @@ into a classified, actionable list.
 ## Process
 
 1. Collect every "Missing input", "Assumption made", "Project documentation
-   gap", and "UTE standards gap" line from the Agent Run Report(s) under
+   gap", and "standards gap" line from the Agent Run Report(s) under
    audit. If no Agent Run Report exists (older run, or an ad hoc question),
    reconstruct the same list from the raw output: where did the agent guess,
    hedge, or say "not documented"?
@@ -46,7 +46,7 @@ into a classified, actionable list.
    based on how often this is likely to recur across projects.
 4. Separate findings that are not a standards gap at all: things that belong
    to the project itself (its own missing docs, its own code issues), or to
-   a different UTE repository entirely (CI/CD template repos, deployment/
+   a different repository entirely (CI/CD template repos, deployment/
    infrastructure repos — see `core/standards/ci-cd.md` for the ownership
    boundary).
 5. Do not edit `skills/`, `core/`, or `core/archetypes/` as part of this
@@ -63,7 +63,7 @@ into a classified, actionable list.
 | `archetype-gap` | No `core/archetypes/<type>/` matches the project's stack, or an existing archetype is missing or wrong about a stack-specific convention. | `core/archetypes/<type>/` |
 | `ci-cd-boundary-gap` | Confusion about pipeline ownership — application repo vs. `ute-ci-templates`/`ute-jenkins-library`/`ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`. | `core/standards/ci-cd.md` |
 | `vendor-skill-gap` | A third-party skill/pattern would close the gap and is worth reviewing for import. | `docs/vendor-skill-mapping.md`, `vendor-skills/` (see `docs/vendor-skills-policy.md`) |
-| `not-agent-standards` | The gap belongs to the project itself, or to a different UTE repository's domain entirely — nothing in this repo should change. | N/A — note only |
+| `not-agent-standards` | The gap belongs to the project itself, or to a different repository's domain entirely — nothing in this repo should change. | N/A — note only |
 
 ## Required output
 

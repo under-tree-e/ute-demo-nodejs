@@ -38,7 +38,7 @@ ticket in one predictable shape, and never carries a secret.
   ci(scope): short description
   ```
 - Accepted types: `feat`, `fix`, `hotfix`, `refactor`, `chore`, `docs`,
-  `test`, `perf` — plus existing UTE-accepted `infra`, `ci`, `build`,
+  `test`, `perf` — plus previously accepted `infra`, `ci`, `build`,
   `revert` (retained).
 - Use `feat` (not `feature`) as the commit type — the branch type is
   `feature`, the commit type is `feat`.
@@ -61,7 +61,7 @@ ticket in one predictable shape, and never carries a secret.
   `core/standards/git/tags.md`.
 - Examples:
   ```
-  feat(auth): add OAuth login via Google (UTE-451)
+  feat(auth): add OAuth login via Google (PROJ-451)
   fix(checkout): handle null cart on guest session (GP-88)
   infra(ci): add branch name validation step (NO-TICKET)
   ```
@@ -107,7 +107,7 @@ ticket in one predictable shape, and never carries a secret.
 ## Related Archetypes
 - N/A
 
-## Related UTE Repositories
+## Related Repositories
 - N/A — commit-message and secrets-in-diff validation are
   agent-standards-owned and CI-agnostic. See `core/standards/ci-cd.md` for
   pipeline ownership boundaries and `core/standards/security.md` for

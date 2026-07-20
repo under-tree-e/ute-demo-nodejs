@@ -1,8 +1,8 @@
-# UTE Security Standard
+# Security Standard
 
 ## Purpose
 
-Defines the security posture an AI agent must hold across all UTE repos:
+Defines the security posture an AI agent must hold across all repos:
 never touch secrets, keep permissions deny-by-default, and respect
 least-privilege access control (repository, CI/CD, secrets, environment,
 production) as a governance baseline — regardless of which repo owns the
@@ -39,8 +39,8 @@ actual implementation of any given control.
 
 ## Source Documents
 
-- Environment & Secrets Standard (Draft, UTE, 2026-05-21).
-- Security & Access Control Policy (Draft, UTE, 2026-05-22).
+- Environment & Secrets Standard (Draft, 2026-05-21).
+- Security & Access Control Policy (Draft, 2026-05-22).
 
 ## Required Rules
 
@@ -316,7 +316,7 @@ actual implementation of any given control.
 - `docker-compose-app` — config keys vs. real secrets distinction applies
   directly at the compose-file boundary (detail: `configuration.md`).
 
-## Related UTE Repositories
+## Related Repositories
 
 | Concern | Owner |
 | --- | --- |
@@ -340,7 +340,7 @@ actual implementation of any given control.
   source with no stated trigger condition.
 - No owning repo is named for implementing branch/tag protection
   settings, Vault policy, or audit-log storage — needs mapping to a
-  concrete UTE repo.
+  concrete repo.
 - No process defined for how an offboarding credential-rotation waiver is
   requested, approved, or recorded.
 - Build-time config committed via CI-injected values (e.g. Angular

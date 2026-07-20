@@ -8,7 +8,7 @@ explanation, private notes, or undocumented manual steps.
 
 ## Applies To
 
-- Every UTE repository, regardless of stack (Node.js, Angular, npm
+- Every repository, regardless of stack (Node.js, Angular, npm
   package, infra, docs-only, deployment).
 - New repositories at creation time, and existing repositories during
   `project-discovery`/readiness checks.
@@ -245,7 +245,7 @@ explanation, private notes, or undocumented manual steps.
   nodejs-api, nodejs-cli, nodejs-worker, devops-infra,
   docker-compose-app, erpnext-frappe-app).
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — GitHub Actions pipeline implementation.
 - `ute-jenkins-library` / `ute-jenkins` — Jenkins pipeline implementation

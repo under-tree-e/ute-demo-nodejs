@@ -10,7 +10,7 @@ missing.
 
 ## When to use
 
-- First pass on a project after a UTE agent adapter is installed.
+- First pass on a project after an agent adapter is installed.
 - Project docs are missing, empty, or clearly stale.
 - Before architecture review, feature planning, or any non-trivial change on
   an unfamiliar codebase.

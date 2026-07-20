@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Defines how UTE fixes a product's version and moves a change from `main`
+Defines how this project fixes a product's version and moves a change from `main`
 to production: Semantic Versioning rules, Git release tags as the single
 source of truth, the Release Candidate → final release flow, hotfix
 handling, package versioning, release notes, deployment-source
@@ -10,8 +10,8 @@ restrictions per environment, and rollback/ownership expectations.
 
 ## Applies To
 
-- Every UTE application repo cutting a release (RC, final, or hotfix).
-- Every UTE package/library repo publishing a versioned artifact.
+- Every application repo cutting a release (RC, final, or hotfix).
+- Every package/library repo publishing a versioned artifact.
 - Any agent proposing a version bump, a release tag, a changelog entry, or
   a deployment triggered by a release.
 
@@ -100,7 +100,7 @@ Before cutting a final release tag, confirm:
 - Rollback path understood (see `core/sdlc/rollback-plan.md`).
 
 After the final tag is created, the pipeline stage order is (implementation
-owned by CI/CD repos — see Related UTE Repositories):
+owned by CI/CD repos — see Related Repositories):
 
 1. Run release-grade checks.
 2. Build the release artifact.
@@ -291,7 +291,7 @@ allowed source for that environment:
 - `core/archetypes/devops-infra` — CI/CD and deployment-source overlay
   this document's environment allow-list applies to.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates` — owns GitHub Actions implementation of the
   release-grade checks / build / publish / deploy / verify pipeline

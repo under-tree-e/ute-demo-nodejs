@@ -2,7 +2,7 @@
 name: rollback-plan
 description: Create a rollback plan for a release, deployment, database migration, infrastructure change, or risky production-impacting change.
 ---
-# UTE Rollback Plan
+# Rollback Plan
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/rollback-plan/SKILL.md`, `adapters/codex/skills/rollback-plan/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
@@ -67,7 +67,7 @@ Every run of this skill must end with:
 - Missing inputs:
 - Assumptions made:
 - Project documentation gaps:
-- UTE standards gaps:
+- Standards gaps:
 - Recommended updates to `ute-agent-standards`:
-- Items that belong to other UTE repositories:
+- Items that belong to other repositories:
 - Follow-up questions, if any:

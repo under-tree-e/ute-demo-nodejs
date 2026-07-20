@@ -11,7 +11,7 @@ monorepo sprawl.
 
 - `project-discovery` and `architecture-review` when a project's repo
   layout is being assessed or a new repo/split is proposed.
-- Any decision to create a new UTE repository, merge repositories, or
+- Any decision to create a new repository, merge repositories, or
   extract a module/service/package into its own repository.
 
 ## Does Not Cover
@@ -185,7 +185,7 @@ Score each candidate split by counting "yes" answers:
   once a repository boundary is already decided — not a substitute for
   this standard's boundary decision.
 
-## Related UTE Repositories
+## Related Repositories
 
 - `ute-ci-templates`, `ute-jenkins-library`, `ute-jenkins` — own the CI/CD
   readiness a split-architecture reorganization must have in place; this
