@@ -32,6 +32,7 @@ services:
 
 volumes:
   demo_nodejs_node_modules_volume:
+    name: demo_nodejs_node_modules_volume
 
 networks:
   dev_network:
