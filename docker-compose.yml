@@ -3,6 +3,7 @@
 services:
   ute-demo-nodejs:
     image: node:22-alpine
+    container_name: ute-demo-nodejs-dev
     working_dir: /app
     ports:
       - "${UTE_DEMO_NODEJS_DEV_PORT:-8110}:3000"
