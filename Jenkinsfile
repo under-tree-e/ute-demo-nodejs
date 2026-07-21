@@ -1,6 +1,7 @@
 @Library('ute-jenkins-library') _
 
 uteNodeContainerRelease(
+  sharedConfigFileId: 'ute-demo-nodejs-cicd-config',
   imageName: 'under-tree-e/ute-demo-nodejs',
   registry: 'ghcr.io',
   testPort: '3101',

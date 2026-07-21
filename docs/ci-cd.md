@@ -2,9 +2,17 @@
 
 The `Jenkinsfile` itself is a thin call into `ute-jenkins-library`'s
 `uteNodeContainerRelease` shared step (`@Library('ute-jenkins-library') _`)
-— stage logic lives there, not in this repo. All folder/job-level env vars
-and credential IDs below are unchanged by that: the shared step reads them
-exactly the same way the previous inline pipeline did.
+— stage logic lives there, not in this repo.
+
+The shared step's first stage loads all non-secret config below from a
+**Jenkins Config File Provider Properties file** (`sharedConfigFileId:
+'ute-demo-nodejs-cicd-config'` in the `Jenkinsfile`, defined under the
+`ute` Folder in Jenkins itself — Manage Jenkins has no
+Environment Injector folder/job "Environment Variables" section usable
+for Multibranch Pipeline items, so this is the mechanism instead) and
+sets each key as an env var before any other stage runs. Every stage
+downstream reads them the exact same way a folder-level env var would
+have been read.
 
 The Jenkins multibranch pipeline has two boundaries:
 
@@ -17,9 +25,9 @@ The Jenkins multibranch pipeline has two boundaries:
 Jenkins never SSHes to a deployment target. Semaphore runs the Ansible playbook
 and reports the final task result back to Jenkins.
 
-## Jenkins folder/job configuration
+## Config File contents (`ute-demo-nodejs-cicd-config`, Properties type)
 
-Set these **non-secret environment variables** at the folder or job level:
+Set these **non-secret environment variables** as `KEY=value` lines:
 
 | Variable | Value |
 |---|---|
@@ -33,7 +41,7 @@ Set these **non-secret environment variables** at the folder or job level:
 | `UTE_SUPPLY_CHAIN_SCAN_ENABLED` | `true` only when the agent has `trivy` and `syft` |
 | `UTE_SEMAPHORE_DEPLOY_TIMEOUT_SECONDS` | optional; default `900` |
 
-Set these **credential IDs**, never token values, at the same scope:
+Set these **credential IDs**, never token values, in the same file:
 
 | Variable | Credential type | Minimum access |
 |---|---|---|
@@ -42,5 +50,6 @@ Set these **credential IDs**, never token values, at the same scope:
 | `UTE_PLATFORM_API_GIT_CREDENTIALS_ID` | GitHub read credential | read `ute-homelab/ute-platform-api` |
 | `UTE_SEMAPHORE_API_TOKEN_CREDENTIALS_ID` | Secret text | create/read only the required Semaphore deployment tasks |
 
-The credentials themselves must originate in Vault and be injected into Jenkins
-Credentials under the corresponding access policy.
+The credentials themselves (the actual Jenkins Credentials store entries these
+IDs point at) must be created separately in Jenkins Credentials — this Config
+File only ever names IDs, never values.
