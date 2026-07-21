@@ -2,9 +2,15 @@
 
 The `Jenkinsfile` itself is a thin call into `ute-jenkins-library`'s
 `uteNodeContainerRelease` shared step (`@Library('ute-jenkins-library') _`)
-— stage logic lives there, not in this repo. All folder/job-level env vars
-and credential IDs below are unchanged by that: the shared step reads them
-exactly the same way the previous inline pipeline did.
+— stage logic lives there, not in this repo. Every non-secret config value
+below (inventory repo/ref, Semaphore URL/project/template ID, credential
+IDs, SonarQube/supply-chain toggles) is passed as an explicit argument to
+`uteNodeContainerRelease(...)` directly in the `Jenkinsfile`, not a
+folder/job-level environment variable — this controller has no
+Environment Injector plugin installed, so that UI section doesn't exist
+here. The shared step still accepts the equivalent `UTE_*`/`SEMAPHORE_*`
+env var as a fallback if a `cfg` key is left unset, for a future install
+that does wire up folder-level vars.
 
 The Jenkins multibranch pipeline has two boundaries:
 
@@ -17,30 +23,30 @@ The Jenkins multibranch pipeline has two boundaries:
 Jenkins never SSHes to a deployment target. Semaphore runs the Ansible playbook
 and reports the final task result back to Jenkins.
 
-## Jenkins folder/job configuration
+## Configuration, set directly in `Jenkinsfile`
 
-Set these **non-secret environment variables** at the folder or job level:
+Non-secret values (all literal — none of these are token/password material):
 
-| Variable | Value |
+| `uteNodeContainerRelease(...)` key | Value |
 |---|---|
-| `UTE_INVENTORY_REPOSITORY` | `ute-homelab/ute-inventory` while the temporary organization remains in use |
-| `UTE_INVENTORY_REF` | `main` |
-| `SEMAPHORE_URL` | Semaphore base URL without a trailing slash |
-| `SEMAPHORE_PROJECT_ID` | numeric project ID for the automation project |
-| `SEMAPHORE_TEMPLATE_ID` | numeric Ansible deployment task-template ID |
-| `UTE_SONARQUBE_ENABLED` | `true` only after scanner/tool configuration exists |
-| `UTE_SONARQUBE_SERVER` | Jenkins SonarQube installation name when enabled |
-| `UTE_SUPPLY_CHAIN_SCAN_ENABLED` | `true` only when the agent has `trivy` and `syft` |
-| `UTE_SEMAPHORE_DEPLOY_TIMEOUT_SECONDS` | optional; default `900` |
+| `inventoryRepository` | `ute-homelab/ute-inventory` |
+| `inventoryRef` | `main` |
+| `semaphoreUrl` | Semaphore base URL without a trailing slash |
+| `semaphoreProjectId` | numeric project ID for the automation project |
+| `semaphoreTemplateId` | numeric Ansible deployment task-template ID |
+| `sonarqubeEnabled` | `true` only after scanner/tool configuration exists |
+| `sonarqubeServer` | Jenkins SonarQube installation name when enabled |
+| `supplyChainScanEnabled` | `true` only when the agent has `trivy` and `syft` |
+| `semaphoreDeployTimeoutSeconds` | optional; default `900` |
 
-Set these **credential IDs**, never token values, at the same scope:
+Credential **IDs** only, never token values — the credentials themselves
+must already exist in the Jenkins Credentials store (created manually on
+a controller with no Vault/JCasC wiring, or sourced from Vault on one
+that has it):
 
-| Variable | Credential type | Minimum access |
+| `uteNodeContainerRelease(...)` key | Credential type | Minimum access |
 |---|---|---|
-| `UTE_GHCR_PUBLISH_CREDENTIALS_ID` | Username/password | GHCR package write for `under-tree-e/ute-demo-nodejs` |
-| `UTE_INVENTORY_GIT_CREDENTIALS_ID` | GitHub read credential | read `ute-homelab/ute-inventory` |
-| `UTE_PLATFORM_API_GIT_CREDENTIALS_ID` | GitHub read credential | read `ute-homelab/ute-platform-api` |
-| `UTE_SEMAPHORE_API_TOKEN_CREDENTIALS_ID` | Secret text | create/read only the required Semaphore deployment tasks |
-
-The credentials themselves must originate in Vault and be injected into Jenkins
-Credentials under the corresponding access policy.
+| `registryCredentialsId` | Username/password | GHCR package write for `under-tree-e/ute-demo-nodejs` |
+| `inventoryGitCredentialsId` | GitHub read credential | read `ute-homelab/ute-inventory` |
+| `platformApiGitCredentialsId` | GitHub read credential | read `ute-homelab/ute-platform-api` |
+| `semaphoreApiTokenCredentialsId` | Secret text | create/read only the required Semaphore deployment tasks |
