@@ -68,17 +68,37 @@ router.get("/api/monitoringdata", async function (req, res, next) {
     if (fs.existsSync("/.dockerenv")) {
       data.container = true;
 
-      // Read cgroup container memory info
-      data.memUsedBytes = parseInt(
-        fs.readFileSync("/sys/fs/cgroup/memory/memory.usage_in_bytes", "utf8"),
-      );
-      data.memTotalBytes = parseInt(
-        fs.readFileSync("/sys/fs/cgroup/memory/memory.limit_in_bytes", "utf8"),
-      );
+      // Read cgroup container memory info - cgroup v2 (unified hierarchy)
+      // first, falling back to the legacy cgroup v1 layout for older hosts.
+      if (fs.existsSync("/sys/fs/cgroup/memory.current")) {
+        data.memUsedBytes = parseInt(
+          fs.readFileSync("/sys/fs/cgroup/memory.current", "utf8"),
+        );
+        // memory.max is the literal string "max" when unlimited, not a number
+        data.memTotalBytes = parseInt(
+          fs.readFileSync("/sys/fs/cgroup/memory.max", "utf8"),
+        );
+      } else {
+        data.memUsedBytes = parseInt(
+          fs.readFileSync(
+            "/sys/fs/cgroup/memory/memory.usage_in_bytes",
+            "utf8",
+          ),
+        );
+        data.memTotalBytes = parseInt(
+          fs.readFileSync(
+            "/sys/fs/cgroup/memory/memory.limit_in_bytes",
+            "utf8",
+          ),
+        );
+      }
 
-      // limit_in_bytes might not be set, in which case it contains some HUGE number
-      // Fall back to using os.totalmem()
-      if (data.memTotalBytes > 90000000000000) {
+      // limit/max might not be set (or be "max"), in which case it's either
+      // some HUGE number (v1) or NaN (v2). Fall back to using os.totalmem()
+      if (
+        Number.isNaN(data.memTotalBytes) ||
+        data.memTotalBytes > 90000000000000
+      ) {
         data.memTotalBytes = os.totalmem();
       }
     } else {
