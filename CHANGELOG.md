@@ -1,3 +1,44 @@
+## Release v0.1.4
+
+Finishes the real Jenkins release-tag pipeline verification `v0.1.3`
+started. `v0.1.3`'s Semaphore delegation stage ran for the first time ever
+and correctly surfaced a real contract mismatch: `trigger_semaphore_deployment.py`
+built its Semaphore task payload assuming the target template ran
+`ansible-playbook` directly (`--extra-vars`), but the real "UTE - Deploy
+Compose Release" template invokes `ute-automation`'s
+`scripts/deploy-compose-release`, which deliberately rejects arbitrary
+Ansible extra vars/limits and accepts exactly six specific flags. `v0.1.4`
+carries the fixed script through a clean release tag.
+
+### Added
+
+- Nothing new in `src/`; identical application code to `v0.1.3`.
+
+### Fixed
+
+- `scripts/trigger_semaphore_deployment.py`: now sends
+  `deploy-compose-release`'s actual accepted flags (`--deployment-id`,
+  `--inventory-ref`, `--artifact-version`, `--image-ref`, `--source-ref`,
+  `--mode apply`) instead of `--extra-vars` — reproduced live as the first
+  real Semaphore delegation attempt from Jenkins, which failed with
+  `--extra-vars is not accepted`.
+
+### Changed
+
+- Nothing beyond the version bump and this changelog entry.
+
+### Known issues
+
+- None known beyond the pre-existing items already listed under
+  `v0.1.0`/`v0.1.1`.
+
+### Deployment notes
+
+- This release is expected to complete the first real, fully green
+  Jenkins release-tag pipeline: GHCR publish, inventory resolve, and
+  Semaphore-delegated deployment to `ute-sandbox-01` all succeeding in one
+  build — see `ute-workspace` feature F020.
+
 ## Release v0.1.3
 
 Re-cuts a release tag to finish proving the real Jenkins release-tag
