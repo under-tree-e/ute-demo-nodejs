@@ -24,7 +24,7 @@
   "dependencies": {
     "@azure/msal-node": "^2.15.0",
     "applicationinsights": "2.9.6",
-    "axios": "^1.7.7",
+    "axios": "^1.16.0",
     "connect-redis": "^7.1.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
@@ -42,5 +42,22 @@
     "httpyac": "^6.15.1",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3"
+  },
+  "overrides": {
+    "form-data": "4.0.6",
+    "path-to-regexp": "0.1.13",
+    "jws": "3.2.3",
+    "jake": {
+      "minimatch": {
+        ".": "3.1.4",
+        "brace-expansion": "1.1.16"
+      }
+    },
+    "filelist": {
+      "minimatch": {
+        ".": "5.1.8",
+        "brace-expansion": "2.1.2"
+      }
+    }
   }
 }
