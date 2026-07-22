@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 18,
+  "EndLine": 18,
+  "StartColumn": 36,
+  "EndColumn": 91,
+  "Match": "InstrumentationKey=REDACTED;",
+  "Secret": "REDACTED",
+  "File": "deploy/kubernetes/aks-mine.yaml",
+  "SymlinkFile": "",
+  "Commit": "37a060e6a6e3254494c8ecac73af5302efef5471",
+  "Link": "https://github.com/under-tree-e/ute-demo-nodejs/blob/37a060e6a6e3254494c8ecac73af5302efef5471/deploy/kubernetes/aks-mine.yaml#L18",
+  "Entropy": 3.8820214,
+  "Author": "graf Gopher",
+  "Email": "55102559+graf-Gopher@users.noreply.github.com",
+  "Date": "2026-06-13T09:39:51Z",
+  "Message": "Add files via upload",
+  "Tags": [],
+  "Fingerprint": "37a060e6a6e3254494c8ecac73af5302efef5471:deploy/kubernetes/aks-mine.yaml:generic-api-key:18"
+ }
+]
