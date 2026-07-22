@@ -37,8 +37,8 @@ Set these **non-secret environment variables** as `KEY=value` lines:
 | `SEMAPHORE_PROJECT_ID` | numeric project ID for the automation project |
 | `SEMAPHORE_TEMPLATE_ID` | numeric Ansible deployment task-template ID |
 | `UTE_SECRET_SCAN_ENABLED` | `true` to run the containerized gitleaks secret-scan stage (blocking — fails the build on any real finding) |
-| `UTE_SONARQUBE_ENABLED` | `true` only after scanner/tool configuration exists |
-| `UTE_SONARQUBE_SERVER` | Jenkins SonarQube installation name when enabled |
+| `UTE_SONARQUBE_ENABLED` | `true` — the SonarQube installation, credential, and webhook are configured (Quality Gate blocks the build) |
+| `UTE_SONARQUBE_SERVER` | `SonarQube` — the Jenkins SonarQube installation name (`Manage Jenkins` → `System` → `SonarQube servers`) |
 | `UTE_SUPPLY_CHAIN_SCAN_ENABLED` | `true` only when the agent has `trivy` and `syft` |
 | `UTE_SEMAPHORE_DEPLOY_TIMEOUT_SECONDS` | optional; default `900` |
 
@@ -54,3 +54,12 @@ Set these **credential IDs**, never token values, in the same file:
 The credentials themselves (the actual Jenkins Credentials store entries these
 IDs point at) must be created separately in Jenkins Credentials — this Config
 File only ever names IDs, never values.
+
+SonarQube's credential is a system-level exception to that: it lives on the
+`SonarQube` installation itself (`Manage Jenkins` → `System` → `SonarQube
+servers` → credential), not as a Config-File-referenced ID, because
+`withSonarQubeEnv()` reads it from the installation, not an env var. That
+SonarQube server must also have a webhook configured back to this Jenkins
+controller (`<jenkins-url>/sonarqube-webhook/`) — without it,
+`waitForQualityGate()` blocks for its full timeout on every build before
+failing closed.
