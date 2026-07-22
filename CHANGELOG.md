@@ -1,3 +1,42 @@
+## Release v0.1.3
+
+Re-cuts a release tag to finish proving the real Jenkins release-tag
+pipeline end-to-end. `v0.1.2`'s first Jenkins build (build #1) correctly
+surfaced two real infrastructure gaps — missing Jenkins Credentials
+entries and a malformed `UTE_INVENTORY_REPOSITORY` value in the shared
+Config File — both now fixed operationally (not code changes). Once
+fixed, `v0.1.2` did successfully publish to GHCR, but its own
+immutable-release guard then correctly refused to let a retry rebuild
+overwrite that already-published tag, blocking the still-unproven
+inventory-resolve/Semaphore-delegation stages. `v0.1.3` is a clean tag to
+carry that already-fixed configuration through those remaining stages.
+
+### Added
+
+- Nothing new in `src/`; identical application code to `v0.1.2`.
+
+### Fixed
+
+- Nothing in `src/`; the real fixes (Jenkins Credentials, Config File
+  value) were infrastructure/configuration, not code, and already apply
+  to this commit.
+
+### Changed
+
+- Nothing beyond the version bump and this changelog entry.
+
+### Known issues
+
+- None known beyond the pre-existing items already listed under
+  `v0.1.0`/`v0.1.1`.
+
+### Deployment notes
+
+- This release is expected to be the first to observe the Jenkins
+  release-tag pipeline's inventory-resolve and Semaphore
+  deployment-delegation stages succeed for real, completing the
+  verification `v0.1.2` started — see `ute-workspace` feature F020.
+
 ## Release v0.1.2
 
 Migrates this app's Jenkinsfile onto `ute-jenkins-library`'s shared
