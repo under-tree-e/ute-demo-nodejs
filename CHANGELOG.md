@@ -1,3 +1,64 @@
+## Release v0.1.2
+
+Migrates this app's Jenkinsfile onto `ute-jenkins-library`'s shared
+`uteNodeContainerRelease` step (`ute-workspace` F020 — Jenkins as the
+mandatory CI/CD path, GitHub Actions as reserve) and fixes two real bugs
+that F020's live-infrastructure testing surfaced. This is the first
+release cut specifically to exercise the real Jenkins release-tag pipeline
+(GHCR publish, inventory resolve, Semaphore deployment delegation)
+end-to-end against `ute-sandbox-01`.
+
+### Added
+
+- Nothing new in `src/`; this release packages CI/CD-path and monitoring
+  fixes already on `main` as the first release-tag build to run through
+  the real Jenkins controller.
+
+### Fixed
+
+- `/api/monitoringdata`: container memory stats now read the cgroup v2
+  unified hierarchy (`/sys/fs/cgroup/memory.current` /
+  `memory.max`) first, falling back to the legacy cgroup v1 paths, and
+  falling back further to `os.totalmem()` when the limit is unset —
+  previously hardcoded the v1-only path, which silently failed on every
+  cgroup v2 host (never caught before because prior CI never ran the app
+  inside a plain container).
+- `src/tests/health-tests.http`: removed quotes from httpyac string
+  equality assertions (`?? body status == ok` /
+  `?? body status == ready`) — httpyac treats the RHS as a literal token,
+  so quoting it always failed the assertion regardless of the actual
+  response.
+
+### Changed
+
+- `Jenkinsfile` now delegates to `ute-jenkins-library`'s
+  `uteNodeContainerRelease` shared step instead of an inline pipeline,
+  closing the template-ownership gap flagged in F020's audit; CI/CD
+  configuration values are now sourced from a Jenkins Config File
+  Provider entry (`ute-demo-nodejs-cicd-config`) rather than
+  folder/job-level environment variables (Environment Injector doesn't
+  support Multibranch Pipeline/Folder jobs).
+- `docker-compose.yml`: explicit `container_name` set to stop Compose's
+  double-prefixed auto-naming; dev-compose `node_modules` volume renamed
+  to the concise `<container>_<subcategory>_volume` convention.
+- `docs/ci-cd.md` rewritten to document the Config File Provider
+  mechanism.
+- Docs prose neutralized of `UTE`-prefixed brand language per the
+  workspace-wide prefix-removal initiative (functional identifiers
+  unchanged).
+
+### Known issues
+
+- None known beyond the pre-existing items already listed under `v0.1.0`/
+  `v0.1.1`.
+
+### Deployment notes
+
+- This is the first release expected to actually exercise the Jenkins
+  release-tag pipeline's deploy-delegation stage (Semaphore Task Template
+  "UTE - Deploy Compose Release" against `ute-sandbox-01`) — see
+  `ute-workspace` feature F020 for the live verification record.
+
 ## Release v0.1.1
 
 Adds the `deploy/secrets/` SOPS-encrypted runtime secret convention (no
