@@ -6,10 +6,16 @@ Required environment variables:
   SEMAPHORE_API_TOKEN
   SEMAPHORE_PROJECT_ID
   SEMAPHORE_TEMPLATE_ID
+  UTE_INVENTORY_RESOLVED_SHA (the exact ute-inventory commit SHA this
+  deployment request was exported from)
 
-The selected Semaphore task template must point to the `ute-ansible` repository,
-allow overridden Ansible arguments and run the playbook named in the request.
-Secret values such as GHCR pull credentials stay in Semaphore/Vault and are not
+The selected Semaphore task template must point to ute-automation's
+scripts/deploy-compose-release and allow overriding its task arguments.
+That script accepts exactly six CLI flags (--deployment-id, --inventory-ref,
+--artifact-version, --image-ref, --source-ref, --mode) and deliberately
+rejects arbitrary Ansible extra vars/limits — everything else is derived
+server-side from the validated --deployment-id inventory record. Secret
+values such as GHCR pull credentials stay in Semaphore/Vault and are not
 included in this request or this client.
 """
 from __future__ import annotations
@@ -73,26 +79,19 @@ def load_deployment_request(path: Path) -> dict[str, Any]:
     return request
 
 
-def ansible_extra_vars(deployment: dict[str, Any]) -> dict[str, Any]:
-    source = deployment["source"]
-    runtime = deployment["runtime"]
-    target = deployment["target"]
-    return {
-        "ute_deployment_id": deployment["deploymentId"],
-        "ute_artifact_version": deployment["artifactVersion"],
-        "ute_image_ref": deployment["imageRef"],
-        "ute_source_repository": source["repositoryUrl"],
-        "ute_source_ref": source["ref"],
-        "ute_source_path": source["path"],
-        "ute_compose_manifest": source["manifest"],
-        "ute_compose_project_name": runtime["composeProjectName"],
-        "ute_compose_service_name": runtime["composeServiceName"],
-        "ute_runtime_env_file": runtime["runtimeEnvFile"],
-        "ute_traefik_network": runtime["traefikNetwork"],
-        "ute_public_host": runtime["publicHost"],
-        "ute_healthcheck_path": runtime["healthcheckPath"],
-        "ute_ansible_limit": target["ansibleLimit"],
-    }
+def deploy_compose_release_arguments(deployment: dict[str, Any], inventory_ref: str) -> list[str]:
+    # Matches deploy-compose-release's own accepted flags exactly (see its
+    # usage text) -- everything else (server ID, service ID, environment,
+    # runtime topology) is re-derived server-side from --deployment-id, and
+    # arbitrary Ansible extra vars/limits are deliberately rejected there.
+    return [
+        "--deployment-id", deployment["deploymentId"],
+        "--inventory-ref", inventory_ref,
+        "--artifact-version", deployment["artifactVersion"],
+        "--image-ref", deployment["imageRef"],
+        "--source-ref", deployment["source"]["ref"],
+        "--mode", "apply",
+    ]
 
 
 def main() -> int:
@@ -108,20 +107,19 @@ def main() -> int:
         token = required_env("SEMAPHORE_API_TOKEN")
         project_id = required_env("SEMAPHORE_PROJECT_ID")
         template_id = required_env("SEMAPHORE_TEMPLATE_ID")
+        inventory_ref = required_env("UTE_INVENTORY_RESOLVED_SHA")
         if not project_id.isdigit() or not template_id.isdigit():
             raise ValueError("SEMAPHORE_PROJECT_ID and SEMAPHORE_TEMPLATE_ID must be numeric")
 
-        extra_vars = ansible_extra_vars(deployment)
         task_payload = {
             "template_id": int(template_id),
-            "limit": extra_vars.pop("ute_ansible_limit"),
             "message": (
                 f"{deployment['deploymentId']} {deployment['artifactVersion']} "
                 f"{deployment['imageRef']}"
             ),
             # Semaphore forwards these to the template only when overriding task
             # arguments is enabled. JSON prevents shell interpolation in Jenkins.
-            "arguments": json.dumps(["--extra-vars", json.dumps(extra_vars, separators=(",", ":"))]),
+            "arguments": json.dumps(deploy_compose_release_arguments(deployment, inventory_ref)),
         }
         started = request_json(
             f"{base_url}/api/project/{project_id}/tasks",
