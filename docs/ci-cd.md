@@ -36,6 +36,7 @@ Set these **non-secret environment variables** as `KEY=value` lines:
 | `SEMAPHORE_URL` | Semaphore base URL without a trailing slash |
 | `SEMAPHORE_PROJECT_ID` | numeric project ID for the automation project |
 | `SEMAPHORE_TEMPLATE_ID` | numeric Ansible deployment task-template ID |
+| `UTE_SECRET_SCAN_ENABLED` | `true` to run the containerized gitleaks secret-scan stage (blocking — fails the build on any real finding) |
 | `UTE_SONARQUBE_ENABLED` | `true` only after scanner/tool configuration exists |
 | `UTE_SONARQUBE_SERVER` | Jenkins SonarQube installation name when enabled |
 | `UTE_SUPPLY_CHAIN_SCAN_ENABLED` | `true` only when the agent has `trivy` and `syft` |
