@@ -1,3 +1,41 @@
+## Release v0.1.5
+
+Carries the F021 CI/CD quality and security tooling work (gitleaks,
+SonarQube, containerized Trivy/Syft, and now k6) through a clean release
+tag, to exercise the new advisory k6 performance-test stage for the
+first time — the last remaining unverified piece of `ute-workspace`
+feature F021.
+
+### Added
+
+- `tests/load/smoke.js`: a minimal k6 load-test script exercising
+  `/healthz`, `/readyz`, and `/info` under light concurrent load. No
+  thresholds defined — advisory only, never fails the build.
+
+### Fixed
+
+- Nothing new in this release beyond what already shipped to `main`
+  since `v0.1.4` (F021 Stage 1-3 fixes, already released as part of
+  ongoing `main` commits, not their own tagged release).
+
+### Changed
+
+- Nothing beyond the version bump, this changelog entry, and the new
+  k6 script.
+
+### Known issues
+
+- No performance budget/threshold has been agreed for this demo app yet
+  — the k6 stage is purely informational (archives a JSON summary for
+  human review), not a gate.
+
+### Deployment notes
+
+- This release is expected to be the first to exercise the k6
+  performance-test stage for real (release-tag-gated,
+  `UTE_PERFORMANCE_TEST_ENABLED=true`) — see `ute-workspace` feature
+  F021 Stage 4.
+
 ## Release v0.1.4
 
 Finishes the real Jenkins release-tag pipeline verification `v0.1.3`
