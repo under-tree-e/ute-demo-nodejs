@@ -41,6 +41,7 @@ Set these **non-secret environment variables** as `KEY=value` lines:
 | `UTE_SONARQUBE_SERVER` | `SonarQube` — the Jenkins SonarQube installation name (`Manage Jenkins` → `System` → `SonarQube servers`) |
 | `UTE_SUPPLY_CHAIN_SCAN_ENABLED` | `true` to run containerized Trivy (HIGH/CRITICAL fails the build) and Syft (CycloneDX SBOM artifact) — no agent binary install needed |
 | `UTE_SEMAPHORE_DEPLOY_TIMEOUT_SECONDS` | optional; default `900` |
+| `UTE_PERFORMANCE_TEST_ENABLED` | `true` to run a k6 load test (`tests/load/smoke.js`) against a release-tag build only — advisory, never fails the build; results are archived as `artifacts/k6-summary.json` |
 
 Set these **credential IDs**, never token values, in the same file:
 
