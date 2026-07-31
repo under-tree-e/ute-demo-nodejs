@@ -59,6 +59,12 @@ Ad hoc stages — not fixed pipeline steps, invoke whenever relevant:
 
 ## Notes
 
+- Feature planning has one embedded sub-step, not a pipeline stage of its
+  own: `core/sdlc/scope-split.md` (`scope-split` skill). It runs inside
+  `feature-planning.md` to catch out-of-scope items surfaced while
+  drafting a feature and, with user confirmation, spin each one off into
+  its own `features/` folder instead of expanding the current feature's
+  scope.
 - Not every change needs every stage. A one-line docs fix doesn't need
   architecture review or test strategy — use judgment, scaled to risk and
   size, per `core/standards/workflow.md`.

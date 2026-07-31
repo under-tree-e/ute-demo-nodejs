@@ -36,7 +36,14 @@ feature folders.
 5. Write the six documents below using the starter shapes bundled with this
    skill in its own `templates/` directory (installed alongside
    `SKILL.md` — no separate opt-in step).
-6. Mark assumptions and open questions explicitly. No code changes.
+6. Run the embedded scope-split check (`skills/scope-split/SKILL.md`,
+   `.agents/core/sdlc/scope-split.md`): list anything noticed during steps 1-5
+   that this feature's acceptance criteria do not require, ask the user
+   which of those items to spin off into their own `features/FXXX-.../`
+   folders, and create folders only for confirmed items. Never let this
+   change the scope, requirements, or acceptance criteria of the feature
+   being planned right now.
+7. Mark assumptions and open questions explicitly. No code changes.
 
 ## Required outputs
 
@@ -63,6 +70,8 @@ implementation would be unsafe or materially ambiguous.
 - `.agents/core/standards/` — check for the specific standards implicated by the
   feature (e.g. `configuration.md`, `security.md`, `api-integration.md`,
   `ci-cd.md`, `testing.md`, `observability.md`, `release-versioning.md`)
+- `skills/scope-split/SKILL.md` — the embedded out-of-scope check run as
+  step 6 above
 
 ## Required Final Output: Agent Run Report
 
@@ -79,6 +88,8 @@ Every run of this skill must end with:
 - Assumptions made:
 - Project documentation gaps:
 - Standards gaps:
+- Out-of-scope items found (scope-split) and how each was resolved
+  (spun off / declined):
 - Recommended updates to `ute-agent-standards`:
 - Items that belong to other repositories:
 - Follow-up questions, if any:
