@@ -41,8 +41,14 @@ the skill, no separate template tree to opt into.
    they exist.
 3. Inspect existing feature folders to follow naming and format.
 4. Create a concise but complete feature plan.
-5. Do not change production code.
-6. Mark assumptions and open questions explicitly.
+5. Run the embedded scope-split check (`core/sdlc/scope-split.md`,
+   `skills/scope-split/SKILL.md`): anything noticed during steps 1-4 that
+   this feature's acceptance criteria do not require gets listed, put to
+   the user for confirmation, and — only for confirmed items — spun off
+   into its own `features/FXXX-.../` folder. This never changes the scope
+   of the feature being planned right now.
+6. Do not change production code.
+7. Mark assumptions and open questions explicitly.
 
 ## Rules
 
