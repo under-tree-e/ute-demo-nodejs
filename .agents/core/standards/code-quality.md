@@ -27,6 +27,9 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
 
 - Code Review Memo
 - Testing Standard (Draft, 2026-05-21)
+- Operator decision (2026-08-03), recorded directly here — the mandatory
+  function-level doc-comment rule below, not derived from either source
+  document above.
 
 ## Required Rules
 
@@ -58,6 +61,17 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
   CI.
 - Reviewer/agent MUST NOT approve/accept a change with an unexplained CI
   failure, or with no test coverage explanation when tests are absent.
+- Every named function/method MUST have a header doc-comment (JSDoc,
+  Python docstring, or the language's equivalent) stating its parameters,
+  return value, and purpose. This is a distinct requirement from the
+  "avoid unnecessary explanatory comments" guidance below: the header
+  doc-comment documents a function's *contract* (what it accepts, what it
+  returns, why it exists) and is required even when the name is already
+  clear; it is not the same as an inline comment narrating *what*
+  confusing code does line by line, which the Recommended Rules below
+  still discourage in favor of clearer naming/structure. See
+  `core/standards/development.md` for the same rule stated alongside
+  import-organization and explicit-typing conventions.
 
 ## Recommended Rules
 
@@ -87,6 +101,8 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
   for fixing/trusting CI.
 - Blocking a change on personal style preference rather than a concrete
   correctness/clarity/risk problem.
+- A named function/method with no header doc-comment stating its
+  parameters, return value, and purpose.
 
 ## Agent Must Check
 
@@ -101,6 +117,8 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
   readability or risk future defects, not on every minor stylistic
   nit.
 - DTOs/mappers do not leak extra/unintended fields.
+- A new or changed function/method has a header doc-comment covering
+  parameters, return value, and purpose.
 
 ## Agent Must Not Do
 
@@ -112,6 +130,7 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
   issue.
 - Must not demand a large unrelated refactor as a condition for
   accepting an otherwise safe, clear change.
+- Must not wave through a new function/method with no header doc-comment.
 
 ## Related Skills
 
@@ -138,3 +157,7 @@ layering conventions live in `core/archetypes/<type>/`.
   review) is not fully specified upstream.
 - No default static-analysis/lint tool or threshold is named in source
   material — left to each project's own CI config.
+- The function-doc-comment rule added 2026-08-03 is new here — not yet
+  retrofitted onto any consuming project's existing functions; treat a
+  pre-existing undocumented function as a gap to fix opportunistically
+  (on next touch), not a mandatory standalone documentation pass.

@@ -71,6 +71,16 @@ This section is Frappe/ERPNext-specific, day-to-day coding guidance for
 this archetype only — it does not apply to any other archetype, and
 none of it belongs in `core/standards/*`, which stays framework-neutral.
 
+### Typing and function documentation
+
+- Use Python type hints on function/method parameters and return types
+  (including `-> None`) throughout app code — Frappe's own APIs are
+  loosely typed, but this app's own functions/methods are not exempt from
+  `core/standards/development.md`'s explicit-typing requirement.
+- Every function/method has a docstring stating its parameters, return
+  value, and purpose, per `core/standards/code-quality.md` — including
+  whitelisted endpoints and hook handlers registered in `hooks.py`.
+
 ### Whitelisted APIs
 
 - Only mark an endpoint `allow_guest=True` when anonymous access is
@@ -83,6 +93,18 @@ none of it belongs in `core/standards/*`, which stays framework-neutral.
 
 ### Database access
 
+- `core/standards/data-modeling.md` requires a dedicated, non-sequential
+  `uid` per table for joins/API references — a standard DocType already
+  satisfies this via its `name` field (the actual database primary key),
+  which Frappe generates from autoname rules (hash, UUID-shaped, or a
+  naming series) rather than a bare sequential integer. Do not add a
+  redundant `uid` field to a DocType whose `name` is already
+  non-sequential and globally unique within its table. Only add a
+  separate `uid` field if the DocType's naming series is sequential or
+  otherwise human-meaningful/mutable (e.g. `INV-0001`) and something in
+  the schema needs a stable, non-sequential identifier distinct from that
+  display name — treat that as an explicit, documented exception, not the
+  default.
 - Use `frappe.qb` or `frappe.db.get_all`/`get_list` with parameterized
   filters; never build `frappe.db.sql()` by string-concatenating
   user-controlled input — that's SQL injection.
@@ -129,6 +151,13 @@ none of it belongs in `core/standards/*`, which stays framework-neutral.
   server-rendered) based on the audience — internal operational UI can
   usually stay on Desk; a purpose-built end-user product experience is
   where a Vue SPA earns its extra complexity.
+- No user-facing text is hardcoded in a single language on any surface:
+  wrap it in Frappe's translation mechanism — `frappe._("...")` /
+  `{{ _("...") }}` in Python/Jinja, `__("...")` in client-side JS, and the
+  Vue SPA's own i18n integration (e.g. `vue-i18n`) if the app uses one —
+  so every surface stays translatable. Applies to DocType labels,
+  validation/error messages, Desk client scripts, portal templates, and
+  Vue SPA components alike.
 
 ## Backups before migrations
 
