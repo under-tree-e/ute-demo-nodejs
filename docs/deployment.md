@@ -3,7 +3,7 @@
 A deployment starts only from a release tag and follows this chain:
 
 ```text
-Jenkins → immutable GHCR digest → ute-inventory request
+Jenkins → immutable GHCR digest → inventory request
 → Semaphore task → Ansible → Docker Compose → healthcheck
 ```
 

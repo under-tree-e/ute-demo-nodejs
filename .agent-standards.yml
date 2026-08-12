@@ -1,5 +1,5 @@
 agentStandards:
-  source: ute-agent-standards
+  source: agent-standards
   version: v0.1
   agents:
     - claude
