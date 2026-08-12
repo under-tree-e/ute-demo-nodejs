@@ -122,7 +122,7 @@ actual implementation of any given control.
 - CODEOWNERS is a **project-governance concept**, applied by consuming
   projects to require owner review on critical/security-sensitive paths —
   it is not something this repo defines the contents of.
-- This repo (`ute-agent-standards`) never installs a CODEOWNERS file into
+- This repo (`agent-standards`) never installs a CODEOWNERS file into
   a consuming project, under any flag or circumstance — see
   `core/standards/ci-cd.md` for the full rule and rationale. Do not
   restate that rule's detail here; treat `ci-cd.md` as canonical.
@@ -261,7 +261,7 @@ actual implementation of any given control.
   exception.
 - Hardcoding secrets in pipeline config instead of using the CI/CD
   credentials/secrets binding mechanism (implementation of that binding
-  belongs to `ute-ci-templates`/`ute-jenkins-library` — see Excluded
+  belongs to `ci-templates`/`jenkins-library` — see Excluded
   CI/CD Content below).
 
 ## Agent Must Check
@@ -320,13 +320,13 @@ actual implementation of any given control.
 
 | Concern | Owner |
 | --- | --- |
-| GitHub Actions implementation of secrets binding | `ute-ci-templates` |
-| Jenkins credentials binding / shared pipeline steps | `ute-jenkins-library`, `ute-jenkins` |
-| Deployment/provisioning execution, production access paths | `ute-ansible`, `ute-automation` |
-| Infrastructure (network exposure, environment tiers) | `ute-infra` |
-| Desired-state / GitOps | `ute-gitops` |
+| GitHub Actions implementation of secrets binding | `ci-templates` |
+| Jenkins credentials binding / shared pipeline steps | `jenkins-library`, `jenkins` |
+| Deployment/provisioning execution, production access paths | `ansible`, `automation` |
+| Infrastructure (network exposure, environment tiers) | `infra` |
+| Desired-state / GitOps | `gitops` |
 
-`ute-agent-standards` defines the access-control and secrets-handling
+`agent-standards` defines the access-control and secrets-handling
 *rules*; it never implements or installs the mechanisms above.
 
 ## Open Questions

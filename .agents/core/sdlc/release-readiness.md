@@ -53,8 +53,8 @@ Pipeline ownership must be clear before release — see
 `core/standards/ci-cd.md`. One of the following must hold, or the verdict
 cannot be a plain "ready":
 
-- GitHub Actions via an approved `ute-ci-templates` reusable workflow, or
-- Jenkins via an approved `ute-jenkins-library` shared library, or
+- GitHub Actions via an approved `ci-templates` reusable workflow, or
+- Jenkins via an approved `jenkins-library` shared library, or
 - a documented project-specific exception (ADR or `risks.md` entry).
 
 ## Checklist
@@ -64,7 +64,7 @@ cannot be a plain "ready":
 - artifact/image built immutably (versioned/tagged, not rebuilt-in-place at
   deploy time)
 - deployment path documented (which tool/repo actually deploys —
-  `ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`, or the project's
+  `ansible`/`automation`/`infra`/`gitops`, or the project's
   documented equivalent)
 - rollback documented (see `core/sdlc/rollback-plan.md`)
 - release notes prepared

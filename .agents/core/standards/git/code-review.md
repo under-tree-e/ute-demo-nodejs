@@ -307,11 +307,11 @@ skipping silently.
 
 ## Related Repositories
 
-- `ute-ci-templates` — owns GitHub Actions pipeline implementation;
+- `ci-templates` — owns GitHub Actions pipeline implementation;
   CI/CD & config review checks for duplicated pipeline logic point here.
-- `ute-jenkins-library` / `ute-jenkins` — owns Jenkins shared pipeline
+- `jenkins-library` / `jenkins` — owns Jenkins shared pipeline
   steps and controller/runtime config.
-- `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` — own
+- `ansible` / `automation` / `infra` / `gitops` — own
   deployment execution and infrastructure/desired-state; a PR that
   triggers or performs deployment/infra changes directly is a review
   finding pointing here, not something to fix by rewriting the diff.

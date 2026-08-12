@@ -15,7 +15,7 @@ coding agent is in use.
 | [`observability.md`](observability.md) | What must be observable — logs, metrics, traces, audit trail | `production-readiness`, `feature-plan` |
 | [`testing.md`](testing.md) | Testing floor, ownership, merge blockers, link to CI/CD | `test-strategy`, `implementation-pass`, `feature-plan`, `change-audit` |
 | [`api-integration.md`](api-integration.md) | API/contract/integration design, error handling, validation | `feature-plan` |
-| [`ci-cd.md`](ci-cd.md) | CI/CD standard — this repo owns no pipeline implementation; ownership boundaries vs. `ute-ci-templates`, `ute-jenkins-library`, `ute-jenkins`, `ute-ansible`/`ute-automation`, `ute-infra`, `ute-gitops`; required project docs and release-readiness gate | `devops-review`, `release-readiness`, `rollback-plan`, `production-readiness`, `project-discovery`, `standards-gap-audit` |
+| [`ci-cd.md`](ci-cd.md) | CI/CD standard — this repo owns no pipeline implementation; ownership boundaries vs. `ci-templates`, `jenkins-library`, `jenkins`, `ansible`/`automation`, `infra`, `gitops`; required project docs and release-readiness gate | `devops-review`, `release-readiness`, `rollback-plan`, `production-readiness`, `project-discovery`, `standards-gap-audit` |
 | [`jenkins.md`](jenkins.md) | Jenkins as quality gate/deployment orchestrator — governance only, no pipeline implementation | `devops-review` |
 | [`release-versioning.md`](release-versioning.md) | SemVer, release tags as source of truth, RC/hotfix/changelog rules | `release-readiness`, `rollback-plan` |
 | [`packages-modules.md`](packages-modules.md) | In-repo module vs. separately versioned/published package decision and packaging rules | `architecture-review`, `core/archetypes/npm-package/` |

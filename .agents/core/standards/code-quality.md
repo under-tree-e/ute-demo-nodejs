@@ -127,9 +127,9 @@ layering conventions live in `core/archetypes/<type>/`.
 
 ## Related Repositories
 
-- `ute-ci-templates` — owns the CI checks (build, lint, static analysis)
+- `ci-templates` — owns the CI checks (build, lint, static analysis)
   this standard defers to; see `core/standards/ci-cd.md`.
-- `ute-jenkins-library` / `ute-jenkins` — same, for the Jenkins path.
+- `jenkins-library` / `jenkins` — same, for the Jenkins path.
 
 ## Open Questions
 

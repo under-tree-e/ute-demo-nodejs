@@ -56,9 +56,9 @@ any single change.
     effect on the running system actually be seen (deploy markers on
     dashboards, deploy events in logs), not just inferred after the fact.
 12. Check that CI/CD and deployment automation ownership is documented
-    (`docs/ci-cd.md` — GitHub Actions via `ute-ci-templates`, Jenkins via
-    `ute-jenkins-library`, or a documented exception; deployment execution
-    via `ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`) — see
+    (`docs/ci-cd.md` — GitHub Actions via `ci-templates`, Jenkins via
+    `jenkins-library`, or a documented exception; deployment execution
+    via `ansible`/`automation`/`infra`/`gitops`) — see
     `core/standards/ci-cd.md`. Undocumented ownership is an operational risk
     in its own right, independent of the pipeline's technical quality.
 13. Walk through 2-3 plausible failure scenarios (dependency down, disk

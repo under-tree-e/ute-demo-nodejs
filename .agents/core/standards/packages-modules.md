@@ -216,7 +216,7 @@ Before proposing/approving a package extraction or a publish, verify:
 ## Agent Must Not Do
 
 - Must not author or copy pipeline YAML/Groovy to perform the publish —
-  that's `ute-ci-templates`/`ute-jenkins-library`'s job; see
+  that's `ci-templates`/`jenkins-library`'s job; see
   `core/standards/ci-cd.md`.
 - Must not generate the concrete npm package repo layout here — defer to
   `core/archetypes/npm-package/structure.md`.
@@ -249,8 +249,8 @@ Before proposing/approving a package extraction or a publish, verify:
 
 ## Related Repositories
 
-- `ute-ci-templates` — owns GitHub Actions publish workflows.
-- `ute-jenkins-library` — owns Jenkins shared publish steps.
+- `ci-templates` — owns GitHub Actions publish workflows.
+- `jenkins-library` — owns Jenkins shared publish steps.
 - Registry infrastructure (npmjs account/org, GitHub Packages org
   config) — owned outside this repo; not an agent-standards concern.
 
@@ -278,5 +278,5 @@ Before proposing/approving a package extraction or a publish, verify:
 - Source repo-structure list includes "Jenkinsfile / `.github/workflows/*`"
   as a file present in a package repo. Per `core/standards/ci-cd.md`, this
   standard does not define pipeline content — only notes that such a file
-  is expected to exist and is owned by `ute-ci-templates`/
-  `ute-jenkins-library`, not authored here.
+  is expected to exist and is owned by `ci-templates`/
+  `jenkins-library`, not authored here.

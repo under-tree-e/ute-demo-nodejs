@@ -106,7 +106,7 @@ explanation, private notes, or undocumented manual steps.
   check, container scan (if Docker is used), static analysis (e.g.
   SonarQube, if integrated), release/deployment pipeline.
 - This standard never specifies pipeline syntax (YAML/Groovy) — that
-  belongs to `ute-ci-templates`/`ute-jenkins-library` per
+  belongs to `ci-templates`/`jenkins-library` per
   `core/standards/ci-cd.md`.
 
 ### Pull requests
@@ -247,10 +247,10 @@ explanation, private notes, or undocumented manual steps.
 
 ## Related Repositories
 
-- `ute-ci-templates` — GitHub Actions pipeline implementation.
-- `ute-jenkins-library` / `ute-jenkins` — Jenkins pipeline implementation
+- `ci-templates` — GitHub Actions pipeline implementation.
+- `jenkins-library` / `jenkins` — Jenkins pipeline implementation
   and controller/runtime.
-- `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` —
+- `ansible` / `automation` / `infra` / `gitops` —
   deployment, infrastructure, and desired-state execution.
 
 ## Open Questions
@@ -265,7 +265,7 @@ explanation, private notes, or undocumented manual steps.
   exceptional, approved circumstances.
 - `sonar-project.properties`, `Dockerfile`, and `docker-compose.yml`
   templates from the Repository Template Blueprint are illustrative
-  content owned by `ute-ci-templates`/`ute-ansible`/`ute-infra` — this
+  content owned by `ci-templates`/`ansible`/`infra` — this
   repo does not ship them as installable templates; confirm no example
   copies exist elsewhere in this repo that could be mistaken for
   installable ones.

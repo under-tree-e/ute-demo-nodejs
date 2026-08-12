@@ -21,7 +21,7 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 
 - Backend repo structure — see `core/archetypes/nodejs-api/structure.md`.
 - Git/PR/CI-CD rules — see `core/standards/git/`, `core/standards/ci-cd.md`.
-- Jenkinsfile/pipeline templates — owned by `ute-jenkins-library`/`ute-ci-templates`, not this repo (see `core/standards/ci-cd.md`).
+- Jenkinsfile/pipeline templates — owned by `jenkins-library`/`ci-templates`, not this repo (see `core/standards/ci-cd.md`).
 - Secrets storage mechanics (vaults, secret managers) — see `core/standards/security.md`.
 - Repo naming and package publishing — see relevant archetype/tooling docs.
 - Test-planning process — see `core/sdlc/test-strategy.md`.
@@ -265,7 +265,7 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 
 - Must not author or copy pipeline YAML/Groovy/Jenkinsfile content into
   this repo or a consuming API's docs — that belongs to
-  `ute-ci-templates`/`ute-jenkins-library` (see `core/standards/ci-cd.md`).
+  `ci-templates`/`jenkins-library` (see `core/standards/ci-cd.md`).
 - Must not generate an API endpoint that skips validation or permission
   checks as a shortcut.
 - Must not treat an internal API as exempt from documentation just
@@ -296,10 +296,10 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 
 ## Related Repositories
 
-- `ute-ci-templates` / `ute-jenkins-library` / `ute-jenkins` — own any
+- `ci-templates` / `jenkins-library` / `jenkins` — own any
   pipeline that builds/tests/publishes an API or SDK; this standard does
   not define that pipeline (see `core/standards/ci-cd.md`).
-- `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` — own
+- `ansible` / `automation` / `infra` / `gitops` — own
   deployment of the services that implement these APIs.
 
 ## Open Questions

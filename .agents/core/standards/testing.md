@@ -20,7 +20,7 @@ regression-prone areas), not just raise a coverage number.
 ## Does Not Cover
 
 - Pipeline implementation/stage sequencing — see `core/standards/ci-cd.md`
-  and the owning repos (`ute-ci-templates`, `ute-jenkins-library`).
+  and the owning repos (`ci-templates`, `jenkins-library`).
 - The literal Jenkins Pipeline Blueprint or any PR/CI-CD memo referenced by
   source material — those are implementation artifacts owned elsewhere, not
   restated here.
@@ -219,9 +219,9 @@ regression-prone areas), not just raise a coverage number.
 
 ## Related Repositories
 
-- `ute-ci-templates` — owns GitHub Actions pipeline stages that run these
+- `ci-templates` — owns GitHub Actions pipeline stages that run these
   test gates.
-- `ute-jenkins-library` / `ute-jenkins` — owns Jenkins pipeline steps that
+- `jenkins-library` / `jenkins` — owns Jenkins pipeline steps that
   run these test gates.
 - Neither is duplicated here — this document states the testing
   requirement, not the pipeline that enforces it.
@@ -232,7 +232,7 @@ regression-prone areas), not just raise a coverage number.
   treating its rules as binding governance.
 - No org-wide default coverage threshold is defined; source only requires
   documenting a threshold if one is used. Decide whether
-  `ute-agent-standards` should set a default or leave it fully per-project.
+  `agent-standards` should set a default or leave it fully per-project.
 - "MVP" is used as a qualifying condition (minimum test set, coverage) but
   isn't formally defined in the source — needs a definition or a
   cross-reference to wherever MVP is defined.

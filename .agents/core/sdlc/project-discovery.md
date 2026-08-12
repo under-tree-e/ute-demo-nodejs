@@ -78,8 +78,8 @@ CI/CD model:
 - project-local exception
 
 Recommended pipeline owner:
-- ute-ci-templates
-- ute-jenkins-library
+- ci-templates
+- jenkins-library
 - project-specific exception (must cite an ADR or risks.md entry)
 ```
 

@@ -156,9 +156,9 @@ keys, secrets in README/PR/chat) are defined once in
 
 ## Related Repositories
 
-- `ute-ci-templates` / `ute-jenkins-library` / `ute-jenkins` — own secret
+- `ci-templates` / `jenkins-library` / `jenkins` — own secret
   injection into pipeline runs; not config classification.
-- `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` — own
+- `ansible` / `automation` / `infra` / `gitops` — own
   runtime secret delivery to deployed environments.
 
 ## Open Questions

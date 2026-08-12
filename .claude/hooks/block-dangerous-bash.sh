@@ -11,7 +11,7 @@ case "$command" in
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
     "permissionDecision": "deny",
-    "permissionDecisionReason": "Dangerous command blocked by UTE Claude hook. Ask the user explicitly and provide rollback details."
+    "permissionDecisionReason": "Dangerous command blocked by the Claude hook. Ask the user explicitly and provide rollback details."
   }
 }
 JSON

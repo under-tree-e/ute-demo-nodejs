@@ -90,6 +90,6 @@ Every run of this skill must end with:
 - Standards gaps:
 - Out-of-scope items found (scope-split) and how each was resolved
   (spun off / declined):
-- Recommended updates to `ute-agent-standards`:
+- Recommended updates to `agent-standards`:
 - Items that belong to other repositories:
 - Follow-up questions, if any:

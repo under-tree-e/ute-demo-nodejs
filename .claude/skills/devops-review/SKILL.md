@@ -42,13 +42,13 @@ CI/CD boundary checks (see `.agents/core/standards/ci-cd.md` and, for Jenkins
 changes, `.agents/core/standards/jenkins.md`):
 
 - Pipeline logic is not duplicated in the application repo (no custom
-  reusable workflow reimplementing what `ute-ci-templates` already
+  reusable workflow reimplementing what `ci-templates` already
   provides, no Jenkins steps copy-pasted instead of pulled from
-  `ute-jenkins-library`) — unless an explicit, documented exception exists.
+  `jenkins-library`) — unless an explicit, documented exception exists.
 - If GitHub Actions: the workflow calls an approved reusable workflow from
-  `ute-ci-templates` rather than defining pipeline steps inline.
+  `ci-templates` rather than defining pipeline steps inline.
 - If Jenkins: the `Jenkinsfile` uses an approved shared library from
-  `ute-jenkins-library` rather than inlining pipeline steps.
+  `jenkins-library` rather than inlining pipeline steps.
 - Build and deploy are separated — a build/test stage does not also push to
   a production target in the same undifferentiated step.
 - Secrets are not passed via plain environment variables or files committed
@@ -56,7 +56,7 @@ changes, `.agents/core/standards/jenkins.md`):
   secret store, referenced, never inlined.
 - Deployment is not triggered directly from an AI-agent process — it runs
   through the pipeline or a human-invoked deployment tool
-  (`ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`).
+  (`ansible`/`automation`/`infra`/`gitops`).
 - A rollback strategy exists for this change (see `rollback-plan`).
 - The CI/CD owner repo for this project is documented in `docs/ci-cd.md`
   (see `project-discovery`).
@@ -89,6 +89,6 @@ Every run of this skill must end with:
 - Assumptions made:
 - Project documentation gaps:
 - Standards gaps:
-- Recommended updates to `ute-agent-standards`:
+- Recommended updates to `agent-standards`:
 - Items that belong to other repositories:
 - Follow-up questions, if any:

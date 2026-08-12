@@ -39,7 +39,7 @@ limitations.
 
 This skill produces a plan — it does not execute a rollback, backup, or
 restore. Rollback execution belongs to deployment tooling
-(`ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`, or the owning
+(`ansible`/`automation`/`infra`/`gitops`, or the owning
 CI/CD pipeline), not to this skill. Do not execute a production rollback
 unless the user explicitly instructs it for this specific change and safe
 tooling exists (dry-run support, a tested rollback command, non-production
@@ -68,6 +68,6 @@ Every run of this skill must end with:
 - Assumptions made:
 - Project documentation gaps:
 - Standards gaps:
-- Recommended updates to `ute-agent-standards`:
+- Recommended updates to `agent-standards`:
 - Items that belong to other repositories:
 - Follow-up questions, if any:
