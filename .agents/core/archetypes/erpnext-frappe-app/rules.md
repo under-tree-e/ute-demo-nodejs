@@ -156,7 +156,7 @@ none of it belongs in `core/standards/*`, which stays framework-neutral.
 ## CI/CD expectations
 
 Use dedicated CI/CD templates from approved repositories
-(`ute-ci-templates` for GitHub Actions, `ute-jenkins-library` for Jenkins)
+(`ci-templates` for GitHub Actions, `jenkins-library` for Jenkins)
 to run bench-based build/test/migrate stages, instead of hand-rolling
 pipeline logic in this repo. Document the selected delivery model in
 `docs/ci-cd.md` — see `core/standards/ci-cd.md`.

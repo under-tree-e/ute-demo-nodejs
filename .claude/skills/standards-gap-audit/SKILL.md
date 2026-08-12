@@ -52,8 +52,8 @@ no report exists), the skill outputs themselves, the project's own
 - `archetype-gap` — no archetype matches the stack, or an existing one is
   wrong/incomplete. Fix: `.agents/core/archetypes/<type>/`.
 - `ci-cd-boundary-gap` — confusion about pipeline ownership vs.
-  `ute-ci-templates`/`ute-jenkins-library`/`ute-ansible`/`ute-automation`/
-  `ute-infra`/`ute-gitops`. Fix: `.agents/core/standards/ci-cd.md`.
+  `ci-templates`/`jenkins-library`/`ansible`/`automation`/
+  `infra`/`gitops`. Fix: `.agents/core/standards/ci-cd.md`.
 - `vendor-skill-gap` — a third-party skill/pattern would close it and is
   worth reviewing for import. Fix: `docs/vendor-skill-mapping.md`,
   `vendor-skills/`.
@@ -105,7 +105,7 @@ followed by:
 - Project documentation gaps:
 - Standards gaps: only true `core-standard-gap`/`archetype-gap` findings,
   not project or CI/CD items
-- Recommended updates to `ute-agent-standards`:
+- Recommended updates to `agent-standards`:
 - Items that belong to other repositories: project/CI/CD/infra ownership,
   kept separate from agent-standard ownership
 - Follow-up questions, if any:

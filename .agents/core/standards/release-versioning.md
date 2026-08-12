@@ -30,9 +30,9 @@ restrictions per environment, and rollback/ownership expectations.
   required, not how to build one.
 - Actual pipeline execution (build, test-gate, artifact publish, deploy,
   post-deploy verification) — that is CI/CD implementation owned by
-  `ute-ci-templates` / `ute-jenkins-library` / `ute-jenkins`, and
-  deployment execution owned by `ute-ansible` / `ute-automation` /
-  `ute-infra` / `ute-gitops`. This document describes the *stages
+  `ci-templates` / `jenkins-library` / `jenkins`, and
+  deployment execution owned by `ansible` / `automation` /
+  `infra` / `gitops`. This document describes the *stages
   conceptually* (what must happen, in what order) so an agent can check
   compliance; it never specifies how a pipeline implements them.
 
@@ -262,8 +262,8 @@ allowed source for that environment:
   correction requires a new tag.
 - Must not author pipeline YAML/Groovy/Terraform/Ansible as the
   implementation of the release stages described here — that belongs to
-  `ute-ci-templates` / `ute-jenkins-library` / `ute-ansible` /
-  `ute-automation` / `ute-infra` / `ute-gitops` (see
+  `ci-templates` / `jenkins-library` / `ansible` /
+  `automation` / `infra` / `gitops` (see
   `core/standards/ci-cd.md`).
 - Must not expand hotfix scope beyond the minimal critical fix.
 - Must not publish or recommend publishing a package with secrets, a
@@ -293,11 +293,11 @@ allowed source for that environment:
 
 ## Related Repositories
 
-- `ute-ci-templates` — owns GitHub Actions implementation of the
+- `ci-templates` — owns GitHub Actions implementation of the
   release-grade checks / build / publish / deploy / verify pipeline
   stages described conceptually above.
-- `ute-jenkins-library` / `ute-jenkins` — owns the Jenkins equivalent.
-- `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` — own
+- `jenkins-library` / `jenkins` — owns the Jenkins equivalent.
+- `ansible` / `automation` / `infra` / `gitops` — own
   actual deployment execution once an artifact/image is published.
 
 ## Open Questions
@@ -319,5 +319,5 @@ allowed source for that environment:
   "internal-only" and therefore version-exempt.
 - Owning repo(s) for the actual release-grade checks / artifact publish /
   deployment steps are not named in the source policy — this document
-  assumes the standard `ute-ci-templates` / `ute-jenkins-library` /
-  `ute-ansible` split used elsewhere in this repo; confirm.
+  assumes the standard `ci-templates` / `jenkins-library` /
+  `ansible` split used elsewhere in this repo; confirm.

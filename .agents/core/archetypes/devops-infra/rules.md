@@ -56,10 +56,10 @@
 ## CI/CD expectations
 
 Use dedicated CI/CD templates from approved repositories
-(`ute-ci-templates` for GitHub Actions, `ute-jenkins-library` for Jenkins)
+(`ci-templates` for GitHub Actions, `jenkins-library` for Jenkins)
 to run `plan`/`apply`/`--check` stages — never hand-roll pipeline logic that
 duplicates them. Deployment execution itself belongs to
-`ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`, not to inline
+`ansible`/`automation`/`infra`/`gitops`, not to inline
 pipeline steps or an AI-agent process. Document the selected delivery model
 in `docs/ci-cd.md` — see `core/standards/ci-cd.md`.
 

@@ -77,7 +77,7 @@ PR description, merge gating, and author/reviewer/CI-CD responsibilities.
   approve only after sufficient review.
 - CI/CD responsibilities: automatically check lint/format, type checking,
   unit tests, build verification, and any additional configured checks
-  (implementation owned by `ute-ci-templates`/`ute-jenkins-library`, see
+  (implementation owned by `ci-templates`/`jenkins-library`, see
   `standards/ci-cd.md`).
 - Every PR, including Draft PRs, MUST use the repo's PR template.
 - No secrets, tokens, `.env` files, private keys, or credentials MUST be
@@ -173,7 +173,7 @@ The PR description (and the PR template that produces it) MUST cover:
 - Must not generate a non-descriptive PR title ("Update", "Fix", "WIP",
   etc.) when drafting a PR on the user's behalf.
 - Must not author pipeline YAML/Groovy inline to "fix" a red check — that
-  belongs to `ute-ci-templates`/`ute-jenkins-library` (see
+  belongs to `ci-templates`/`jenkins-library` (see
   `standards/ci-cd.md`).
 - Must not commit or paste secrets/tokens/credentials into a PR
   description or diff.
@@ -194,12 +194,12 @@ N/A — this standard applies uniformly regardless of project archetype.
 
 ## Related Repositories
 
-- `ute-ci-templates` — owns the GitHub Actions checks a PR's CI status
+- `ci-templates` — owns the GitHub Actions checks a PR's CI status
   reflects.
-- `ute-jenkins-library` / `ute-jenkins` — owns the Jenkins checks a PR's CI
+- `jenkins-library` / `jenkins` — owns the Jenkins checks a PR's CI
   status reflects on that delivery path.
-- Deployment/infra repos (`ute-ansible`, `ute-automation`, `ute-infra`,
-  `ute-gitops`) are out of scope for the PR itself; a PR's "Deployment
+- Deployment/infra repos (`ansible`, `automation`, `infra`,
+  `gitops`) are out of scope for the PR itself; a PR's "Deployment
   impact" section may reference them.
 
 ## Open Questions

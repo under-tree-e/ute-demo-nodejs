@@ -131,10 +131,10 @@ not covered.
 
 ## Related Repositories
 
-- `ute-ansible` / `ute-automation` / `ute-infra` / `ute-gitops` — own any
+- `ansible` / `automation` / `infra` / `gitops` — own any
   log-shipping, metrics-backend, or tracing infrastructure; this standard
   defines what must be emitted, not how it is collected or stored.
-- `ute-jenkins-library` / `ute-ci-templates` — own pipeline-level logging,
+- `jenkins-library` / `ci-templates` — own pipeline-level logging,
   out of scope here (see `core/standards/ci-cd.md`).
 
 ## Open Questions

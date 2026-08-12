@@ -161,8 +161,8 @@ Score each candidate split by counting "yes" answers:
   CI/CD readiness is undetermined — flag as an open question instead.
 - Must not author or scaffold pipeline YAML/Groovy/Terraform/Ansible as
   part of a repository-split recommendation — that belongs to
-  `ute-ci-templates`/`ute-jenkins-library`/`ute-ansible`/`ute-automation`/
-  `ute-infra`/`ute-gitops` per `core/standards/ci-cd.md`.
+  `ci-templates`/`jenkins-library`/`ansible`/`automation`/
+  `infra`/`gitops` per `core/standards/ci-cd.md`.
 
 ## Related Skills
 
@@ -187,11 +187,11 @@ Score each candidate split by counting "yes" answers:
 
 ## Related Repositories
 
-- `ute-ci-templates`, `ute-jenkins-library`, `ute-jenkins` — own the CI/CD
+- `ci-templates`, `jenkins-library`, `jenkins` — own the CI/CD
   readiness a split-architecture reorganization must have in place; this
   standard never authors their pipeline content (see
   `core/standards/ci-cd.md`).
-- `ute-ansible`, `ute-automation`, `ute-infra`, `ute-gitops` — own
+- `ansible`, `automation`, `infra`, `gitops` — own
   deployment/infra execution a repo split may introduce; this standard
   never defines their content.
 
@@ -206,8 +206,8 @@ Score each candidate split by counting "yes" answers:
   authored/ingested.
 - "CI/CD readiness," used as a split-architecture prerequisite, is not
   defined in the source policy — confirm whether its definition should live
-  in `core/standards/ci-cd.md` or in `ute-ci-templates`/
-  `ute-jenkins-library` with a cross-reference added here.
+  in `core/standards/ci-cd.md` or in `ci-templates`/
+  `jenkins-library` with a cross-reference added here.
 - The 2-3 strong-reason "may split if it simplifies maintenance" band is
   qualitative with no hard metric — confirm whether borderline cases always
   require human sign-off rather than an agent-only decision.

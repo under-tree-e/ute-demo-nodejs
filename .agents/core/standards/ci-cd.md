@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`ute-agent-standards` is an AI-agent governance layer, not a CI/CD
+`agent-standards` is an AI-agent governance layer, not a CI/CD
 implementation repo. It defines *rules, skills, checklists, and SDLC
 process* — it does not own pipeline definitions, runners, or deployment
 execution. Dedicated repos own those (see Ownership below).
@@ -30,12 +30,12 @@ Pipeline implementation itself. Ownership:
 
 | Concern | Owner | Not here |
 | --- | --- | --- |
-| GitHub Actions reusable workflows | `ute-ci-templates` | This repo must not ship installable `.github/workflows/*` |
-| Jenkins shared library / reusable pipeline primitives | `ute-jenkins-library` | This repo must not ship Jenkinsfiles or pipeline steps as installable templates |
-| Jenkins controller/images/config | `ute-jenkins` | Runtime and controller config live there, not here |
-| Deployment/provisioning execution | `ute-ansible`, `ute-automation` | This repo never runs deployments |
-| Infrastructure | `ute-infra` (Terraform) | This repo never defines infrastructure |
-| Desired-state / GitOps | `ute-gitops` | This repo never declares desired cluster state |
+| GitHub Actions reusable workflows | `ci-templates` | This repo must not ship installable `.github/workflows/*` |
+| Jenkins shared library / reusable pipeline primitives | `jenkins-library` | This repo must not ship Jenkinsfiles or pipeline steps as installable templates |
+| Jenkins controller/images/config | `jenkins` | Runtime and controller config live there, not here |
+| Deployment/provisioning execution | `ansible`, `automation` | This repo never runs deployments |
+| Infrastructure | `infra` (Terraform) | This repo never defines infrastructure |
+| Desired-state / GitOps | `gitops` | This repo never declares desired cluster state |
 
 ### Supported delivery paths
 
@@ -43,16 +43,16 @@ Every consuming project's CI/CD falls into one of these paths (see
 `core/sdlc/project-discovery.md` for how an agent determines which one
 applies), or an explicit, documented exception (see below).
 
-**GitHub Actions** — owner `ute-ci-templates`. A project on this path calls
-reusable workflows from `ute-ci-templates` rather than defining pipeline
+**GitHub Actions** — owner `ci-templates`. A project on this path calls
+reusable workflows from `ci-templates` rather than defining pipeline
 logic inline.
 
-**Jenkins** — owner `ute-jenkins-library` + `ute-jenkins`. A project on this
-path calls shared library steps from `ute-jenkins-library`; `ute-jenkins`
+**Jenkins** — owner `jenkins-library` + `jenkins`. A project on this
+path calls shared library steps from `jenkins-library`; `jenkins`
 owns the controller/agent/runtime that executes it.
 
-**Deployment execution** — owner `ute-ansible` / `ute-automation` /
-`ute-infra` / `ute-gitops`. Once a build/test pipeline produces an artifact
+**Deployment execution** — owner `ansible` / `automation` /
+`infra` / `gitops`. Once a build/test pipeline produces an artifact
 or image, the actual deployment — running Ansible, applying Terraform, or
 reconciling GitOps state — happens in these repos, never inline in the
 application repo's pipeline or in an AI-agent process.
@@ -170,15 +170,15 @@ deploy → release tag (if a release is needed).
 
 - Treat `.github/workflows/`, `Jenkinsfile`, `.semaphore/`, and similar
   pipeline definitions in a *consuming* project as belonging to
-  `ute-ci-templates` / `ute-jenkins-library` conventions, not as something
+  `ci-templates` / `jenkins-library` conventions, not as something
   to author from scratch or copy in from this repo.
 - When a project needs CI/CD set up, point to the relevant dedicated repo
   instead of generating pipeline YAML/Groovy inline, unless the user
   explicitly asks for a one-off/local script.
 - When reviewing a diff, flag pipeline logic duplicated inside an
   application repo (custom reusable workflows reimplementing what
-  `ute-ci-templates` already provides, or shared Jenkins steps copy-pasted
-  instead of pulled from `ute-jenkins-library`) as a standards violation
+  `ci-templates` already provides, or shared Jenkins steps copy-pasted
+  instead of pulled from `jenkins-library`) as a standards violation
   needing an explicit, documented exception.
 - Before returning a release-readiness "ready" verdict, check: pipeline
   runs on PR; `main` protected by required checks; lint/format check
@@ -206,7 +206,7 @@ Agents may:
 ## Agent Must Not Do
 
 - Must not author pipeline YAML/Groovy from scratch as a default action —
-  that's `ute-ci-templates`'/`ute-jenkins-library`'s job, not this repo's or
+  that's `ci-templates`'/`jenkins-library`'s job, not this repo's or
   an agent's improvisation.
 - Must not have `scripts/install-agent-standards.sh` write
   `.github/workflows/`, a `Jenkinsfile`, a `CODEOWNERS` file, project-doc
@@ -217,12 +217,12 @@ Agents may:
   concerns respectively, never this repo's.
 - Must not let duplicated pipeline logic in an application repo pass review
   silently — an application repo may embed its own pipeline logic instead
-  of using `ute-ci-templates`/`ute-jenkins-library` only with an explicit,
+  of using `ci-templates`/`jenkins-library` only with an explicit,
   documented exception (recorded in an ADR or the feature's `risks.md`),
   never as a silent default.
 - Must not execute a production deployment, rollback, or infrastructure
   apply/destroy directly from an AI-agent process — that belongs to
-  `ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops` tooling, run by a
+  `ansible`/`automation`/`infra`/`gitops` tooling, run by a
   human or by the pipeline itself, not by the agent.
 - Must not treat a green CI run as equivalent to a completed code review,
   or wave a change through on CI status alone.
@@ -246,12 +246,12 @@ top of, not instead of, this standard.
 
 ## Related Repositories
 
-- `ute-ci-templates` — GitHub Actions reusable workflows
-- `ute-jenkins-library` — Jenkins shared library / pipeline primitives
-- `ute-jenkins` — Jenkins controller/agent/runtime
-- `ute-ansible`, `ute-automation` — deployment/provisioning execution
-- `ute-infra` — infrastructure (Terraform)
-- `ute-gitops` — desired-state / GitOps
+- `ci-templates` — GitHub Actions reusable workflows
+- `jenkins-library` — Jenkins shared library / pipeline primitives
+- `jenkins` — Jenkins controller/agent/runtime
+- `ansible`, `automation` — deployment/provisioning execution
+- `infra` — infrastructure (Terraform)
+- `gitops` — desired-state / GitOps
 
 ## Required project documentation
 
@@ -260,19 +260,19 @@ Every consuming project must have a `docs/ci-cd.md` (produced/maintained by
 
 - **CI/CD model** — GitHub Actions, Jenkins, both, unknown, or a documented
   project-local exception.
-- **Recommended/actual pipeline owner** — `ute-ci-templates`,
-  `ute-jenkins-library`, or the documented project-specific exception (with
+- **Recommended/actual pipeline owner** — `ci-templates`,
+  `jenkins-library`, or the documented project-specific exception (with
   its ADR/`risks.md` reference).
 - Build/test/deploy commands actually used, and where the deployment step
-  hands off to `ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`.
+  hands off to `ansible`/`automation`/`infra`/`gitops`.
 
 ## Release readiness expectations
 
 Pipeline ownership must be unambiguous before a release ships — this is a
 release gate, not a suggestion (see `core/sdlc/release-readiness.md`):
 
-- GitHub Actions via approved `ute-ci-templates` reusable workflows, or
-- Jenkins via approved `ute-jenkins-library` shared library steps, or
+- GitHub Actions via approved `ci-templates` reusable workflows, or
+- Jenkins via approved `jenkins-library` shared library steps, or
 - a documented project-specific exception (ADR/`risks.md`).
 
 Absent one of these, `release-readiness` must not return a plain "ready"
@@ -287,7 +287,7 @@ actually met, and a rollback plan is documented.
   ingestion pass.
 - The memo doesn't name which CI system (GitHub Actions, Jenkins, etc.)
   implements a given project's pipeline — mapping a specific rule to
-  `ute-ci-templates` vs `ute-jenkins-library` requires the project's own
+  `ci-templates` vs `jenkins-library` requires the project's own
   `docs/ci-cd.md`, not inference from this standard alone.
 - "Exceptional cases" justifying a manual CI run, and a documented CI/CD
   bypass, are not defined in the source — approval authority and

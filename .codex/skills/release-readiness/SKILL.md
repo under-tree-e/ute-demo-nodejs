@@ -33,7 +33,7 @@ migrations, config/env changes, existing rollback plan, changelog location.
 ## CI/CD ownership gate
 
 Pipeline ownership must be clear before release (`.agents/core/standards/ci-cd.md`):
-GitHub Actions via `ute-ci-templates`, Jenkins via `ute-jenkins-library`, or
+GitHub Actions via `ci-templates`, Jenkins via `jenkins-library`, or
 a documented project-specific exception. Absent one of these, do not return
 a plain "ready" verdict.
 
@@ -87,6 +87,6 @@ Every run of this skill must end with:
 - Assumptions made:
 - Project documentation gaps:
 - Standards gaps:
-- Recommended updates to `ute-agent-standards`:
+- Recommended updates to `agent-standards`:
 - Items that belong to other repositories:
 - Follow-up questions, if any:

@@ -11,7 +11,7 @@ case "$path" in
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
     "permissionDecision": "deny",
-    "permissionDecisionReason": "Sensitive file access blocked by UTE Claude hook."
+    "permissionDecisionReason": "Sensitive file access blocked by the Claude hook."
   }
 }
 JSON

@@ -91,7 +91,7 @@ glance, never landing on `main` except through a reviewed, squashed PR.
   set the expected prefix per project, `--allow-no-ticket` to opt in to
   `NO-TICKET`). Run it locally before pushing, or wire it into the
   project's own CI (this repo ships the script, not a CI workflow —
-  production CI/CD ownership is `ute-ci-templates`/`ute-jenkins-library`,
+  production CI/CD ownership is `ci-templates`/`jenkins-library`,
   see `core/standards/ci-cd.md`).
 - Branch was created from an up-to-date `main`.
 - Only one task's worth of change is on the branch.
@@ -118,7 +118,7 @@ glance, never landing on `main` except through a reviewed, squashed PR.
 ## Related Repositories
 - N/A — branch naming and its validation script are agent-standards-owned
   and CI-agnostic. See `core/standards/ci-cd.md` for pipeline ownership
-  boundaries (`ute-ci-templates`, `ute-jenkins-library`, etc.).
+  boundaries (`ci-templates`, `jenkins-library`, etc.).
 
 ## Open Questions
 - Git memo status is "On Review" — confirm these rules are finalized, not

@@ -23,8 +23,8 @@ Prefer operational clarity over theory.
 ## Execution boundary
 
 Rollback execution belongs to deployment tooling
-(`ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`, or the project's
-CI/CD pipeline via `ute-ci-templates`/`ute-jenkins-library` — see
+(`ansible`/`automation`/`infra`/`gitops`, or the project's
+CI/CD pipeline via `ci-templates`/`jenkins-library` — see
 `core/standards/ci-cd.md`), not to agent standards. This skill documents a
 rollback plan; it must not execute a production rollback itself unless the
 user explicitly instructs it for this specific change and safe tooling

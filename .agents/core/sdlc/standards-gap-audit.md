@@ -61,7 +61,7 @@ into a classified, actionable list.
 | `agent-skill-gap` | A skill's goal/inputs/process/required-outputs section is ambiguous, incomplete, or missing a step, so the agent had to guess how to proceed. | `skills/<name>/SKILL.md` |
 | `core-standard-gap` | A policy or rule question `core/standards/` should answer either doesn't exist there or is ambiguous. | `core/standards/<name>.md` |
 | `archetype-gap` | No `core/archetypes/<type>/` matches the project's stack, or an existing archetype is missing or wrong about a stack-specific convention. | `core/archetypes/<type>/` |
-| `ci-cd-boundary-gap` | Confusion about pipeline ownership — application repo vs. `ute-ci-templates`/`ute-jenkins-library`/`ute-ansible`/`ute-automation`/`ute-infra`/`ute-gitops`. | `core/standards/ci-cd.md` |
+| `ci-cd-boundary-gap` | Confusion about pipeline ownership — application repo vs. `ci-templates`/`jenkins-library`/`ansible`/`automation`/`infra`/`gitops`. | `core/standards/ci-cd.md` |
 | `vendor-skill-gap` | A third-party skill/pattern would close the gap and is worth reviewing for import. | `docs/vendor-skill-mapping.md`, `vendor-skills/` (see `docs/vendor-skills-policy.md`) |
 | `not-agent-standards` | The gap belongs to the project itself, or to a different repository's domain entirely — nothing in this repo should change. | N/A — note only |
 

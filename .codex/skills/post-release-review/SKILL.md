@@ -60,6 +60,6 @@ Every run of this skill must end with:
 - Assumptions made:
 - Project documentation gaps:
 - Standards gaps:
-- Recommended updates to `ute-agent-standards`:
+- Recommended updates to `agent-standards`:
 - Items that belong to other repositories:
 - Follow-up questions, if any:

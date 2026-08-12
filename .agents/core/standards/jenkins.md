@@ -20,9 +20,9 @@ template any Jenkinsfile.
 - General CI/CD ownership boundaries and supported delivery paths — see
   `core/standards/ci-cd.md` (this file specializes that policy for Jenkins;
   it does not restate or override it).
-- GitHub Actions — see `core/ci-cd.md` / `ute-ci-templates`.
+- GitHub Actions — see `core/ci-cd.md` / `ci-templates`.
 - Deployment/infra execution mechanics (Ansible, Terraform, GitOps) — see
-  `ute-ansible`, `ute-automation`, `ute-infra`, `ute-gitops`.
+  `ansible`, `automation`, `infra`, `gitops`.
 - Infra Pipeline profile stage detail — source Blueprint lists it as a
   pipeline type (infra repo changes / plan-apply) but does not define its
   stages; scoping against the Terraform/Ansible ownership boundary is an
@@ -113,9 +113,9 @@ template any Jenkinsfile.
 
 - This repo ships no Jenkinsfile template, no reusable Jenkins pipeline
   step, and no Groovy pipeline code of any kind.
-- A project's Jenkinsfile must use the `ute-jenkins-library` shared library,
+- A project's Jenkinsfile must use the `jenkins-library` shared library,
   or record a documented exception (ADR/`risks.md`) if it does not.
-- `ute-jenkins` owns the controller/agent/runtime that executes pipelines;
+- `jenkins` owns the controller/agent/runtime that executes pipelines;
   it is out of scope here.
 
 ## Recommended Rules
@@ -145,8 +145,8 @@ template any Jenkinsfile.
 - A single Jenkinsfile that chaotically mixes PR, release, and manual logic
   without clear, separated rules per profile.
 - Authoring a Jenkinsfile, Jenkins shared-library step, or any Groovy
-  pipeline code inside `ute-agent-standards` (`core/` or
-  `core/archetypes/`) — that belongs in `ute-jenkins-library`/`ute-jenkins`.
+  pipeline code inside `agent-standards` (`core/` or
+  `core/archetypes/`) — that belongs in `jenkins-library`/`jenkins`.
 
 ## Agent Must Check
 
@@ -170,19 +170,19 @@ Pipeline-readiness checklist — before treating a repo's Jenkins setup as
 - Logs are sufficient for diagnosis.
 - Cleanup runs when needed.
 - README documents which pipeline profile(s) are in use.
-- Jenkinsfile uses `ute-jenkins-library`, or an explicit documented
+- Jenkinsfile uses `jenkins-library`, or an explicit documented
   exception exists.
 
 ## Agent Must Not Do
 
 - Must not author or transcribe Jenkinsfile/Groovy pipeline code into
-  `ute-agent-standards` under any path, including as an "example".
+  `agent-standards` under any path, including as an "example".
 - Must not copy pipeline code from a source document (Blueprint, memo,
   existing Jenkinsfile) verbatim into this repo — convert it into a rule or
-  checklist item, or a named reference to `ute-jenkins-library`/
-  `ute-jenkins`.
+  checklist item, or a named reference to `jenkins-library`/
+  `jenkins`.
 - Must not generate a full Jenkinsfile from scratch for a consuming project
-  as a default action — point to `ute-jenkins-library` instead, unless the
+  as a default action — point to `jenkins-library` instead, unless the
   user explicitly asks for a one-off/local script and accepts it as a
   documented exception.
 - Must not approve a "ready" verdict for a repo whose production deploy
@@ -207,32 +207,32 @@ Pipeline-readiness checklist — before treating a repo's Jenkins setup as
 
 | Repo | Owns |
 | --- | --- |
-| `ute-jenkins-library` | Shared library, reusable pipeline steps, Jenkinsfile templates |
-| `ute-jenkins` | Jenkins controller, agents, runtime configuration |
-| `ute-ansible` / `ute-automation` | Deployment execution once an artifact/image exists |
-| `ute-infra` | Terraform-defined infrastructure |
-| `ute-gitops` | Desired-state / GitOps reconciliation |
+| `jenkins-library` | Shared library, reusable pipeline steps, Jenkinsfile templates |
+| `jenkins` | Jenkins controller, agents, runtime configuration |
+| `ansible` / `automation` | Deployment execution once an artifact/image exists |
+| `infra` | Terraform-defined infrastructure |
+| `gitops` | Desired-state / GitOps reconciliation |
 
 ## Open Questions
 
 - General CI/CD policy is deferred to the "CI-CD memo" and "CI/CD System
   Policy" documents referenced by the Blueprint — confirm these are already
-  ingested into `ute-agent-standards` (likely as `core/standards/ci-cd.md`)
+  ingested into `agent-standards` (likely as `core/standards/ci-cd.md`)
   and cross-link rather than duplicate; flag to a human if a separate
   ingestion is still needed.
 - The Blueprint does not name the authoritative owner of canonical
   Jenkinsfile templates as clearly as `core/standards/ci-cd.md` does
-  (`ute-jenkins-library` for shared library, `ute-jenkins` for
+  (`jenkins-library` for shared library, `jenkins` for
   controller/runtime) — this file follows `ci-cd.md`'s existing split;
   confirm with a human if the Blueprint intends a different split.
 - Infra Pipeline profile has no detailed stage blueprint in the source and
-  its relationship to `ute-ansible`/`ute-automation`/`ute-infra`/
-  `ute-gitops` ownership is unresolved — needs a separate source or an
+  its relationship to `ansible`/`automation`/`infra`/
+  `gitops` ownership is unresolved — needs a separate source or an
   explicit scoping note before adding required rules for it.
 - Source Blueprint status is "Draft" (2026-05-21) — rules derived here
   should be treated as provisional pending the Blueprint's finalization;
   revisit when it is finalized.
 - Whether the Package Publish Pipeline's inline `.npmrc` leaked-token check
   should become a required governance rule (vs. staying an implementation
-  detail owned by `ute-jenkins-library`) is unresolved — not included as a
+  detail owned by `jenkins-library`) is unresolved — not included as a
   required rule here pending a human decision.

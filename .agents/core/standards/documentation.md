@@ -78,7 +78,7 @@ explanation, private notes, or undocumented manual steps.
   of duplicating rules across files. This repo's own equivalent of that
   navigation concept is `docs/source-standards-manifest.md` — it, not
   this file, is the place to add cross-doc navigation for
-  `ute-agent-standards` itself.
+  `agent-standards` itself.
 
 ## Forbidden Patterns
 
