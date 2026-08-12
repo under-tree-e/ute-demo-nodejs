@@ -5,16 +5,16 @@ file(s) — the no-Vault delivery path (`ute-workspace` F016 Mode B,
 `secret_delivery_mode: sops-encrypted-file`) for hosts that don't run
 Vault Agent.
 
-## Why here, not `ute-gitops` or `ute-automation`
+## Why here, not `gitops` or `automation`
 
 Decided during `ute-workspace` feature
 [`F017-first-end-to-end-demo-deployment`](https://github.com/ute-homelab/ute-workspace/tree/main/features/F017-first-end-to-end-demo-deployment)
 (Option B):
 
-- **`ute-gitops`** is Kubernetes/Kustomize-only and, per its own
+- **`gitops`** is Kubernetes/Kustomize-only and, per its own
   `README.md`/`SECURITY.md`, holds no secrets of any kind — not even
   encrypted ones.
-- **`ute-automation`** (and `ute-ansible`) are fetched at a moving `main`
+- **`automation`** (and `ansible`) are fetched at a moving `main`
   ref during a real deploy, not a pinned immutable SHA/tag — this
   application's own repo, by contrast, is always checked out at a pinned
   `--source-ref` (a real Git tag, e.g. `v0.1.0`) during deploy, matching
@@ -23,11 +23,11 @@ Decided during `ute-workspace` feature
 
 ## How it's consumed
 
-`ute-inventory`'s `UteDeployment.spec.externalRuntimeSecretRef` points at
+`inventory`'s `UteDeployment.spec.externalRuntimeSecretRef` points at
 a `UteSecretReference` (`provider.type: sops`, `provider.path` = the
 logical path to the file in this directory, e.g.
 `deploy/secrets/runtime.env.sops`). At deploy time,
-`ute-ansible`'s `ute_compose_release` role decrypts it **on the Ansible
+`ansible`'s `ute_compose_release` role decrypts it **on the Ansible
 executor only** (never on the target host), merges it with this
 deployment's `nonSecretEnv`, and writes the combined result to the
 target's canonical `/opt/runtime/<service>.env`.
