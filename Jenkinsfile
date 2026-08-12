@@ -1,6 +1,6 @@
-@Library('ute-jenkins-library') _
+@Library('jenkins-library') _
 
-uteNodeContainerRelease(
+nodeContainerRelease(
   sharedConfigFileId: 'ute-demo-nodejs-cicd-config',
   imageName: 'under-tree-e/ute-demo-nodejs',
   registry: 'ghcr.io',
