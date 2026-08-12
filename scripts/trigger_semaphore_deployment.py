@@ -6,10 +6,10 @@ Required environment variables:
   SEMAPHORE_API_TOKEN
   SEMAPHORE_PROJECT_ID
   SEMAPHORE_TEMPLATE_ID
-  UTE_INVENTORY_RESOLVED_SHA (the exact ute-inventory commit SHA this
+  INVENTORY_RESOLVED_SHA (the exact inventory commit SHA this
   deployment request was exported from)
 
-The selected Semaphore task template must point to ute-automation's
+The selected Semaphore task template must point to automation's
 scripts/deploy-compose-release and allow overriding its task arguments.
 That script accepts exactly six CLI flags (--deployment-id, --inventory-ref,
 --artifact-version, --image-ref, --source-ref, --mode) and deliberately
@@ -107,7 +107,7 @@ def main() -> int:
         token = required_env("SEMAPHORE_API_TOKEN")
         project_id = required_env("SEMAPHORE_PROJECT_ID")
         template_id = required_env("SEMAPHORE_TEMPLATE_ID")
-        inventory_ref = required_env("UTE_INVENTORY_RESOLVED_SHA")
+        inventory_ref = required_env("INVENTORY_RESOLVED_SHA")
         if not project_id.isdigit() or not template_id.isdigit():
             raise ValueError("SEMAPHORE_PROJECT_ID and SEMAPHORE_TEMPLATE_ID must be numeric")
 
