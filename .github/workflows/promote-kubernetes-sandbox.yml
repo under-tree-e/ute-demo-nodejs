@@ -1,4 +1,4 @@
-name: Promote Image to UTE Sandbox GitOps
+name: Promote Image to Sandbox GitOps
 
 on:
   workflow_dispatch:
@@ -12,10 +12,10 @@ jobs:
   promote:
     uses: ute-workspace/ci-templates/.github/workflows/gitops-image-promotion.yml@v1
     with:
-      deployment-environment: ute-sandbox
+      deployment-environment: sandbox
       gitops-repository: ute-workspace/gitops
       gitops-ref: main
-      kustomization-path: apps/ute-demo-nodejs/overlays/ute-sandbox
+      kustomization-path: apps/ute-demo-nodejs/overlays/sandbox
       image-name: ghcr.io/under-tree-e/ute-demo-nodejs
       image-ref: ${{ inputs.image_ref }}
     secrets:
