@@ -1,3 +1,30 @@
+## Release v0.1.7
+
+`v0.1.6`'s own Release Container workflow failed its Vulnerability scan
+gate (2 new HIGH CVEs surfaced since the last time this repo's dependency
+tree was verified): `CVE-2026-14257`/`CVE-2026-69152` in `brace-expansion`
+(pulled in transitively via `ejs` -> `jake` -> `minimatch`, and via
+`jake` -> `filelist` -> `minimatch`) and `CVE-2026-69192` in `ip-address`
+(pulled in via `mongodb`'s optional `socks` peer dependency — present in
+the built image despite `npm ci --omit=dev` because a production
+package's peer dependency keeps the whole chain out of the dev-only
+set). `v0.1.6` never produced a pushed image and cannot be deployed.
+
+### Fixed
+
+- `src/package.json`: bumped the existing pinned `overrides` for
+  `brace-expansion` (`1.1.16` -> `1.1.18` under `jake`, `2.1.2` -> `2.1.4`
+  under `filelist`) and added a new override pinning `ip-address` to
+  `10.3.1` under `socks`. `src/package-lock.json` regenerated to match
+  (via a `node:22-alpine` container, matching the Dockerfile's runtime).
+- Verified locally: `npm ci --omit=dev` succeeds, and a local
+  `docker build` + `aquasec/trivy image --severity HIGH,CRITICAL` scan of
+  the resulting image shows 0 findings.
+
+### Deployment notes
+
+- Deployments must target `v0.1.7`, not `v0.1.6` (which has no image).
+
 ## Release v0.1.6
 
 Rotates `deploy/secrets/runtime.env.sops`'s age keypair and `SESSION_SECRET`
