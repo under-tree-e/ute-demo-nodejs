@@ -1,3 +1,35 @@
+## Release v0.1.6
+
+Rotates `deploy/secrets/runtime.env.sops`'s age keypair and `SESSION_SECRET`
+value. The original age private key was never captured anywhere durable —
+it existed only as a manually placed, undocumented key file on the
+Orchestrator Semaphore this template originally ran on. Subject Semaphore
+(the new, sole executor per the `ute-workspace` self-sufficiency
+initiative) never had it, and the operator confirmed no copy exists
+anywhere. `SESSION_SECRET` is a purely internal session/cookie-signing
+value with no other system depending on its exact bytes (it exists solely
+to exercise the SOPS-encrypted-secret-delivery convention introduced in
+`v0.1.1`), so rotating both was safe.
+
+### Added
+
+- Nothing new in `src/`; identical application code to `v0.1.5`.
+
+### Fixed
+
+- `deploy/secrets/runtime.env.sops`: re-encrypted with a freshly generated
+  age keypair and a freshly generated `SESSION_SECRET`. The new private
+  key must be relayed into Subject Semaphore's `phase0-converge-secrets`
+  Environment as `SOPS_AGE_KEY` before this tag can be deployed — see
+  `ute-automation`'s `docs/semaphore-deploy-compose-release.md`.
+
+### Deployment notes
+
+- Any deployment still pinned to `v0.1.5` or earlier will fail
+  `compose_release`'s SOPS decrypt step once `ute-ansible`'s fail-closed
+  age-key check ships, since the old key is permanently lost. Re-point
+  deployments at `v0.1.6` or later.
+
 ## Release v0.1.5
 
 Carries the F021 CI/CD quality and security tooling work (gitleaks,
