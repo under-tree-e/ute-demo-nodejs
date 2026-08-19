@@ -1,3 +1,25 @@
+## Release v0.1.8
+
+A real Deploy Compose Release run against Subject Semaphore, with a
+working SOPS decrypt and a working image, failed one step further:
+`docker compose config -q` on `deploy/compose/docker-compose.release.yml`,
+which still referenced the old `UTE_`-prefixed interpolation variable
+names (`UTE_IMAGE_REF`, `UTE_RUNTIME_ENV_FILE`, `UTE_PUBLIC_HOST`,
+`UTE_TRAEFIK_NETWORK`). `ute-ansible`'s `compose_release` role has
+rendered the non-prefixed names since the ansible-side phases of the
+`ute-workspace` UTE prefix removal initiative -- this repo's own compose
+file was never updated to match.
+
+### Fixed
+
+- `deploy/compose/docker-compose.release.yml`, `deploy/compose/README.md`:
+  drop the `UTE_` prefix on all 4 interpolation variables.
+
+### Deployment notes
+
+- Deployments must target `v0.1.8` or later; earlier tags' compose file
+  cannot resolve the variables `deployment.env` actually contains.
+
 ## Release v0.1.7
 
 `v0.1.6`'s own Release Container workflow failed its Vulnerability scan
