@@ -1,10 +1,10 @@
 services:
   ute-demo-nodejs:
-    image: ${UTE_IMAGE_REF:?UTE_IMAGE_REF must be an immutable GHCR digest}
+    image: ${IMAGE_REF:?IMAGE_REF must be an immutable GHCR digest}
     container_name: ute-demo-nodejs
     restart: unless-stopped
     env_file:
-      - ${UTE_RUNTIME_ENV_FILE:?UTE_RUNTIME_ENV_FILE must point to the Vault Agent rendered file}
+      - ${RUNTIME_ENV_FILE:?RUNTIME_ENV_FILE must point to the Vault Agent rendered file}
     read_only: true
     tmpfs:
       - /tmp:mode=1777
@@ -15,7 +15,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.ute-demo-nodejs.entrypoints=https
-      - traefik.http.routers.ute-demo-nodejs.rule=Host(`${UTE_PUBLIC_HOST:?UTE_PUBLIC_HOST is required}`)
+      - traefik.http.routers.ute-demo-nodejs.rule=Host(`${PUBLIC_HOST:?PUBLIC_HOST is required}`)
       - traefik.http.routers.ute-demo-nodejs.tls=true
       - traefik.http.services.ute-demo-nodejs.loadbalancer.server.port=3000
     networks:
@@ -24,4 +24,4 @@ services:
 networks:
   proxy:
     external: true
-    name: ${UTE_TRAEFIK_NETWORK:?UTE_TRAEFIK_NETWORK is required}
+    name: ${TRAEFIK_NETWORK:?TRAEFIK_NETWORK is required}
