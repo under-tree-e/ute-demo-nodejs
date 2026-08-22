@@ -217,3 +217,5 @@ This repository is also the reference implementation for the delegated Docker
 Compose release path. Local development uses the root `docker-compose.yml`;
 release delivery uses `deploy/compose/docker-compose.release.yml` and an immutable
 GHCR image digest. See `docs/ci-cd.md`, `docs/deployment.md` and `docs/rollback.md`.
+
+<!-- F036 Phase 4: real ci verify run on jenkins-controller, 2026-08-22 -->
