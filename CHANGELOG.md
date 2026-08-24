@@ -1,3 +1,25 @@
+## Release v0.1.9
+
+No application code change. This release verifies, for the first time,
+the real end-to-end release path through the platform's new,
+self-hosted `jenkins-controller` (`jenkins` repo F036) instead of the
+operator's previous personal Jenkins instance -- checkout, secret scan,
+`npm ci`, lint, HTTP integration tests, image build, container smoke
+test, a real SonarQube analysis + Quality Gate against the platform's
+own self-hosted SonarQube instance, supply-chain scan/SBOM, GHCR
+publish, and Semaphore-delegated deployment, all real-run on a real
+`ci-standard` pool agent (not the controller's own docker.sock
+fallback). A prior non-tagged branch run
+(`chore/F036-phase4-real-ci-verify-run`, build #4) already verified
+every stage up to and including the Quality Gate; this release is the
+first to also exercise the publish/deploy stages for real.
+
+### Deployment notes
+
+- Deploys via the new `jenkins-controller` release path for the first
+  time; the previous personal-Jenkins-based path stays untouched and
+  available as a rollback path if this run needs to be abandoned.
+
 ## Release v0.1.8
 
 A real Deploy Compose Release run against Subject Semaphore, with a
