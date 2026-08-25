@@ -35,6 +35,21 @@
   connection once there — not a separate connection per module. Keep
   migrations in the repo but separate from runtime business logic; keep
   seed/demo data separate from production data.
+- Every table/collection has a `uid` field (globally unique, non-
+  sequential) and joins/foreign keys/API responses reference records by
+  `uid`, not by an internal auto-increment `id` — see
+  `core/standards/data-modeling.md` for the full rule and rationale.
+
+## Typing
+
+- TypeScript projects run with `strict` mode; explicit parameter types,
+  explicit return types (including `void`), and explicit
+  `public`/`private`/`protected` on class members and methods are required
+  even where TypeScript would infer or default them — see
+  `core/standards/development.md`.
+- Plain JavaScript (no TypeScript) projects use JSDoc `@param`/`@returns`
+  type annotations on every exported function as the equivalent
+  mechanism.
 
 ## Request validation
 

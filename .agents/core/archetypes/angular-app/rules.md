@@ -102,6 +102,14 @@
   shipped to a browser bundle is public) — never route secret-shaped
   values through either mechanism.
 
+## Typing
+
+- TypeScript projects run with `strict` mode. Explicit parameter types,
+  explicit method/getter return types (including `void`), and explicit
+  `public`/`private`/`protected` on every class member and method are
+  required — even on a component/service where TypeScript would infer or
+  default them — per `core/standards/development.md`.
+
 ## Naming conventions
 
 - Directory names reveal the role of the code without opening the file:
@@ -135,6 +143,22 @@
   explicitly — not just the happy path.
 - Disable/indicate in-flight state on actions that trigger network calls
   (buttons, forms) to prevent double-submits.
+
+## Internationalization (i18n)
+
+- The app supports multiple languages via one translation mechanism
+  (Angular's built-in i18n, `ngx-translate`, `transloco`, or an equivalent
+  — follow whichever the project already uses; don't introduce a second
+  one) and every user-facing string is sourced through it — templates,
+  component TypeScript, and any generated/static HTML alike.
+- No user-facing text is hardcoded directly in a template, component
+  class, pipe, or service — labels, button text, placeholders, validation/
+  error messages, `alt`/`aria-label`/`title` attributes, and toast/snackbar
+  copy all go through a translation key, not a literal string.
+- Add new user-facing copy to the translation source files (not just the
+  default-language one) as part of the same change that introduces it —
+  don't ship a new string in the default language only and defer
+  translation as a follow-up.
 
 ## Accessibility
 
