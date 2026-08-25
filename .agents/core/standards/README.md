@@ -9,7 +9,8 @@ coding agent is in use.
 | [`repository-architecture.md`](repository-architecture.md) | Single-repo vs. monorepo vs. split-repo decision criteria (lifecycle/ownership/deployment, not preference) | `architecture-review`, `project-discovery` |
 | [`documentation.md`](documentation.md) | What docs must answer and when they must be updated | `docs-sync` |
 | [`development.md`](development.md) | Baseline code-organization and dependency-hygiene rules for any repo/language | `implementation-pass`, `feature-plan` |
-| [`code-quality.md`](code-quality.md) | What "quality" means for a change: build gate, no silent failure/error swallowing, readability/naming/duplication | `implementation-pass`, `change-audit` |
+| [`data-modeling.md`](data-modeling.md) | Every table/collection carries a `uid`; joins and external references prefer `uid` over internal sequential `id` | `architecture-review`, `feature-plan`, `implementation-pass`, `change-audit` |
+| [`code-quality.md`](code-quality.md) | What "quality" means for a change: build gate, no silent failure/error swallowing, readability/naming/duplication, required function-level documentation | `implementation-pass`, `change-audit` |
 | [`configuration.md`](configuration.md) | Non-secret configuration classification and structure | `feature-plan`, `implementation-pass` |
 | [`security.md`](security.md) | Security posture: secrets, deny-by-default, destructive-command guardrails | `architecture-review`, `devops-review`, `feature-plan`, `implementation-pass`, `change-audit` |
 | [`observability.md`](observability.md) | What must be observable — logs, metrics, traces, audit trail | `production-readiness`, `feature-plan` |

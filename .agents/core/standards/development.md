@@ -39,6 +39,9 @@ for the stack in play.
 - Package & Module Standard (status: On Review) — module-vs-package
   decision principle and naming-clarity rules applied here to in-repo
   module organization.
+- Operator decision (2026-08-03), recorded directly here — import
+  grouping and explicit-typing conventions below, not derived from the two
+  source docs above.
 
 ## Required Rules
 
@@ -62,6 +65,29 @@ for the stack in play.
   module's purpose evident without opening it.
 - Consolidate duplicated logic into one place instead of copy-pasting it
   across modules or packages.
+- Group imports into two blocks, in this order: external (third-party
+  packages and, where the language distinguishes them, standard-library
+  imports) first, then internal (project-local) imports second. Precede
+  each block with a comment header in that language's native comment
+  syntax, using the wording "Module imports" for the external block and
+  "Project imports" for the internal block (e.g. `/* Module imports */` /
+  `/* Project imports */` in JS/TS; `# Module imports` / `# Project
+  imports` in Python — the two-block order and labels are the invariant,
+  the comment delimiter adapts to the language). Do not interleave
+  external and internal imports.
+- Where the language supports explicit type annotations, write them
+  explicitly rather than relying on inference or a runtime default — this
+  includes function/method parameter types, return types (including
+  `void`), and access modifiers (`public`/`private`/`protected`) on class
+  members and methods — even when the language would otherwise infer the
+  same type or default the same visibility. See the relevant archetype's
+  `rules.md` for stack-specific mechanics (e.g. TypeScript `strict` mode
+  for `nodejs-api`/`angular-app`, type hints for `erpnext-frappe-app`).
+- Every named function/method MUST have a header doc-comment (JSDoc,
+  Python docstring, or the language's equivalent) stating its parameters,
+  return value, and purpose — see `core/standards/code-quality.md` for how
+  this coexists with that file's "avoid unnecessary explanatory comments"
+  guidance.
 
 ## Recommended Rules
 
@@ -88,6 +114,12 @@ for the stack in play.
   independent lifecycle, or publish need behind it.
 - Duplicating the same logic across multiple modules/packages instead of
   consolidating it.
+- Import statements interleaved without the external/internal grouping and
+  header comments, or reordered on an unrelated change as drive-by
+  cleanup.
+- A function/method parameter, return type, or class member/method
+  visibility left unannotated when the language supports annotating it.
+- A named function/method with no header doc-comment.
 
 ## Agent Must Check
 
@@ -103,6 +135,13 @@ for the stack in play.
 - Before extracting a module into a separate package: is there real reuse,
   an independent release cycle, or a publish requirement — or is the module
   fine staying where it is?
+- Before adding/editing an import block: are external and internal imports
+  grouped separately, each under its own header comment?
+- Before writing a function/method signature: are parameter types, the
+  return type, and (for class members/methods) the access modifier all
+  explicit, where the language allows it?
+- Before finishing a new function/method: does it have a header doc-comment
+  covering parameters, return value, and purpose?
 
 ## Agent Must Not Do
 
@@ -116,6 +155,9 @@ for the stack in play.
   values when a centralized config layer already exists in the project.
 - Must not extract a module into a standalone package without a real reuse
   or publish need — see the Package & Module Standard's extraction rule.
+- Must not leave imports interleaved/ungrouped, a type/visibility
+  annotation implicit where it could be explicit, or a new function/method
+  without a header doc-comment.
 
 ## Related Skills
 
@@ -153,3 +195,8 @@ for the stack in play.
 - No dedicated `core/standards/` file yet exists for the Package & Module
   Standard's full content (naming, SemVer, publishing) — confirm where
   that material lands so this file's cross-reference has a concrete target.
+- Import-grouping, explicit-typing, and function-doc-comment rules added
+  2026-08-03 are new here — not yet retrofitted onto any consuming
+  project's existing code; treat a pre-existing file that doesn't follow
+  them as a gap to fix opportunistically (on next touch), not a mandatory
+  standalone reformatting pass.

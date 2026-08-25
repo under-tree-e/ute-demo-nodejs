@@ -36,6 +36,15 @@
   workspace can still produce a broken package (missing files, wrong entry
   points).
 
+## Internationalization (i18n)
+
+- If the library ships UI (components, directives with templates), it
+  must not hardcode user-facing text — expose translation inputs
+  (`@Input()` text/label bindings, content projection, or i18n tokens the
+  consumer supplies) rather than baking a fixed-language string into the
+  library, per `core/archetypes/angular-app/rules.md`'s i18n rule, which
+  every consumer app is expected to follow.
+
 ## Demo/sandbox app
 
 - If the library has any UI surface, maintain a demo app that imports it the
