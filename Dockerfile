@@ -1,6 +1,16 @@
 # syntax=docker/dockerfile:1
 FROM node:22-alpine
 
+# Real gap found 2026-09-02 (v0.1.10 re-cut, CI's own Vulnerability
+# scan step): node:22-alpine is a floating tag -- its own bundled
+# libssl3/libcrypto3 packages drift over time, independent of anything
+# in this repo, and a rebuild picked up a real HIGH CVE
+# (CVE-2026-14456, OpenSSL DoS via unbounded QUIC-server memory
+# growth) already fixed upstream in Alpine's own package index. Same
+# "don't wait on an upstream base-image update" precedent as the npm
+# removal below -- upgrade Alpine's own packages at build time instead.
+RUN apk --no-cache upgrade
+
 ARG VERSION=dev
 ARG VCS_REF=unknown
 
