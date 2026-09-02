@@ -1,3 +1,25 @@
+## Release v0.1.11
+
+No application code change. Fixes a real content-loss bug in
+`deploy/secrets/runtime.env.sops`, found live while re-deploying
+`v0.1.10` (F032 Крок 8, item 5, platform repo): the file committed in
+#38's rotation held only a single bare base64 value (the raw new
+`SESSION_SECRET`, with no `SESSION_SECRET=` key prefix and no other
+content) instead of a real, properly-formatted `SESSION_SECRET=<value>`
+dotenv entry -- `sops --decrypt --input-type dotenv` correctly
+decrypted it, but the *result* wasn't valid `KEY=value` content, so
+`ansible`'s `compose_release` role failed at `parse_dotenv`. Almost
+certainly caused by encrypting a file that held only the freshly
+generated secret's raw output, not a real `.env`-formatted file, per
+`deploy/secrets/README.md`'s own documented `sops --encrypt` command.
+Re-encrypted with a fresh `SESSION_SECRET` value, correctly formatted
+this time, same recipient.
+
+### Deployment notes
+
+- Purely a `deploy/secrets/runtime.env.sops` content fix -- no other
+  change since `v0.1.10`.
+
 ## Release v0.1.10
 
 No application code change. Re-cut purely to pick up `deploy/secrets/
