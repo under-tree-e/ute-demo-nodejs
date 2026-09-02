@@ -1,3 +1,22 @@
+## Release v0.1.10
+
+No application code change. Re-cut purely to pick up `deploy/secrets/
+runtime.env.sops` re-encrypted under the current, live SOPS age key
+(#38, 2026-08-26) -- `v0.1.9`'s own copy of that file was still
+encrypted under the previous key, rotated away two days after v0.1.9
+was tagged, which made every real "Deploy Compose Release" attempt
+against `v0.1.9` fail with `age: no identity matched any of the
+recipients` (found live, F032 Крок 8, item 5). This platform's
+`compose_release` role checks out the release's own immutable git tag
+for its secrets file (never a moving branch), so a release tagged
+before a real SOPS key rotation can never decrypt again after that
+rotation -- this release exists to close that gap for real.
+
+### Deployment notes
+
+- Purely a re-tag of current `main` (already at commit #38) -- no
+  other change since `v0.1.9`.
+
 ## Release v0.1.9
 
 No application code change. This release verifies, for the first time,
