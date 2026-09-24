@@ -30,14 +30,22 @@ from `package.json`/`Makefile`/CI, test data fixtures, affected code areas.
    advice applies.
 3. Identify test commands that actually exist — never invent ones.
 4. Rank affected areas by risk/impact.
+4a. If a security-critical trust boundary (auth, secrets, permissions, a
+    new privileged credential, enrollment/trust establishment) is in
+    scope, draft a Bad-Path Test Matrix (`# | Scenario | Required
+    behavior`) per `.agents/core/standards/testing.md` — required alongside the
+    happy-path plan, not optional depth; every row must be demonstrated,
+    not merely written.
 5. Draft unit/integration/e2e/manual/regression plans in that priority
    order.
 6. Note test data requirements (never real secrets/PII).
 
 ## Required outputs
 
-Risk ranking, test plan by level, test data needs, commands found (or
-"none found — manual only"), gaps/open questions.
+Risk ranking, test plan by level, Bad-Path Test Matrix (required when a
+security-critical trust boundary is in scope, otherwise state N/A), test
+data needs, commands found (or "none found — manual only"), gaps/open
+questions.
 
 ## Safety constraints
 

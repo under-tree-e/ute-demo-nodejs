@@ -123,6 +123,33 @@ regression-prone areas), not just raise a coverage number.
   in the PR and, for anything risk-bearing, in the feature's `risks.md`
   (see `core/sdlc/release-readiness.md`) — `release-readiness` must not
   return a plain "ready" verdict over unexplained test gaps.
+- Any change that introduces or touches a security-critical trust boundary
+  (authentication, authorization/permissions, secrets or credential
+  handling, a new or widened privileged API/credential surface, key/cert
+  enrollment or trust establishment, tenant isolation) must be accompanied
+  by a **Bad-Path Test Matrix**, not only a happy-path test plan. Build it
+  during `core/sdlc/test-strategy.md` (see that document's own matching
+  step) as a table: `# | Scenario | Required behavior` — covering, at
+  minimum, unauthorized/unknown identity, a legitimate identity in a
+  disallowed state, stale/superseded authorization (checked against an
+  older-but-once-valid state), conflicting/duplicate claims to the same
+  identity, a time-of-check-to-time-of-use gap between validation and the
+  privileged action, malformed/injection-shaped input, and — if the
+  boundary can be retried indefinitely — a policy for what happens to a
+  never-resolved attempt. The matrix is scenario-driven, not a fixed
+  checklist to fill mechanically; only include rows the boundary can
+  actually encounter, and add boundary-specific rows (e.g. concurrent
+  access to the same target, a resource destroyed and recreated under the
+  same identity) beyond this minimum where the boundary's own design
+  raises them.
+- No row in a Bad-Path Test Matrix is satisfied by being written down —
+  each one must be demonstrated (an automated test, or a recorded manual/
+  live verification when automation genuinely cannot reach it, with the
+  gap stated) before the boundary it covers is considered tested. A
+  boundary is not "done" on happy-path acceptance criteria alone while its
+  own matrix rows remain undemonstrated — record any still-undemonstrated
+  row as an open gap (PR description, and `risks.md` if risk-bearing),
+  never silently.
 
 ## Recommended Rules
 
@@ -165,6 +192,13 @@ regression-prone areas), not just raise a coverage number.
   smoke/verification checks.
 - Using shared mutable test state without resetting it between tests.
 - Introducing flakiness via an unmanaged dependency on an external service.
+- Testing only the happy path for a security-critical trust boundary (auth,
+  permissions, secrets/credentials, enrollment/trust establishment) — an
+  untested deny-path is a standing risk that a regression in the rejection
+  logic ships silently, since nothing would ever exercise it.
+- Marking a security-critical trust boundary "tested" or "done" when its
+  Bad-Path Test Matrix exists only as a written table with no row actually
+  demonstrated.
 
 ## Agent Must Check
 
@@ -181,6 +215,10 @@ regression-prone areas), not just raise a coverage number.
 - A reviewer can tell what is and isn't covered from the PR alone.
 - Absence of tests is explained in the PR (and in `risks.md` if
   risk-bearing) when acceptable.
+- If the change touches a security-critical trust boundary, a Bad-Path
+  Test Matrix exists and every row is actually demonstrated (test or
+  recorded manual/live verification) — not only the happy-path acceptance
+  criteria.
 
 ## Agent Must Not Do
 
@@ -198,7 +236,9 @@ regression-prone areas), not just raise a coverage number.
 ## Related Skills
 
 - `/test-strategy` (`core/sdlc/test-strategy.md`) — risk-prioritized test
-  planning process; reads the matching archetype's `validation.md` first.
+  planning process; reads the matching archetype's `validation.md` first;
+  also where a Bad-Path Test Matrix is drafted when a security-critical
+  trust boundary is in scope.
 - `/release-readiness` (`core/sdlc/release-readiness.md`) — gates release on
   test status and unexplained gaps.
 - `/change-audit` (`core/sdlc/change-audit.md`) — audits whether planned

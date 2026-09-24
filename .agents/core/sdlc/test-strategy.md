@@ -41,6 +41,23 @@ test tooling, not generic advice.
    aren't defined in the project.
 4. Rank affected areas by risk/impact (data loss, auth, payments, public
    API > internal utility).
+4a. If the change introduces or touches a security-critical trust boundary
+    (authentication, authorization/permissions, secrets or credential
+    handling, a new or widened privileged API/credential surface, key/cert
+    enrollment or trust establishment, tenant isolation), draft a
+    **Bad-Path Test Matrix** per `core/standards/testing.md`'s own
+    Required Rule: a table (`# | Scenario | Required behavior`) of
+    adversarial/deny-path scenarios that boundary must handle correctly —
+    unauthorized/unknown identity, a legitimate identity in a disallowed
+    state, stale/superseded authorization, conflicting/duplicate claims to
+    the same identity, a time-of-check-to-time-of-use gap, malformed/
+    injection-shaped input, and (if retryable) a never-resolved-attempt
+    policy, plus any boundary-specific scenario its own design raises.
+    This is a required companion to the happy-path plan for that boundary,
+    not optional extra depth — the boundary is not considered tested
+    until every row is demonstrated (automated test, or a recorded manual/
+    live verification with the gap stated), not merely written down or
+    covered by happy-path acceptance criteria.
 5. Draft a unit test plan for the highest-risk logic first.
 6. Draft an integration test plan for cross-component/service paths.
 7. Draft an e2e/smoke test plan for user-facing or deployment-critical
@@ -61,6 +78,8 @@ test tooling, not generic advice.
 - E2E/smoke test plan
 - Manual QA checklist
 - Regression checklist
+- Bad-Path Test Matrix, required whenever a security-critical trust
+  boundary is in scope (see step 4a); state explicitly if none applies
 - Test data requirements
 - Risk-based priority order
 - Commands to run, only if discoverable from the project
@@ -85,6 +104,8 @@ test tooling, not generic advice.
 
 - Risk ranking of affected areas
 - Test plan by level (unit/integration/e2e/manual/regression)
+- Bad-Path Test Matrix, if a security-critical trust boundary is in scope
+  (or an explicit "not applicable" note if not)
 - Test data needs
 - Commands found (or "none found — manual only")
 - Gaps/open questions
