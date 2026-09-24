@@ -114,7 +114,8 @@ template any Jenkinsfile.
 - This repo ships no Jenkinsfile template, no reusable Jenkins pipeline
   step, and no Groovy pipeline code of any kind.
 - A project's Jenkinsfile must use the `jenkins-library` shared library,
-  or record a documented exception (ADR/`risks.md`) if it does not.
+  or record a documented exception (ADR/`risks.md`, see
+  `core/standards/knowledge-governance.md`) if it does not.
 - `jenkins` owns the controller/agent/runtime that executes pipelines;
   it is out of scope here.
 
