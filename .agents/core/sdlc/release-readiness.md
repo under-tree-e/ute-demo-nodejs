@@ -55,7 +55,8 @@ cannot be a plain "ready":
 
 - GitHub Actions via an approved `ci-templates` reusable workflow, or
 - Jenkins via an approved `jenkins-library` shared library, or
-- a documented project-specific exception (ADR or `risks.md` entry).
+- a documented project-specific exception (ADR or `risks.md` entry — see
+  `core/standards/knowledge-governance.md` for the ADR format).
 
 ## Checklist
 

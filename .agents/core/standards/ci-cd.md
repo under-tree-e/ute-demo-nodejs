@@ -151,7 +151,8 @@ deploy → release tag (if a release is needed).
   CI checks when the project's risk profile calls for them.
 - Treat any CI/CD bypass as an exceptional path, not routine — it needs a
   named, accountable decision-maker and a documented reason (ADR or the
-  feature's `risks.md`).
+  feature's `risks.md`; see `core/standards/knowledge-governance.md` for
+  what an ADR is and where it lives).
 
 ## Forbidden Patterns
 

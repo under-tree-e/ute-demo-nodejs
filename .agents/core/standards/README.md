@@ -21,6 +21,7 @@ coding agent is in use.
 | [`release-versioning.md`](release-versioning.md) | SemVer, release tags as source of truth, RC/hotfix/changelog rules | `release-readiness`, `rollback-plan` |
 | [`packages-modules.md`](packages-modules.md) | In-repo module vs. separately versioned/published package decision and packaging rules | `architecture-review`, `core/archetypes/npm-package/` |
 | [`task-handover.md`](task-handover.md) | Task state lives in the repo/PR, never in private chat or unpushed local commits | `pr-summary`, `change-audit` |
+| [`knowledge-governance.md`](knowledge-governance.md) | Which document type owns which kind of project knowledge, the Decision Record (ADR) format, a lightweight Change Contract for small changes, and a conflict-handling taxonomy | `feature-plan`, `architecture-review`, `change-audit`, `docs-sync` |
 | [`workflow.md`](workflow.md) | Agent-neutral mandatory order of operations for non-trivial changes | All skills (baseline) |
 | [`tooling-vs-ai-responsibility.md`](tooling-vs-ai-responsibility.md) | What an AI agent should own vs. what deterministic CI/tooling must enforce | All skills (baseline) |
 | [`git/branching.md`](git/branching.md) | One task = one branch, named so type/ticket are obvious | `pr-summary`, `change-audit` |

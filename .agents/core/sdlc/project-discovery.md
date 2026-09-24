@@ -80,7 +80,8 @@ CI/CD model:
 Recommended pipeline owner:
 - ci-templates
 - jenkins-library
-- project-specific exception (must cite an ADR or risks.md entry)
+- project-specific exception (must cite an ADR or risks.md entry — see
+  `core/standards/knowledge-governance.md` for the ADR format)
 ```
 
 Do not generate or propose new workflow/pipeline files as an output of this
