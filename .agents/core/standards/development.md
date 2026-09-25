@@ -84,10 +84,9 @@ for the stack in play.
   `rules.md` for stack-specific mechanics (e.g. TypeScript `strict` mode
   for `nodejs-api`/`angular-app`, type hints for `erpnext-frappe-app`).
 - Every named function/method MUST have a header doc-comment (JSDoc,
-  Python docstring, or the language's equivalent) stating its parameters,
-  return value, and purpose — see `core/standards/code-quality.md` for how
-  this coexists with that file's "avoid unnecessary explanatory comments"
-  guidance.
+  Python docstring, or the language's equivalent) stating what it does,
+  its parameters, and its return value. Comment content rules live in
+  `core/standards/code-quality.md`.
 
 ## Recommended Rules
 
@@ -141,7 +140,7 @@ for the stack in play.
   return type, and (for class members/methods) the access modifier all
   explicit, where the language allows it?
 - Before finishing a new function/method: does it have a header doc-comment
-  covering parameters, return value, and purpose?
+  covering what it does, its parameters, and its return value?
 
 ## Agent Must Not Do
 
@@ -195,8 +194,7 @@ for the stack in play.
 - No dedicated `core/standards/` file yet exists for the Package & Module
   Standard's full content (naming, SemVer, publishing) — confirm where
   that material lands so this file's cross-reference has a concrete target.
-- Import-grouping, explicit-typing, and function-doc-comment rules added
-  2026-08-03 are new here — not yet retrofitted onto any consuming
-  project's existing code; treat a pre-existing file that doesn't follow
-  them as a gap to fix opportunistically (on next touch), not a mandatory
-  standalone reformatting pass.
+- Import-grouping, explicit-typing, and function-doc-comment rules are not
+  yet retrofitted onto every consuming project's existing code; treat a
+  pre-existing file that doesn't follow them as a gap to fix on next
+  touch, not a mandatory standalone reformatting pass.

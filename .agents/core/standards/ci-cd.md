@@ -40,7 +40,7 @@ Pipeline implementation itself. Ownership:
 ### Supported delivery paths
 
 Every consuming project's CI/CD falls into one of these paths (see
-`core/sdlc/project-discovery.md` for how an agent determines which one
+the `project-discovery` skill for how an agent determines which one
 applies), or an explicit, documented exception (see below).
 
 **GitHub Actions** — owner `ci-templates`. A project on this path calls
@@ -59,7 +59,7 @@ application repo's pipeline or in an AI-agent process.
 
 Also out of scope: release-tag/versioning conventions in detail (see
 `core/standards/git/tags.md`, `core/standards/git/releases.md`) and rollback
-plan content in detail (see `core/sdlc/rollback-plan.md` / `rollback-plan`
+plan content in detail (see the `rollback-plan`
 skill) — this standard cross-references both, it doesn't restate them.
 
 ## Source Documents
@@ -123,7 +123,7 @@ CI passing is necessary, not sufficient — see Purpose above and
   approval, protected branch/tag, restricted operator list, or a documented
   rollback plan.
 - Every release with production impact needs a documented rollback plan
-  before it ships — see `rollback-plan` skill / `core/sdlc/rollback-plan.md`.
+  before it ships — see `rollback-plan` skill.
   Do not restate rollback content here; cross-reference it.
 
 **Release tags** — use git tags, never commit messages or branch names, to
@@ -150,9 +150,9 @@ deploy → release tag (if a release is needed).
   dependency checks, container scan, and coverage reporting as additional
   CI checks when the project's risk profile calls for them.
 - Treat any CI/CD bypass as an exceptional path, not routine — it needs a
-  named, accountable decision-maker and a documented reason (ADR or the
-  feature's `risks.md`; see `core/standards/knowledge-governance.md` for
-  what an ADR is and where it lives).
+  named, accountable decision-maker and a documented reason: an entry in the `docs/architecture.md` "Exceptions" section
+  with its removal condition, or, while the feature is open, its `spec.md`
+  Risks section (`core/standards/knowledge-governance.md`).
 
 ## Forbidden Patterns
 
@@ -187,7 +187,7 @@ deploy → release tag (if a release is needed).
   build verification present; failed CI blocks merge; deploy only via
   pipeline; production deploy has a release tag or approval; secrets not
   stored in repo; a rollback approach is documented (see
-  `core/sdlc/release-readiness.md`, `core/sdlc/rollback-plan.md`).
+  the `release-readiness` skill, the `rollback-plan` skill).
 - Confirm the merge-gate checklist above is actually satisfied before
   suggesting a PR is mergeable — don't infer "green" from partial signal.
 
@@ -219,7 +219,7 @@ Agents may:
 - Must not let duplicated pipeline logic in an application repo pass review
   silently — an application repo may embed its own pipeline logic instead
   of using `ci-templates`/`jenkins-library` only with an explicit,
-  documented exception (recorded in an ADR or the feature's `risks.md`),
+  documented exception (an entry in the `docs/architecture.md` "Exceptions" section),
   never as a silent default.
 - Must not execute a production deployment, rollback, or infrastructure
   apply/destroy directly from an AI-agent process — that belongs to
@@ -232,10 +232,10 @@ Agents may:
 
 ## Related Skills
 
-- `rollback-plan` / `core/sdlc/rollback-plan.md`
-- `release-readiness` / `core/sdlc/release-readiness.md`
+- `rollback-plan` skill
+- `release-readiness` skill
 - `devops-review`
-- `change-audit` / `core/sdlc/change-audit.md`
+- `change-audit` skill
 - `docs-sync`
 
 ## Related Archetypes
@@ -257,24 +257,27 @@ top of, not instead of, this standard.
 ## Required project documentation
 
 Every consuming project must have a `docs/ci-cd.md` (produced/maintained by
-`project-discovery`, see `core/sdlc/project-discovery.md`) that states:
+`project-discovery`, see the `project-discovery` skill) that states:
 
 - **CI/CD model** — GitHub Actions, Jenkins, both, unknown, or a documented
   project-local exception.
 - **Recommended/actual pipeline owner** — `ci-templates`,
   `jenkins-library`, or the documented project-specific exception (with
-  its ADR/`risks.md` reference).
+  its `docs/architecture.md` Exceptions entry).
 - Build/test/deploy commands actually used, and where the deployment step
   hands off to `ansible`/`automation`/`infra`/`gitops`.
+- **Local gates** — the exact commands an agent runs before handing a
+  change to audit (tests, type check, lint, build), so agents reuse them
+  instead of rediscovering them on every run.
 
 ## Release readiness expectations
 
 Pipeline ownership must be unambiguous before a release ships — this is a
-release gate, not a suggestion (see `core/sdlc/release-readiness.md`):
+release gate, not a suggestion (see the `release-readiness` skill):
 
 - GitHub Actions via approved `ci-templates` reusable workflows, or
 - Jenkins via approved `jenkins-library` shared library steps, or
-- a documented project-specific exception (ADR/`risks.md`).
+- a documented project-specific exception (an entry in the `docs/architecture.md` "Exceptions" section).
 
 Absent one of these, `release-readiness` must not return a plain "ready"
 verdict. In addition, a release must not be marked ready unless the merge

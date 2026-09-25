@@ -8,8 +8,8 @@ exactly one authoritative document type that owns it. Agent memory, prior
 conversations, and search-result ranking (newest, largest, most similar
 title) are never that authority — they can help locate the authoritative
 artifact, never replace it. This standard defines the ownership model,
-the `Decision Record` artifact several other standards already assume
-exists (see Source Documents), a lightweight `Change Contract` format for
+how `docs/architecture.md` records decisions as current state (no
+separate decision-record files), a lightweight `Change Contract` format for
 changes too small to justify the full feature-folder structure, and how
 an agent must classify and handle a contradiction between two documents.
 
@@ -28,19 +28,20 @@ an agent must classify and handle a contradiction between two documents.
 ## Does Not Cover
 
 - The feature-folder file structure and its content —
-  see `core/sdlc/feature-planning.md`.
+  see the `feature-plan` skill.
 - The architecture-review process and its output —
-  see `core/sdlc/architecture-review.md`.
+  see the `architecture-review` skill.
 - Docs-sync mechanics (deciding which docs to update after a change) —
-  see `core/sdlc/docs-sync.md`.
+  see the `docs-sync` skill.
 - PR/handover state and its four-section block —
   see `core/standards/task-handover.md`.
 - Test/acceptance content itself —
-  see `core/sdlc/test-strategy.md`.
+  see the `test-strategy` skill.
 - The project-level current-state entry point
   (`docs/product-overview.md`, `docs/architecture.md`, etc.) and how it's
-  built — see `core/sdlc/project-discovery.md`. This standard classifies
-  those docs as authoritative sources; it does not redefine their shape.
+  built — see the `project-discovery` skill. This standard classifies
+  those docs as authoritative sources and defines how
+  `docs/architecture.md` is updated (Architecture document, below).
 - The mandatory order of operations for non-trivial work —
   see `core/standards/workflow.md`. This standard adds a classification
   step inside that order (Recommended Rules below), it does not add a
@@ -50,13 +51,13 @@ an agent must classify and handle a contradiction between two documents.
 
 - "UTE Project Knowledge & Change Governance Standard" (status: Draft,
   supplied 2026-09-23) — knowledge-class taxonomy and authority model
-  (source §§1-3), Decision Record promotion (source §8), the Change
+  (source §§1-3), decision promotion into current state (source §8), the Change
   Contract concept (source §§5-6), and the conflict-handling taxonomy
   (source §12) are extracted below. The source's universal change-model
   diagram (§4), per-task-type context lists (§11), and project-level
   current-state entry point (§16) are intentionally **not** ingested —
   they restate the pipeline already defined in `docs/sdlc-workflow.md`
-  and the doc set `core/sdlc/project-discovery.md` already produces; see
+  and the doc set the `project-discovery` skill already produces; see
   Open Questions for the one piece (a completion-summary contract,
   source §15) left for a separate decision instead of silently dropped or
   silently duplicated.
@@ -73,44 +74,60 @@ every knowledge artifact below).
 
 | Knowledge type | Authoritative artifact |
 | --- | --- |
-| What a feature must do | `features/FXXX-.../feature.md` + `requirements.md` + `acceptance-criteria.md` |
-| Why a technical/architectural approach was chosen | Decision Record (see below) |
+| What an open feature must do | `features/FXXX-.../spec.md` (exists only while the feature is open, see `core/standards/features.md`) |
+| Why a technical/architectural approach was chosen | The description of the PR that changed `docs/architecture.md` (its `Why` section), found via the PR reference next to the statement |
 | How components/boundaries are structured, right now | `docs/architecture.md` (built by `project-discovery.md`, kept current by `architecture-review.md` + `docs-sync.md`) |
-| How an accepted change will be implemented | `features/FXXX-.../implementation-plan.md` |
-| How something is deployed or operated | `docs/operations.md`, plus `core/sdlc/rollback-plan.md` output for risky changes |
-| What proves a change is complete | `acceptance-criteria.md` + `core/sdlc/test-strategy.md` output |
+| How an accepted change will be implemented | `features/FXXX-.../plan.md` (while open) |
+| Documented exceptions to a standard | `docs/architecture.md` "Exceptions" section |
+| How something is deployed or operated | `docs/operations.md`, plus the `rollback-plan` skill output for risky changes |
+| What proves a change is complete | `spec.md` Acceptance criteria + the `test-strategy` skill output |
+| What changed, and when | Git history of the base branch (`git log --first-parent`); `CHANGELOG.md` for releases only |
 | What exists right now | Code, configuration, and deployed state. This never silently redefines what *should* exist — a gap against any row above is drift or a defect, not an automatic requirement change (see Conflict Handling). |
 
-### Decision Records
+### Architecture document
 
-`core/standards/ci-cd.md`, `core/standards/jenkins.md`, and
-`core/sdlc/release-readiness.md`/`project-discovery.md` already accept
-"an ADR" as a valid documented exception, but this repo never defined
-what that is. This closes that gap:
+There are no decision-record files: no `docs/decisions/`, `ADR-*.md`, or
+`decisions.md` registry. The outcome of a decision is written into
+`docs/architecture.md` as current state; the reasoning stays in the PR
+that made the change.
 
-- A Decision Record lives at `docs/decisions/ADR-<seq>-<short-slug>.md`,
-  sequential per project.
-- Required content: Context, Alternatives considered, Selected approach,
-  Rationale, Consequences, Status (`Proposed` / `Accepted` /
-  `Superseded`).
-- Once a decision reaches `Accepted`, its resulting current state MUST be
-  reflected in the owning authoritative artifact from the table above
-  (e.g. `docs/architecture.md`) in the same change. The Decision Record
-  itself then answers "why was this decided", never "what currently
-  exists" — do not point a reader at an ADR to learn current behavior.
-- Any place in this repo's standards that accepts "a documented ADR" as
-  an exception means a Decision Record in this exact shape and location.
+- **One document per area.** The architecture document is
+  `docs/architecture.md`. A repository that already keeps its architecture
+  elsewhere, or split by area, keeps that location; "Constraints" and
+  "Exceptions" may be sections of it or one dedicated file each within
+  the same set (for example a `rules.md` next to it). Never a second copy
+  of the same area.
+- **Current state by section.** A change edits the section it belongs to.
+  A new section is added only for a new topic. No "Updates", "Changes",
+  or "History" sections.
+- **Constraints.** A decision that forbids or requires something is
+  recorded as a dry, checkable rule in a "Constraints" section, e.g.
+  "Destroy runs only on sandbox hosts. (#123)". That is enough to keep an
+  agent from undoing it; the reason is in the PR.
+- **Exceptions.** A documented exception to a standard (the kind
+  `ci-cd.md`, `jenkins.md`, `release-readiness` and `project-discovery`
+  accept) is an entry in an "Exceptions" section: what is exempt, its
+  scope, the PR, and the condition for removing it. An exception whose
+  removal condition is met is deleted.
+- **PR references, latest only.** A statement carries the PR that last
+  changed it — `(#123)`, or `(ansible#228)` across repositories. When the
+  statement changes, the reference is replaced, never appended. Full
+  history: `git log -L` on the file.
+- **Size.** Past about 500 lines, split by area (for example
+  `docs/architecture/<area>.md`), still current state only.
+- **Open decisions** live in the open feature's `spec.md` ("Open
+  questions", "Decisions") and reach `docs/architecture.md` when the
+  feature's PR merges.
+- The PR that changes `docs/architecture.md` states the reason in its
+  description (`Why` section, see the `pr-summary` skill).
 
 ### Change Contract
 
 For a change small enough that `architecture-review.md`'s "not needed for
 small, contained, single-module changes" applies, and whose acceptance
 criteria fit in a handful of bullets, a delta-shaped Change Contract MAY
-stand in for `feature.md` + `requirements.md` + `acceptance-criteria.md` +
-`risks.md` combined. `implementation-plan.md` and `docs-impact.md` are
-still produced separately, since `implementation-pass.md` and
-`docs-sync.md` consume them directly — see Open Questions for whether
-`feature-planning.md` should adopt this explicitly.
+replace the body of `spec.md` (keep its Status header). `plan.md` is still
+produced.
 
 Required shape when used — describe before/after, not the whole feature:
 
@@ -143,7 +160,7 @@ disagreement before acting:
   above, and another document holds an outdated copy. Action: use the
   authoritative source; update or remove the stale copy.
 - **Authority violation** — a document states something outside its
-  owned knowledge type (e.g. an `implementation-plan.md` defining a new
+  owned knowledge type (e.g. a `plan.md` defining a new
   API contract inline). Action: move the decision into the artifact that
   owns it, replace the violating content with a cross-reference.
 - **Implementation drift** — current code/config/deployed state
@@ -180,18 +197,20 @@ disagreement before acting:
   independently instead of one owning it and the other cross-referencing.
 - Treating current code/config/deployed state as if it silently redefines
   a requirement, instead of flagging the mismatch as drift.
-- An Implementation Plan, Runbook, or Decision Record introducing a new
+- An Implementation Plan or Runbook introducing a new
   product or architecture requirement inline instead of routing it
   through the artifact that owns that knowledge type.
 - Silently resolving a true authority conflict by picking one of the two
   disagreeing documents instead of surfacing it and pausing affected
   work.
-- A Decision Record reaching `Accepted` whose conclusion was never
-  promoted into its owning current-state artifact — leaving the ADR as
-  the only place the decision is reflected.
-- Citing "an ADR" as a documented exception (per `ci-cd.md`,
-  `jenkins.md`, `release-readiness.md`, `project-discovery.md`) without a
-  real `docs/decisions/ADR-*.md` file in the required shape existing.
+- Decision-record files or directories (`docs/decisions/`, `ADR-*.md`,
+  a `decisions.md` registry).
+- An "Updates"/"Changes"/"History" section, or a list of several PR
+  references on one statement, in `docs/architecture.md`.
+- A documented exception without a removal condition, or one kept after
+  its removal condition is met.
+- Citing a documented exception that has no entry in the
+  `docs/architecture.md` "Exceptions" section.
 
 ## Agent Must Check
 
@@ -202,11 +221,12 @@ disagreement before acting:
 - Is agent memory, a prior conversation summary, or "most recent/most
   similar" search ranking being treated as the source of truth for
   something a repository document should own?
-- When a standard's exception clause cites "an ADR", does
-  `docs/decisions/ADR-<seq>-<slug>.md` actually exist with the required
-  content?
-- After a Decision Record reaches `Accepted`, was its conclusion promoted
-  into the owning current-state artifact in the same change?
+- When a standard's exception clause is used, does the
+  `docs/architecture.md` "Exceptions" section have the entry, with scope,
+  PR, and removal condition?
+- When a change alters architecture, does `docs/architecture.md` change
+  in the owning section in the same PR, with that PR as the statement's
+  only reference?
 - When two documents disagree, has the disagreement been classified
   (stale duplication / authority violation / implementation drift / true
   authority conflict) before choosing an action?
@@ -216,7 +236,9 @@ disagreement before acting:
 - Must not treat agent memory, cached context, or search-result
   freshness/similarity as authoritative over the document that owns a
   knowledge type per the table above.
-- Must not let an Implementation Plan, Runbook, or Decision Record
+- Must not create decision-record files; record the outcome in
+  `docs/architecture.md` and the reasoning in the PR.
+- Must not let an Implementation Plan or Runbook
   silently introduce a new product or architecture requirement — route it
   back to the artifact that owns it.
 - Must not silently resolve a true authority conflict between two active
@@ -235,8 +257,8 @@ disagreement before acting:
   standard treats as authoritative for "how components are structured".
 - `change-audit` — the place a true authority conflict or implementation
   drift is most likely first noticed during review.
-- `docs-sync` — the mechanism that promotes an `Accepted` Decision
-  Record's conclusion into its owning current-state doc.
+- `docs-sync` — updates `docs/architecture.md` per the Architecture
+  document rules.
 - `standards-gap-audit` — use when a gap in this ownership model itself
   (an unowned knowledge type, an artifact with no clear owner) is found.
 
@@ -251,14 +273,6 @@ ownership to another repository.
 
 ## Open Questions
 
-- Whether `docs/decisions/` is the right single location for Decision
-  Records project-wide, versus a per-feature `features/FXXX/decisions/`
-  — left open pending a real example with more than a couple of ADRs.
-- Whether `core/sdlc/feature-planning.md` should be amended to formally
-  offer the Change Contract format as a documented alternative output for
-  small changes, or whether it stays an informal option layered on top
-  until adopted deliberately — needs a decision before treating Change
-  Contract as binding on `feature-plan`.
 - The source document's completion-contract concept (its §15: a compact
   summary an agent produces after finishing significant work) partially
   overlaps `change-audit.md`'s existing "Audit output" and

@@ -1,7 +1,7 @@
 # Recommended Files — Docker Compose App
 
 Every the project is expected to have the base doc set described in
-`core/sdlc/project-discovery.md` (`product-overview.md`, `architecture.md`,
+the `project-discovery` skill (`product-overview.md`, `architecture.md`,
 `environments.md`, `ci-cd.md`) filled in, plus `docs/adr/` for architecture
 decision records if this project uses them. Also add:
 

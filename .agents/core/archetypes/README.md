@@ -13,7 +13,7 @@ Each archetype folder has the same four files:
 | `structure.md` | Recommended repo layout (a suggestion, not a mandate) |
 | `rules.md` | Practical conventions/rules specific to the stack |
 | `validation.md` | Testing/CI expectations and common risks |
-| `recommended-files.md` | Docs and config files worth having, beyond the base doc set in `core/sdlc/project-discovery.md` |
+| `recommended-files.md` | Docs and config files worth having, beyond the base doc set in the `project-discovery` skill |
 
 Which skill to reach for at each stage is agent-specific and lives in
 each adapter instead of here — see `adapters/claude/.claude/skills/` and

@@ -10,17 +10,17 @@ time, without depending on an LLM's judgment on a given run.
 
 - Analysis — reading a codebase and explaining what it does and why.
 - Planning — turning an idea into requirements, acceptance criteria, and an
-  implementation plan (`core/sdlc/feature-planning.md`).
+  implementation plan (the `feature-plan` skill).
 - Documentation — drafting and syncing docs from real findings
-  (`core/sdlc/project-discovery.md`, `core/sdlc/docs-sync.md`).
+  (the `project-discovery` skill, the `docs-sync` skill).
 - Review — auditing a diff against intent, checking for gaps a human might
-  skim past (`core/sdlc/change-audit.md`, `core/standards/git/code-review.md`).
+  skim past (the `change-audit` skill, `core/standards/git/code-review.md`).
 - Risk identification — architecture, deployment, rollback, and security risk
-  reasoning (`core/sdlc/architecture-review.md`, `core/sdlc/rollback-plan.md`,
+  reasoning (the `architecture-review` skill, the `rollback-plan` skill,
   the `devops-review` skill).
 - Checklist generation — test strategy, release readiness, production
-  readiness (`core/sdlc/test-strategy.md`, `core/sdlc/release-readiness.md`,
-  `core/sdlc/production-readiness.md`).
+  readiness (the `test-strategy` skill, the `release-readiness` skill,
+  the `production-readiness` skill).
 - PR summary — turning a diff and feature docs into a reviewable description
   (the `pr-summary` skill).
 - Release-readiness reasoning — synthesizing scattered signals (tests, docs,

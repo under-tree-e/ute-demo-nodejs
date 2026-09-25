@@ -34,9 +34,11 @@ Full text: `.agents/core/standards/workflow.md`, `.agents/core/standards/securit
    active branch. This applies even when the work is only planning
    documentation (a `features/<name>/spec.md`/`plan.md`/`audit.md`); see
    `.claude/rules/git-workflow.md`.
-5. Create or update a feature/spec folder.
+5. Create or update a feature folder (`/feature-plan`, rules in
+   `.agents/core/standards/features.md`). Read only folders touched by an open PR.
+   Trivial, easily reversible changes need no folder.
 6. Prepare an implementation plan.
-7. Implement in small steps.
+7. Implement in small steps, test first (`/implementation-pass`).
 8. Run relevant validation, including a test strategy for non-trivial work
    (`/test-strategy`).
 9. Audit the diff.
@@ -46,6 +48,16 @@ Full text: `.agents/core/standards/workflow.md`, `.agents/core/standards/securit
 12. Once the first logical commit exists, push and open an early Draft PR
     (per `.agents/core/standards/git/pull-requests.md`), then prepare the PR
     summary (`/pr-summary`).
+13. One feature is one PR, never merged before the audit passes. Then
+    set `Status: done` in it; the folder is deleted at the start of the next feature. No PR only
+    for closing. `CHANGELOG.md`
+    is for releases only.
+
+Comments state only facts about how the code works
+(`.claude/rules/code-comments.md`). Skills have no run report; add a
+separate `Missing skills:` note only when a missing skill or standard
+would have changed the result (`.agents/core/standards/workflow.md`).
+Keep runs cheap per `.claude/rules/token-efficiency.md`.
 
 ## Recommended skills
 

@@ -78,6 +78,11 @@ concern — see [Does Not Cover](#does-not-cover).
   contain real secret values (build-time or otherwise). Secret injection
   at container runtime is a `security.md` concern, not a config-file
   concern.
+- Git holds durable intent only. A temporary operational override (take a
+  host out of service for a test, switch a profile for one run, force a
+  rebuild) is passed as a run-time parameter of the task that needs it
+  (for example a Semaphore task variable), not committed and later
+  reverted.
 
 ## Recommended Rules
 
@@ -97,6 +102,8 @@ concern — see [Does Not Cover](#does-not-cover).
 ## Forbidden Patterns
 
 - Committing `.env` files with real values.
+- A commit that sets a temporary operational state, followed by a commit
+  that reverts it.
 - Placing production values inside `.env.example`.
 - Using generic, context-free env variable names (`TOKEN`, `KEY`, `PASS`,
   `SECRET`, `URL`, `TEST`, `MY_VAR`).

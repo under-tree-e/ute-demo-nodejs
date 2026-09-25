@@ -24,8 +24,8 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 - Jenkinsfile/pipeline templates — owned by `jenkins-library`/`ci-templates`, not this repo (see `core/standards/ci-cd.md`).
 - Secrets storage mechanics (vaults, secret managers) — see `core/standards/security.md`.
 - Repo naming and package publishing — see relevant archetype/tooling docs.
-- Test-planning process — see `core/sdlc/test-strategy.md`.
-- Logging/metrics/tracing implementation — see observability guidance under `core/sdlc/production-readiness.md` (no dedicated `core/standards/observability.md` exists yet; see Open Questions).
+- Test-planning process — see the `test-strategy` skill.
+- Logging/metrics/tracing implementation — see observability guidance under the `production-readiness` skill (no dedicated `core/standards/observability.md` exists yet; see Open Questions).
 
 ## Source Documents
 
@@ -175,7 +175,7 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 - Do not log passwords, tokens, private keys, full authorization headers,
   payment card data, unneeded full personal data, provider secrets, or
   raw sensitive webhook bodies (full logging field set: see
-  `core/sdlc/production-readiness.md` / observability guidance, not
+  the `production-readiness` skill / observability guidance, not
   restated here).
 
 **Documentation and testing**
@@ -187,7 +187,7 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 - API tests must cover, at minimum: successful request, validation error,
   unauthorized, forbidden, not-found, critical business case, mapper
   output, error format, and pagination/filtering (for list endpoints).
-  Full test-planning process: see `core/sdlc/test-strategy.md`.
+  Full test-planning process: see the `test-strategy` skill.
 - Integration tests must cover: provider request mapping, provider
   response mapping, provider error mapping, timeout behavior, retry
   behavior, webhook signature verification, and duplicate webhook events.
@@ -277,12 +277,12 @@ provider integrations) so that APIs are stable, secure, and safe to evolve.
 
 ## Related Skills
 
-- `core/sdlc/architecture-review.md` — review contract/integration design
+- the `architecture-review` skill — review contract/integration design
   before major API changes.
-- `core/sdlc/test-strategy.md` — plan API/integration test coverage.
-- `core/sdlc/change-audit.md` — audit a diff against this standard.
-- `core/sdlc/release-readiness.md` — gate breaking-change releases.
-- `core/sdlc/docs-sync.md` — keep API docs in sync with contract changes.
+- the `test-strategy` skill — plan API/integration test coverage.
+- the `change-audit` skill — audit a diff against this standard.
+- the `release-readiness` skill — gate breaking-change releases.
+- the `docs-sync` skill — keep API docs in sync with contract changes.
 
 ## Related Archetypes
 

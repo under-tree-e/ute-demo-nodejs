@@ -166,12 +166,12 @@ Score each candidate split by counting "yes" answers:
 
 ## Related Skills
 
-- `core/sdlc/project-discovery.md` — establishes current repo layout and
+- the `project-discovery` skill — establishes current repo layout and
   lifecycle/ownership facts this standard's Decision Flow consumes.
-- `core/sdlc/architecture-review.md` — the gate where a proposed repo
+- the `architecture-review` skill — the gate where a proposed repo
   split/merge/extraction must be scored and justified before
   implementation.
-- `core/sdlc/standards-gap-audit.md` — use if a repo-boundary decision
+- the `standards-gap-audit` skill — use if a repo-boundary decision
   produced confusion or a guess, to classify whether the gap is in this
   standard.
 

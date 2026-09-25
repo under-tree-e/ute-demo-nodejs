@@ -151,7 +151,3 @@ not covered.
 - No named owning repo/system is specified for where logs, metrics, or
   audit logs are actually stored/queried (e.g. a log aggregator, a SIEM,
   Vault audit device) — needs a decision or mapping to a repo.
-- `core/standards/api-integration.md` is referenced here but does not yet
-  exist in this repo as of this writing (see
-  `features/F003-source-standards-ingestion/mapping.md`) — update this
-  file's link/section once that standard lands.

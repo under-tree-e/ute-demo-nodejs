@@ -35,9 +35,17 @@ Current diff, feature folder (if one exists), test/validation results.
 ```md
 ## Purpose
 
+## Why
+
 ## Changes
 
 ## Verification
+
+## Deviations from spec
+
+## Beyond spec
+
+## Deferred / not done
 
 ## Docs impact
 
@@ -48,6 +56,10 @@ Current diff, feature folder (if one exists), test/validation results.
 ## Notes for reviewer
 ```
 
+`## Why` states the reasoning behind the change in a few sentences and is
+required when the PR changes `docs/architecture.md`: it is the only place
+that reasoning is kept.
+
 ## Safety constraints
 
 Never fabricate test/verification results. Never include secrets found in
@@ -56,22 +68,3 @@ the diff.
 ## References
 
 - `.agents/core/standards/git/pull-requests.md` — required sections and rationale
-
-## Required Final Output: Agent Run Report
-
-Every run of this skill must end with:
-
-### Agent Run Report
-
-- Skill:
-- Project type/archetype:
-- Confidence: high / medium / low
-- Inputs used:
-- Applicable standards used:
-- Missing inputs:
-- Assumptions made:
-- Project documentation gaps:
-- Standards gaps:
-- Recommended updates to `agent-standards`:
-- Items that belong to other repositories:
-- Follow-up questions, if any:
