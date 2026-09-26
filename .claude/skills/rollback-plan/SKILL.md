@@ -6,12 +6,11 @@ description: Create a rollback plan for a release, deployment, database migratio
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/rollback-plan/SKILL.md`, `adapters/codex/skills/rollback-plan/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
-Canonical procedure: `.agents/core/sdlc/rollback-plan.md`. Read it before running
-this skill.
-
 ## Goal
 
-Produce a practical, operationally clear rollback plan.
+Produce a practical, operationally clear rollback plan for a release,
+deployment, database migration, infrastructure change, or risky
+production-impacting change.
 
 ## Inputs
 
@@ -19,14 +18,13 @@ Change summary, affected systems, current backup/snapshot posture.
 
 ## Process
 
-1. Read `.agents/core/sdlc/rollback-plan.md`.
-2. Write each required section (see below) grounded in what the project
-   actually has (backup tooling, deployment mechanism, data stores).
-3. Prefer operational clarity over theory — concrete commands/steps over
+1. Write each required section below grounded in what the project actually
+   has (backup tooling, deployment mechanism, data stores).
+2. Prefer operational clarity over theory — concrete commands and steps over
    generic advice.
-4. Apply `.agents/core/standards/release-versioning.md`'s rollback/hotfix
-   expectations (patch/hotfix versioning, tagging) when the plan involves
-   a release or hotfix.
+3. Apply `.agents/core/standards/release-versioning.md`'s rollback/hotfix
+   expectations (patch/hotfix versioning, tagging) when the plan involves a
+   release or hotfix.
 
 ## Required outputs
 
@@ -39,35 +37,16 @@ limitations.
 
 This skill produces a plan — it does not execute a rollback, backup, or
 restore. Rollback execution belongs to deployment tooling
-(`ansible`/`automation`/`infra`/`gitops`, or the owning
-CI/CD pipeline), not to this skill. Do not execute a production rollback
+(`ansible`/`automation`/`infra`/`gitops`, or the owning CI/CD pipeline via
+`ci-templates`/`jenkins-library`). Do not execute a production rollback
 unless the user explicitly instructs it for this specific change and safe
 tooling exists (dry-run support, a tested rollback command, non-production
-target) — see `.agents/core/standards/ci-cd.md`. Never read, print, or commit
-secrets.
+target) — see `.agents/core/standards/ci-cd.md`. Absent both, hand the plan to a
+human or the owning pipeline. Never read, print, or commit secrets.
 
 ## References
 
-- `.agents/core/sdlc/rollback-plan.md` — full process
 - `.agents/core/standards/git/releases.md`, `.agents/core/standards/git/tags.md` — release context
 - `.agents/core/standards/ci-cd.md` — execution boundary and pipeline/tooling ownership
-- `.agents/core/standards/release-versioning.md` — rollback/hotfix versioning and tagging expectations
-
-## Required Final Output: Agent Run Report
-
-Every run of this skill must end with:
-
-### Agent Run Report
-
-- Skill:
-- Project type/archetype:
-- Confidence: high / medium / low
-- Inputs used:
-- Applicable standards used:
-- Missing inputs:
-- Assumptions made:
-- Project documentation gaps:
-- Standards gaps:
-- Recommended updates to `agent-standards`:
-- Items that belong to other repositories:
-- Follow-up questions, if any:
+- `.agents/core/standards/release-versioning.md` — rollback/hotfix versioning and tagging
+- `production-readiness` — the standing operational posture this plan assumes

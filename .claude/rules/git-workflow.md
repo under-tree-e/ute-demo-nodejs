@@ -23,6 +23,7 @@ Before creating a branch or a PR for any non-trivial work, read and follow:
 - Open an early Draft PR as soon as the first logical commit is pushed —
   do not accumulate work only locally for multiple days before a PR exists.
 - Keep diffs small and reviewable.
+- One PR per intent. Small corrections in the same area go into the current PR as their own commit; refinements of an open decision go into the same open PR; pins are bumped once per feature in the consumer's feature PR; never open a PR only for a pin bump, a progress note, or a temporary operational flip (`core/standards/git/pull-requests.md` "PR granularity").
 - Do not force push.
 - Do not rewrite history unless explicitly requested.
 - Do not commit generated secrets, dumps, local config, temporary logs, or session notes.

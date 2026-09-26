@@ -27,15 +27,15 @@ idea
 
 Ad hoc stages — not fixed pipeline steps, invoke whenever relevant:
 
-- `core/sdlc/production-readiness.md` (`production-readiness` skill) —
+- the `production-readiness` skill —
   periodic or pre-go-live operational check on a service, independent of any
   single change.
-- `core/sdlc/rollback-plan.md` (`rollback-plan` skill) — before any
+- the `rollback-plan` skill — before any
   risky/production-impacting change.
 - `devops-review` skill — infrastructure, CI/CD, deployment changes (see
   `core/archetypes/devops-infra/`).
-- `core/sdlc/standards-gap-audit.md` (`standards-gap-audit` skill) — when a
-  skill's Agent Run Report shows non-trivial gaps/assumptions, or a run's
+- the `standards-gap-audit` skill — when a
+  run reports missing skills or non-trivial assumptions, or a run's
   output is unclear; classifies whether the gap is in the project, a skill,
   a standard, an archetype, or belongs to a different repo — see
   `docs/evaluation-loop.md`.
@@ -46,7 +46,7 @@ Ad hoc stages — not fixed pipeline steps, invoke whenever relevant:
 | --- | --- | --- | --- |
 | Discovery | `project-discovery.md` | Repo as-is | Baseline `docs/*.md` |
 | Architecture review | `architecture-review.md` | Proposed change, current architecture | Architecture-impact assessment, open questions |
-| Feature planning | `feature-planning.md` | Idea/task/issue | `features/<name>/` (feature, requirements, acceptance criteria, implementation plan, risks, docs impact) |
+| Feature planning | `feature-planning.md` | Idea/task/issue | `features/<name>/spec.md` + `plan.md` |
 | Implementation | `implementation-pass.md` | Reviewed feature folder | Code changes, updated checklist |
 | Change audit | `change-audit.md` | Diff + feature folder | Verdict: pass / pass with notes / needs fixes / blocked |
 | Test strategy | `test-strategy.md` | Feature, release, or refactor | Unit/integration/e2e/manual/regression plan, risk priority |
@@ -60,7 +60,7 @@ Ad hoc stages — not fixed pipeline steps, invoke whenever relevant:
 ## Notes
 
 - Feature planning has one embedded sub-step, not a pipeline stage of its
-  own: `core/sdlc/scope-split.md` (`scope-split` skill). It runs inside
+  own: the `scope-split` skill. It runs inside
   `feature-planning.md` to catch out-of-scope items surfaced while
   drafting a feature and, with user confirmation, spin each one off into
   its own `features/` folder instead of expanding the current feature's

@@ -27,9 +27,9 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
 
 - Code Review Memo
 - Testing Standard (Draft, 2026-05-21)
-- Operator decision (2026-08-03), recorded directly here — the mandatory
-  function-level doc-comment rule below, not derived from either source
-  document above.
+- Operator decisions recorded directly here — the function-level
+  doc-comment rule and the comment content rules below, not derived from
+  either source document above.
 
 ## Required Rules
 
@@ -62,16 +62,38 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
 - Reviewer/agent MUST NOT approve/accept a change with an unexplained CI
   failure, or with no test coverage explanation when tests are absent.
 - Every named function/method MUST have a header doc-comment (JSDoc,
-  Python docstring, or the language's equivalent) stating its parameters,
-  return value, and purpose. This is a distinct requirement from the
-  "avoid unnecessary explanatory comments" guidance below: the header
-  doc-comment documents a function's *contract* (what it accepts, what it
-  returns, why it exists) and is required even when the name is already
-  clear; it is not the same as an inline comment narrating *what*
-  confusing code does line by line, which the Recommended Rules below
-  still discourage in favor of clearer naming/structure. See
-  `core/standards/development.md` for the same rule stated alongside
-  import-organization and explicit-typing conventions.
+  Python docstring, or the language's equivalent) stating what it does,
+  its parameters, and its return value. It is required even when the
+  name is already clear.
+
+### Comment content
+
+These rules apply to every comment in code, scripts, and configuration
+files (YAML, JSON with comments, HCL, Dockerfiles, Jenkinsfiles), and to
+the names of files, variables, functions, and live resources (job names,
+template names, labels, UI text).
+
+- A comment states only facts about how the code works: what a function
+  does, what a parameter or variable controls, its allowed values and
+  default, its unit, and what the function returns or raises.
+- A short inline comment is allowed only for a non-obvious fact about the
+  code's behavior (a protocol constraint, an ordering requirement, a
+  platform limitation). One line where possible.
+- Comments and names MUST NOT contain: feature/ticket identifiers
+  (`F037`, `platform#F041`), rollout phase/step/slice names, dates,
+  author or operator names, decisions and their reasoning, rejected
+  alternatives, what the code used to do, what was changed, found, or
+  fixed, incident or debugging stories, or cross-references to planning
+  documents.
+- That content belongs in the commit message or the PR. A lasting rule
+  that follows from a decision goes into `docs/architecture.md` as a
+  constraint (`core/standards/knowledge-governance.md`).
+- Existing comments that break these rules:
+  - In code the team owns (written by the team or its agents): rewrite or
+    delete them without asking, in the change that touches the file or in
+    a dedicated cleanup PR.
+  - In vendored, third-party, or another team's code: list them and ask
+    before changing anything.
 
 ## Recommended Rules
 
@@ -80,7 +102,7 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
 - Prefer pointing to an existing standard or a short example snippet over
   demanding an exact rewrite.
 - Prefer naming that makes intent obvious without a comment; treat a
-  needed comment explaining *what* code does (not *why*) as a naming
+  needed inline comment explaining *what* a block of code does as a naming
   smell worth flagging as non-blocking.
 - Prefer test names in the form `should <expected behavior> when
   <condition>` — self-explanatory over needing the test body to
@@ -101,8 +123,12 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
   for fixing/trusting CI.
 - Blocking a change on personal style preference rather than a concrete
   correctness/clarity/risk problem.
-- A named function/method with no header doc-comment stating its
-  parameters, return value, and purpose.
+- A named function/method with no header doc-comment stating what it
+  does, its parameters, and its return value.
+- A comment or name that carries history, decisions, feature/phase
+  identifiers, dates, or debugging narrative (see Comment content).
+- Multi-line comment blocks that explain the story behind code instead
+  of what the code does.
 
 ## Agent Must Check
 
@@ -118,7 +144,8 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
   nit.
 - DTOs/mappers do not leak extra/unintended fields.
 - A new or changed function/method has a header doc-comment covering
-  parameters, return value, and purpose.
+  what it does, its parameters, and its return value.
+- No added or changed comment or name breaks the Comment content rules.
 
 ## Agent Must Not Do
 
@@ -131,6 +158,8 @@ agent doing review/audit work (`change-audit`, `code-review` skill).
 - Must not demand a large unrelated refactor as a condition for
   accepting an otherwise safe, clear change.
 - Must not wave through a new function/method with no header doc-comment.
+- Must not add history, decisions, identifiers, or dates to comments or
+  names, including to explain the agent's own change.
 
 ## Related Skills
 
@@ -157,7 +186,7 @@ layering conventions live in `core/archetypes/<type>/`.
   review) is not fully specified upstream.
 - No default static-analysis/lint tool or threshold is named in source
   material — left to each project's own CI config.
-- The function-doc-comment rule added 2026-08-03 is new here — not yet
-  retrofitted onto any consuming project's existing functions; treat a
-  pre-existing undocumented function as a gap to fix opportunistically
-  (on next touch), not a mandatory standalone documentation pass.
+- The function-doc-comment rule is not yet retrofitted onto every
+  consuming project's existing functions; treat a pre-existing
+  undocumented function as a gap to fix on next touch, not a mandatory
+  standalone documentation pass.

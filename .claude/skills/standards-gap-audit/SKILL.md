@@ -1,13 +1,11 @@
 ---
 name: standards-gap-audit
-description: Analyze the result of an agent run (typically another skill's Agent Run Report) to classify why it was incomplete, guessed, or unclear — project doc gap, weak skill, missing standard, missing archetype, CI/CD boundary confusion, or not a standards gap at all. Use when a skill's output is unclear or its Agent Run Report lists non-trivial gaps/assumptions, not as a routine pipeline step.
+description: Analyze the result of an agent run to classify why it was incomplete, guessed, or unclear — project doc gap, weak skill, missing standard, missing archetype, CI/CD boundary confusion, or not a standards gap at all. Use when a skill's output is unclear or the run reported missing skills or non-trivial assumptions, not as a routine pipeline step.
 ---
 # Standards Gap Audit
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/standards-gap-audit/SKILL.md`, `adapters/codex/skills/standards-gap-audit/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
-Canonical procedure: `.agents/core/sdlc/standards-gap-audit.md`. Read it before
-running this skill — this file only adds the Claude-specific wrapper.
 
 ## Goal
 
@@ -20,21 +18,22 @@ right layer instead of being silently re-guessed on every run — see
 
 ## Inputs
 
-The Agent Run Report(s) from the run(s) being audited (or the raw output if
-no report exists), the skill outputs themselves, the project's own
-`docs/*.md`, and the relevant `.agents/core/standards/`, `.agents/core/sdlc/`,
-`.agents/core/archetypes/`, and `skills/` files. Full list:
-`.agents/core/sdlc/standards-gap-audit.md`.
+The output of the run(s) being audited, including any Missing skills note
+(see `.agents/core/standards/workflow.md`), the project's own
+`docs/*.md`, and the relevant `.agents/core/standards/`, `.agents/core/archetypes/`, and
+`skills/` files.
 
 ## Process
 
-1. Read `.agents/core/sdlc/standards-gap-audit.md` in full.
-2. Pull every "Missing input", "Assumption made", "Project documentation
-   gap", and "standards gap" line out of the Agent Run Report(s) under
-   audit.
-3. Classify each item against the gap types below — check the file a gap
+1. List every missing skill from the Missing skills note, then every place
+   in the raw output where the agent guessed, hedged, or said "not
+   documented".
+2. Classify each item against the gap types below — check the file a gap
    type points at before writing the finding; don't guess whether it
    already covers the case.
+3. For each finding record the area, concrete evidence (quote or close
+   paraphrase), gap type, the specific file to change, and a priority
+   (high/medium/low) by how often it is likely to recur across projects.
 4. Separate anything that isn't a standards gap: it belongs to the project
    itself, or to a different repository (CI/CD template repo,
    deployment/infra repo — see `.agents/core/standards/ci-cd.md`).
@@ -87,29 +86,6 @@ Every table row needs a gap type from the list above and real evidence
 `not-agent-standards` findings go under "Not a Standards Gap", never in the
 table.
 
-## Required Final Output: Agent Run Report
-
-Every run of this skill must end with the Standards Gap Audit output above,
-followed by:
-
-### Agent Run Report
-
-- Skill:
-- Project type/archetype:
-- Confidence: high / medium / low
-- Inputs used:
-- Applicable standards used: standards consulted to classify gaps (e.g.
-  `.agents/core/standards/ci-cd.md` for boundary calls)
-- Missing inputs:
-- Assumptions made:
-- Project documentation gaps:
-- Standards gaps: only true `core-standard-gap`/`archetype-gap` findings,
-  not project or CI/CD items
-- Recommended updates to `agent-standards`:
-- Items that belong to other repositories: project/CI/CD/infra ownership,
-  kept separate from agent-standard ownership
-- Follow-up questions, if any:
-
 ## Safety constraints
 
 Read-only analysis. Do not modify `skills/`, `.agents/core/`, or
@@ -120,7 +96,6 @@ report — if evidence is thin, say so and lower the priority instead.
 
 ## References
 
-- `.agents/core/sdlc/standards-gap-audit.md` — full process and gap-type table
 - `docs/evaluation-loop.md` — where this fits in a pilot/evaluation pass
 - `.agents/core/standards/ci-cd.md` — CI/CD ownership boundary
 - `docs/vendor-skills-policy.md` — process for `vendor-skill-gap` findings

@@ -98,7 +98,7 @@ explanation, private notes, or undocumented manual steps.
   values?
 - Did this change alter behavior, architecture, environments, CI/CD,
   deployment, secrets, rollback, or observability — if so, were the
-  relevant docs updated (see `core/sdlc/docs-sync.md`)?
+  relevant docs updated (see the `docs-sync` skill)?
 - Is content being duplicated across docs that should instead
   cross-reference a single source of truth?
 
@@ -114,7 +114,7 @@ explanation, private notes, or undocumented manual steps.
 
 ## Related Skills
 
-- `/docs-sync` (`core/sdlc/docs-sync.md`) — process for keeping docs in
+- `/docs-sync` — process for keeping docs in
   sync with a change.
 - `/project-discovery` — establishes baseline doc state for a project.
 

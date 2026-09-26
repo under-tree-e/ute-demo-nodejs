@@ -24,7 +24,7 @@ regression-prone areas), not just raise a coverage number.
 - The literal Jenkins Pipeline Blueprint or any PR/CI-CD memo referenced by
   source material — those are implementation artifacts owned elsewhere, not
   restated here.
-- Risk-prioritized test planning process — see `core/sdlc/test-strategy.md`.
+- Risk-prioritized test planning process — see the `test-strategy` skill.
 - Stack-specific test tooling/layout depth — see the relevant
   `core/archetypes/<type>/validation.md` and `structure.md`.
 
@@ -41,8 +41,20 @@ regression-prone areas), not just raise a coverage number.
   raise a coverage number.
 - Prefer project-native validation commands; never invent test/build
   commands a project doesn't actually have.
-- Add tests for new behavior where test infrastructure exists; add a
-  regression test for bug fixes when practical.
+- Test-driven development is mandatory for every behavior change: write
+  or extend a test that fails for the missing or broken behavior, run it
+  and confirm it fails for the expected reason, implement until it
+  passes, then refactor with the test green. A bug fix starts with a
+  regression test that reproduces the bug.
+- Where no automated test can express the behavior (pure configuration
+  wiring, a live-only integration), state that in `plan.md` and the PR,
+  and name the manual or live check that replaces the failing test.
+- A change that adds or changes a user interface MUST be verified in a
+  real browser against the running application before it is reported
+  done or audited as pass: the changed screens render, the changed flows
+  work end to end, and the browser console shows no new errors. Record
+  what was checked in the PR. Changes with no user interface skip this
+  rule.
 - Build verification is mandatory for every repo type, including MVP repos
   — an MVP may shrink its test set but must never drop build verification.
 - Match test type to what needs verifying:
@@ -120,15 +132,15 @@ regression-prone areas), not just raise a coverage number.
 - If tests cannot be run, state exactly why and what should be run
   manually.
 - If tests are missing or intentionally skipped for a change, explain why
-  in the PR and, for anything risk-bearing, in the feature's `risks.md`
-  (see `core/sdlc/release-readiness.md`) — `release-readiness` must not
+  in the PR and, for anything risk-bearing, in the feature's `spec.md` Risks section
+  (see the `release-readiness` skill) — `release-readiness` must not
   return a plain "ready" verdict over unexplained test gaps.
 - Any change that introduces or touches a security-critical trust boundary
   (authentication, authorization/permissions, secrets or credential
   handling, a new or widened privileged API/credential surface, key/cert
   enrollment or trust establishment, tenant isolation) must be accompanied
   by a **Bad-Path Test Matrix**, not only a happy-path test plan. Build it
-  during `core/sdlc/test-strategy.md` (see that document's own matching
+  with the `test-strategy` skill (see its matching
   step) as a table: `# | Scenario | Required behavior` — covering, at
   minimum, unauthorized/unknown identity, a legitimate identity in a
   disallowed state, stale/superseded authorization (checked against an
@@ -148,7 +160,7 @@ regression-prone areas), not just raise a coverage number.
   gap stated) before the boundary it covers is considered tested. A
   boundary is not "done" on happy-path acceptance criteria alone while its
   own matrix rows remain undemonstrated — record any still-undemonstrated
-  row as an open gap (PR description, and `risks.md` if risk-bearing),
+  row as an open gap (PR description, and the `spec.md` Risks section if risk-bearing),
   never silently.
 
 ## Recommended Rules
@@ -213,8 +225,11 @@ regression-prone areas), not just raise a coverage number.
 - Test data contains no production secrets or real user data.
 - Flaky tests are not silently skipped without a ticket.
 - A reviewer can tell what is and isn't covered from the PR alone.
-- Absence of tests is explained in the PR (and in `risks.md` if
-  risk-bearing) when acceptable.
+- Every behavior change has a test that failed before the change and
+  passes after it, or a stated reason plus replacement check.
+- A UI change has a recorded real-browser verification.
+- Absence of tests is explained in the PR (and in the feature's `spec.md`
+  Risks section if risk-bearing) when acceptable.
 - If the change touches a security-critical trust boundary, a Bad-Path
   Test Matrix exists and every row is actually demonstrated (test or
   recorded manual/live verification) — not only the happy-path acceptance
@@ -223,8 +238,11 @@ regression-prone areas), not just raise a coverage number.
 ## Agent Must Not Do
 
 - Must not manually re-run lint, format, standard unit tests, or build
-  verification in place of CI — that's CI/CD's job, not the reviewer's or
-  the agent's.
+  verification as a substitute for CI during review — that's CI/CD's job.
+  Running the tests being written as part of the red→green cycle is
+  development, not a substitute for CI.
+- Must not write the implementation before the failing test for a
+  behavior change.
 - Must not author pipeline YAML/Groovy/stage sequencing here or in this
   repo — see `core/standards/ci-cd.md`.
 - Must not treat a coverage percentage as sufficient evidence a change is
@@ -235,13 +253,13 @@ regression-prone areas), not just raise a coverage number.
 
 ## Related Skills
 
-- `/test-strategy` (`core/sdlc/test-strategy.md`) — risk-prioritized test
+- `/test-strategy` — risk-prioritized test
   planning process; reads the matching archetype's `validation.md` first;
   also where a Bad-Path Test Matrix is drafted when a security-critical
   trust boundary is in scope.
-- `/release-readiness` (`core/sdlc/release-readiness.md`) — gates release on
+- `/release-readiness` — gates release on
   test status and unexplained gaps.
-- `/change-audit` (`core/sdlc/change-audit.md`) — audits whether planned
+- `/change-audit` — audits whether planned
   tests were actually added.
 - Code review checklist — `core/standards/git/code-review.md`.
 

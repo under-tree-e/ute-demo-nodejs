@@ -4,7 +4,7 @@
 
 - Unit/component tests for services, pipes, and non-trivial components
   (Karma/Jasmine or Jest).
-- E2E tests for critical user flows (login, checkout, core CRUD path — 
+- E2E tests for critical user flows (login, checkout, core CRUD path —
   whatever the app's primary journey is) via Cypress or Playwright, where
   present.
 - New/changed UI states (loading, error, empty) get at least one test each,

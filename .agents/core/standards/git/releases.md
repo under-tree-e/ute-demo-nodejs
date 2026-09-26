@@ -33,17 +33,17 @@ green.
 
 Every release with production impact needs one before it ships, not after
 something breaks. See `core/standards/git/tags.md` and the `rollback-plan`
-skill / `core/sdlc/rollback-plan.md`.
+skill.
 
 ## Post-release review
 
 Short retro after the release settles: what went well, what didn't, any
 follow-up actions. See the `post-release-review` skill /
-`core/sdlc/post-release-review.md`.
+the `post-release-review` skill.
 
 ## Related
 
-- `release-readiness` skill / `core/sdlc/release-readiness.md` — checks a
+- `release-readiness` skill — checks a
   release candidate is actually ready before it ships.
-- `post-release-review` skill / `core/sdlc/post-release-review.md` —
+- `post-release-review` skill —
   structured post-release retro.

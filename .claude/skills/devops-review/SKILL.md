@@ -71,24 +71,5 @@ the rollback path is clear — see `.agents/core/standards/security.md`.
 - `.agents/core/archetypes/devops-infra/` — stack-specific detail
 - `.agents/core/standards/ci-cd.md` — CI/CD ownership boundaries this review checks against
 - `.agents/core/standards/jenkins.md` — Jenkins-specific pipeline standards this review checks against
-- `.agents/core/sdlc/architecture-review.md` — pre-implementation counterpart for infra changes
-- `rollback-plan` (`.agents/core/sdlc/rollback-plan.md`) — rollback plan handoff
-
-## Required Final Output: Agent Run Report
-
-Every run of this skill must end with:
-
-### Agent Run Report
-
-- Skill:
-- Project type/archetype:
-- Confidence: high / medium / low
-- Inputs used:
-- Applicable standards used:
-- Missing inputs:
-- Assumptions made:
-- Project documentation gaps:
-- Standards gaps:
-- Recommended updates to `agent-standards`:
-- Items that belong to other repositories:
-- Follow-up questions, if any:
+- the `architecture-review` skill — pre-implementation counterpart for infra changes
+- `rollback-plan` — rollback plan handoff

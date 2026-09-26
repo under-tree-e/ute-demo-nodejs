@@ -6,60 +6,54 @@ description: Capture what happened after a release and turn lessons into follow-
 
 > Canonical portable skill (agent-neutral). Adapter copies: `adapters/claude/.claude/skills/post-release-review/SKILL.md`, `adapters/codex/skills/post-release-review/SKILL.md` — keep in sync with this file. See `docs/portable-skills.md`.
 
-Canonical procedure: `.agents/core/sdlc/post-release-review.md`. Read it before
-running this skill.
-
 ## Goal
 
 Capture what actually happened after a release and convert lessons into
-concrete follow-ups, feeding back into `feature-plan`.
+concrete follow-ups — the closing stage of the SDLC loop, feeding back into
+`feature-plan`.
+
+## When to use
+
+- Shortly after a release/deployment has gone out.
+- After an incident tied to a recent release.
+- Periodically for larger releases, even without an incident.
 
 ## Inputs
 
-Feature folder(s) covered by the release, PR summary/release notes, CI/CD
-logs, monitoring/alerts/incident reports, `release-readiness` output if
-it exists.
+Feature folder(s) or PRs covered by the release, release notes, CI/CD run
+logs and deployment records, monitoring/alerts/incident reports from the
+release window, user/support reports, `release-readiness` output if it
+exists.
 
 ## Process
 
-1. Read `.agents/core/sdlc/post-release-review.md`.
-2. Compare planned scope vs. what shipped.
-3. Check monitoring/incident reports for the release window.
-4. Note what went well and what failed, with specifics.
-5. Turn each issue into a concrete follow-up task.
-6. Propose (don't make) any standards updates.
+1. Identify what was actually released (features, fixes, infra changes) and
+   when.
+2. Compare planned scope against what shipped — note deviations.
+3. Check monitoring/alerts/incident reports for the release window.
+4. Note what went well, with specifics, not generic praise.
+5. Note what failed or was risky, and why — root cause where known,
+   otherwise mark as open. Do not drop a failure because it was later
+   fixed; record it and the fix.
+6. Turn each issue into a concrete follow-up task (owner/skill to invoke).
+   Do not implement follow-ups here.
+7. Identify documentation left stale or inaccurate by the release.
+8. Propose (don't make) any standards updates.
+
+Focus on process and system causes; never assign blame to individuals.
 
 ## Required outputs
 
-Release summary, what went well, what failed or was risky, follow-up tasks,
-documentation updates needed, proposed standards updates if any.
+Release summary, what went well, what failed or was risky, follow-up tasks
+ready for `feature-plan`, documentation updates needed, proposed standards
+updates if any.
 
 ## Safety constraints
 
 No code, infrastructure, or deployment changes. No direct edits to adapter
 skills/rules or `.agents/core/` — propose changes only. Never read, print, or commit
-secrets from incident logs/support tickets.
+secrets, including from incident logs or support tickets.
 
 ## References
 
-- `.agents/core/sdlc/post-release-review.md` — full process
-- `feature-plan` (`.agents/core/sdlc/feature-planning.md`) — where follow-ups land
-
-## Required Final Output: Agent Run Report
-
-Every run of this skill must end with:
-
-### Agent Run Report
-
-- Skill:
-- Project type/archetype:
-- Confidence: high / medium / low
-- Inputs used:
-- Applicable standards used:
-- Missing inputs:
-- Assumptions made:
-- Project documentation gaps:
-- Standards gaps:
-- Recommended updates to `agent-standards`:
-- Items that belong to other repositories:
-- Follow-up questions, if any:
+- `feature-plan` — where follow-ups land

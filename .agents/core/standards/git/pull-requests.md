@@ -83,6 +83,22 @@ PR description, merge gating, and author/reviewer/CI-CD responsibilities.
 - No secrets, tokens, `.env` files, private keys, or credentials MUST be
   committed in a PR.
 
+### PR granularity
+
+- One PR per intent: one feature, one fix, or one standards decision.
+- A small correction found while working, in a file the PR already
+  changes or in the same area, goes into the current PR as its own
+  commit — not a new PR.
+- While a decision is still being refined, keep one PR open and push each
+  refinement to it; merge once the decision settles, not after every
+  refinement.
+- A version or ref pin (for example `ansibleRef`, `jenkinsRef`) is bumped
+  once per feature, in the consuming repository's feature PR, after the
+  producing repositories' PRs are merged — not in a separate PR after each
+  producer merge. Pins still use the actual merge commit SHA.
+- Progress and status are never PRs: they live in commits and in the
+  feature's PR.
+
 ### PR description — required sections
 
 The PR description (and the PR template that produces it) MUST cover:
@@ -93,6 +109,8 @@ The PR description (and the PR template that produces it) MUST cover:
 - What changed
 - Testing performed (how to test)
 - Documentation impact
+- Why — required when the PR changes `docs/architecture.md`; the only
+  place the reasoning behind an architecture change is kept
 - Deployment impact
 - Rollback notes
 - Screenshots/logs when relevant
@@ -126,6 +144,8 @@ The PR description (and the PR template that produces it) MUST cover:
 
 - MUST NOT push directly to `main`.
 - MUST NOT merge without an open PR.
+- MUST NOT open a PR only to bump a pin, record progress, or flip a
+  temporary operational state.
 - MUST NOT merge a Draft PR.
 - MUST NOT merge your own PR without review when the team has more than
   one developer.

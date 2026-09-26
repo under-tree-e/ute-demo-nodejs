@@ -10,7 +10,7 @@ coding agent is in use.
 | [`documentation.md`](documentation.md) | What docs must answer and when they must be updated | `docs-sync` |
 | [`development.md`](development.md) | Baseline code-organization and dependency-hygiene rules for any repo/language | `implementation-pass`, `feature-plan` |
 | [`data-modeling.md`](data-modeling.md) | Every table/collection carries a `uid`; joins and external references prefer `uid` over internal sequential `id` | `architecture-review`, `feature-plan`, `implementation-pass`, `change-audit` |
-| [`code-quality.md`](code-quality.md) | What "quality" means for a change: build gate, no silent failure/error swallowing, readability/naming/duplication, required function-level documentation | `implementation-pass`, `change-audit` |
+| [`code-quality.md`](code-quality.md) | What "quality" means for a change: build gate, no silent failure/error swallowing, readability/naming/duplication, comment content rules, required function-level documentation | `implementation-pass`, `change-audit` |
 | [`configuration.md`](configuration.md) | Non-secret configuration classification and structure | `feature-plan`, `implementation-pass` |
 | [`security.md`](security.md) | Security posture: secrets, deny-by-default, destructive-command guardrails | `architecture-review`, `devops-review`, `feature-plan`, `implementation-pass`, `change-audit` |
 | [`observability.md`](observability.md) | What must be observable — logs, metrics, traces, audit trail | `production-readiness`, `feature-plan` |
@@ -21,7 +21,9 @@ coding agent is in use.
 | [`release-versioning.md`](release-versioning.md) | SemVer, release tags as source of truth, RC/hotfix/changelog rules | `release-readiness`, `rollback-plan` |
 | [`packages-modules.md`](packages-modules.md) | In-repo module vs. separately versioned/published package decision and packaging rules | `architecture-review`, `core/archetypes/npm-package/` |
 | [`task-handover.md`](task-handover.md) | Task state lives in the repo/PR, never in private chat or unpushed local commits | `pr-summary`, `change-audit` |
-| [`knowledge-governance.md`](knowledge-governance.md) | Which document type owns which kind of project knowledge, the Decision Record (ADR) format, a lightweight Change Contract for small changes, and a conflict-handling taxonomy | `feature-plan`, `architecture-review`, `change-audit`, `docs-sync` |
+| [`knowledge-governance.md`](knowledge-governance.md) | Which document type owns which kind of project knowledge, how `docs/architecture.md` records decisions (constraints, exceptions, latest-PR references; no ADR files), a lightweight Change Contract for small changes, and a conflict-handling taxonomy | `feature-plan`, `architecture-review`, `change-audit`, `docs-sync` |
+| [`features.md`](features.md) | Feature folder lifecycle: three files, fixed status values, current-state-only content, closure by folder deletion | `feature-plan`, `implementation-pass`, `change-audit`, `docs-sync` |
+| [`token-efficiency.md`](token-efficiency.md) | Reading, delegation, review-loop, and persistent-context rules that keep agent runs cheap | All skills (baseline) |
 | [`workflow.md`](workflow.md) | Agent-neutral mandatory order of operations for non-trivial changes | All skills (baseline) |
 | [`tooling-vs-ai-responsibility.md`](tooling-vs-ai-responsibility.md) | What an AI agent should own vs. what deterministic CI/tooling must enforce | All skills (baseline) |
 | [`git/branching.md`](git/branching.md) | One task = one branch, named so type/ticket are obvious | `pr-summary`, `change-audit` |

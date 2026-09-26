@@ -25,7 +25,7 @@ restrictions per environment, and rollback/ownership expectations.
 - Package/module structure and registry conventions beyond versioning —
   see `core/standards/packages-modules.md` (planned; not yet created, see
   Open Questions).
-- Rollback plan authoring — see `core/sdlc/rollback-plan.md` / the
+- Rollback plan authoring — see the `rollback-plan` skill / the
   `rollback-plan` skill. This document states *when* a rollback plan is
   required, not how to build one.
 - Actual pipeline execution (build, test-gate, artifact publish, deploy,
@@ -97,7 +97,7 @@ Before cutting a final release tag, confirm:
 - Release notes prepared.
 - Required staging/client-staging verification done.
 - Required production approval obtained.
-- Rollback path understood (see `core/sdlc/rollback-plan.md`).
+- Rollback path understood (see the `rollback-plan` skill).
 
 After the final tag is created, the pipeline stage order is (implementation
 owned by CI/CD repos — see Related Repositories):
@@ -146,6 +146,10 @@ owned by CI/CD repos — see Related Repositories):
 - Every release must have a short description of changes sufficient to
   understand what was delivered. Release notes must match the actual
   release tag.
+- Release notes state facts: what changed for users or operators, one line
+  per item. No discovery or debugging story ("found live while…"), no
+  internal feature, phase, step, or slice identifiers, no author or
+  decision narrative.
 - Minimal template:
 
   ```
@@ -180,7 +184,7 @@ allowed source for that environment:
 - Before production deploy, know: the previous stable version, where the
   previous artifact is stored, whether there is a DB migration, whether
   that migration is reversible, who makes the rollback decision, and how
-  to verify rollback. Build the actual plan with `core/sdlc/rollback-plan.md`
+  to verify rollback. Build the actual plan with the `rollback-plan` skill
   / the `rollback-plan` skill — do not restate it here.
 - If rollback is impossible, state that explicitly in the release/
   deployment notes.
@@ -206,7 +210,7 @@ allowed source for that environment:
 ## Recommended Rules
 
 - Conduct a post-incident review after a hotfix that followed a production
-  incident (see `core/sdlc/post-release-review.md`).
+  incident (see the `post-release-review` skill).
 - Generate release notes automatically from PRs where possible,
   supplemented manually by the release owner.
 - Store release notes in the platform's Release feature (GitHub Release /

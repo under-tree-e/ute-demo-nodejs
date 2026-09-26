@@ -31,7 +31,7 @@ glance, never landing on `main` except through a reviewed, squashed PR.
   artifact) is not exempt from "one branch = one task" just because no
   application code is involved yet — it happens on its own dedicated
   branch, never directly on `main` and never appended onto another task's
-  active branch. See `core/sdlc/feature-planning.md`.
+  active branch. See the `feature-plan` skill.
 - Name branches `<type>/<ticket>-<short-description>`:
   ```
   feature/<ticket>-short-description
