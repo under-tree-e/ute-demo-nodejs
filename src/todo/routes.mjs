@@ -1,8 +1,5 @@
 //
 // Optional mini todo app which uses MongoDb - only shows up when MONGO_CONNSTR is set
-// ----------------------------------------------
-// Ben C, July 2018
-// Updated June, 2019
 //
 
 import express from "express";
