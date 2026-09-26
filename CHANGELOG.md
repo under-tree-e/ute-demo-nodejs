@@ -1,19 +1,11 @@
 ## Release v0.1.11
 
-No application code change. Fixes a real content-loss bug in
-`deploy/secrets/runtime.env.sops`, found live while re-deploying
-`v0.1.10` (F032 Крок 8, item 5, platform repo): the file committed in
-#38's rotation held only a single bare base64 value (the raw new
-`SESSION_SECRET`, with no `SESSION_SECRET=` key prefix and no other
-content) instead of a real, properly-formatted `SESSION_SECRET=<value>`
-dotenv entry -- `sops --decrypt --input-type dotenv` correctly
-decrypted it, but the *result* wasn't valid `KEY=value` content, so
-`ansible`'s `compose_release` role failed at `parse_dotenv`. Almost
-certainly caused by encrypting a file that held only the freshly
-generated secret's raw output, not a real `.env`-formatted file, per
-`deploy/secrets/README.md`'s own documented `sops --encrypt` command.
-Re-encrypted with a fresh `SESSION_SECRET` value, correctly formatted
-this time, same recipient.
+No application change. Fixes a content-loss bug in
+`deploy/secrets/runtime.env.sops`: the committed file held a bare
+base64 value instead of a valid `SESSION_SECRET=<value>` entry, which
+made `ansible`'s `compose_release` role fail at `parse_dotenv`.
+Re-encrypted with a correctly formatted `SESSION_SECRET`, same
+recipient.
 
 ### Deployment notes
 
@@ -22,56 +14,36 @@ this time, same recipient.
 
 ## Release v0.1.10
 
-No application code change. Re-cut purely to pick up `deploy/secrets/
-runtime.env.sops` re-encrypted under the current, live SOPS age key
-(#38, 2026-08-26) -- `v0.1.9`'s own copy of that file was still
-encrypted under the previous key, rotated away two days after v0.1.9
-was tagged, which made every real "Deploy Compose Release" attempt
-against `v0.1.9` fail with `age: no identity matched any of the
-recipients` (found live, F032 Крок 8, item 5). This platform's
+No application change. Re-encrypts `deploy/secrets/runtime.env.sops`
+under the current SOPS age key. A release's pinned secrets file must
+be encrypted under the key live at deploy time, since this platform's
 `compose_release` role checks out the release's own immutable git tag
-for its secrets file (never a moving branch), so a release tagged
-before a real SOPS key rotation can never decrypt again after that
-rotation -- this release exists to close that gap for real.
+for its secrets file and cannot decrypt it under a rotated-away key.
 
 ### Deployment notes
 
-- Purely a re-tag of current `main` (already at commit #38) -- no
-  other change since `v0.1.9`.
+- Purely a re-tag of current `main` -- no other change since `v0.1.9`.
 
 ## Release v0.1.9
 
-No application code change. This release verifies, for the first time,
-the real end-to-end release path through the platform's new,
-self-hosted `jenkins-controller` (`jenkins` repo F036) instead of the
-operator's previous personal Jenkins instance -- checkout, secret scan,
-`npm ci`, lint, HTTP integration tests, image build, container smoke
-test, a real SonarQube analysis + Quality Gate against the platform's
-own self-hosted SonarQube instance, supply-chain scan/SBOM, GHCR
-publish, and Semaphore-delegated deployment, all real-run on a real
-`ci-standard` pool agent (not the controller's own docker.sock
-fallback). A prior non-tagged branch run
-(`chore/F036-phase4-real-ci-verify-run`, build #4) already verified
-every stage up to and including the Quality Gate; this release is the
-first to also exercise the publish/deploy stages for real.
+No application change. Verifies the release pipeline end-to-end on
+the platform's self-hosted Jenkins controller instead of the
+operator's previous personal Jenkins instance: checkout, secret scan,
+dependency install, lint, HTTP integration tests, image build,
+container smoke test, SonarQube analysis and Quality Gate, supply-chain
+scan and SBOM, GHCR publish, and Semaphore-delegated deployment, all on
+a `ci-standard` pool agent.
 
 ### Deployment notes
 
-- Deploys via the new `jenkins-controller` release path for the first
-  time; the previous personal-Jenkins-based path stays untouched and
-  available as a rollback path if this run needs to be abandoned.
+- Deploys via the Jenkins-controller release path; the previous
+  personal-Jenkins-based path remains available as a rollback option.
 
 ## Release v0.1.8
 
-A real Deploy Compose Release run against Subject Semaphore, with a
-working SOPS decrypt and a working image, failed one step further:
-`docker compose config -q` on `deploy/compose/docker-compose.release.yml`,
-which still referenced the old `UTE_`-prefixed interpolation variable
-names (`UTE_IMAGE_REF`, `UTE_RUNTIME_ENV_FILE`, `UTE_PUBLIC_HOST`,
-`UTE_TRAEFIK_NETWORK`). `ute-ansible`'s `compose_release` role has
-rendered the non-prefixed names since the ansible-side phases of the
-`ute-workspace` UTE prefix removal initiative -- this repo's own compose
-file was never updated to match.
+Fixes a variable-name mismatch between this repo's release compose
+file and the Ansible-rendered `deployment.env`, which made
+`docker compose config -q` fail during a real deploy.
 
 ### Fixed
 
@@ -85,26 +57,21 @@ file was never updated to match.
 
 ## Release v0.1.7
 
-`v0.1.6`'s own Release Container workflow failed its Vulnerability scan
-gate (2 new HIGH CVEs surfaced since the last time this repo's dependency
-tree was verified): `CVE-2026-14257`/`CVE-2026-69152` in `brace-expansion`
-(pulled in transitively via `ejs` -> `jake` -> `minimatch`, and via
-`jake` -> `filelist` -> `minimatch`) and `CVE-2026-69192` in `ip-address`
-(pulled in via `mongodb`'s optional `socks` peer dependency — present in
-the built image despite `npm ci --omit=dev` because a production
-package's peer dependency keeps the whole chain out of the dev-only
-set). `v0.1.6` never produced a pushed image and cannot be deployed.
+Fixes 3 HIGH-severity CVEs surfaced by the release pipeline's
+vulnerability scan, in transitive dependencies pulled in via `ejs` and
+`mongodb`'s optional `socks` peer dependency. `v0.1.6` never produced a
+pushed image and cannot be deployed.
 
 ### Fixed
 
 - `src/package.json`: bumped the existing pinned `overrides` for
-  `brace-expansion` (`1.1.16` -> `1.1.18` under `jake`, `2.1.2` -> `2.1.4`
-  under `filelist`) and added a new override pinning `ip-address` to
-  `10.3.1` under `socks`. `src/package-lock.json` regenerated to match
-  (via a `node:22-alpine` container, matching the Dockerfile's runtime).
+  `brace-expansion` (`1.1.16` -> `1.1.18` under `jake`, `2.1.2` ->
+  `2.1.4` under `filelist`) and added a new override pinning
+  `ip-address` to `10.3.1` under `socks`. `src/package-lock.json`
+  regenerated to match.
 - Verified locally: `npm ci --omit=dev` succeeds, and a local
-  `docker build` + `aquasec/trivy image --severity HIGH,CRITICAL` scan of
-  the resulting image shows 0 findings.
+  `docker build` + `aquasec/trivy image --severity HIGH,CRITICAL` scan
+  of the resulting image shows 0 findings.
 
 ### Deployment notes
 
@@ -112,16 +79,11 @@ set). `v0.1.6` never produced a pushed image and cannot be deployed.
 
 ## Release v0.1.6
 
-Rotates `deploy/secrets/runtime.env.sops`'s age keypair and `SESSION_SECRET`
-value. The original age private key was never captured anywhere durable —
-it existed only as a manually placed, undocumented key file on the
-Orchestrator Semaphore this template originally ran on. Subject Semaphore
-(the new, sole executor per the `ute-workspace` self-sufficiency
-initiative) never had it, and the operator confirmed no copy exists
-anywhere. `SESSION_SECRET` is a purely internal session/cookie-signing
-value with no other system depending on its exact bytes (it exists solely
-to exercise the SOPS-encrypted-secret-delivery convention introduced in
-`v0.1.1`), so rotating both was safe.
+Rotates `deploy/secrets/runtime.env.sops`'s age keypair and
+`SESSION_SECRET` value. The previous age private key had no durable
+backup and could not be recovered. `SESSION_SECRET` is a purely
+internal session/cookie-signing value with no other system depending
+on its exact bytes, so rotating both is safe.
 
 ### Added
 
@@ -129,38 +91,33 @@ to exercise the SOPS-encrypted-secret-delivery convention introduced in
 
 ### Fixed
 
-- `deploy/secrets/runtime.env.sops`: re-encrypted with a freshly generated
-  age keypair and a freshly generated `SESSION_SECRET`. The new private
-  key must be relayed into Subject Semaphore's `phase0-converge-secrets`
-  Environment as `SOPS_AGE_KEY` before this tag can be deployed — see
-  `ute-automation`'s `docs/semaphore-deploy-compose-release.md`.
+- `deploy/secrets/runtime.env.sops`: re-encrypted with a new age
+  keypair and a new `SESSION_SECRET`. The new private key must be
+  provided to the Semaphore deployment executor as `SOPS_AGE_KEY`
+  before this tag can be deployed.
 
 ### Deployment notes
 
 - Any deployment still pinned to `v0.1.5` or earlier will fail
-  `compose_release`'s SOPS decrypt step once `ute-ansible`'s fail-closed
-  age-key check ships, since the old key is permanently lost. Re-point
-  deployments at `v0.1.6` or later.
+  `compose_release`'s SOPS decrypt step once `ansible`'s fail-closed
+  age-key check ships, since the old key is permanently lost.
+  Re-point deployments at `v0.1.6` or later.
 
 ## Release v0.1.5
 
-Carries the F021 CI/CD quality and security tooling work (gitleaks,
-SonarQube, containerized Trivy/Syft, and now k6) through a clean release
-tag, to exercise the new advisory k6 performance-test stage for the
-first time — the last remaining unverified piece of `ute-workspace`
-feature F021.
+Adds gitleaks, SonarQube, containerized Trivy/Syft, and k6 CI/CD
+quality and security tooling.
 
 ### Added
 
 - `tests/load/smoke.js`: a minimal k6 load-test script exercising
   `/healthz`, `/readyz`, and `/info` under light concurrent load. No
-  thresholds defined — advisory only, never fails the build.
+  thresholds defined -- advisory only, never fails the build.
 
 ### Fixed
 
-- Nothing new in this release beyond what already shipped to `main`
-  since `v0.1.4` (F021 Stage 1-3 fixes, already released as part of
-  ongoing `main` commits, not their own tagged release).
+- No additional fixes in this release beyond what already shipped to
+  `main`.
 
 ### Changed
 
@@ -169,28 +126,18 @@ feature F021.
 
 ### Known issues
 
-- No performance budget/threshold has been agreed for this demo app yet
-  — the k6 stage is purely informational (archives a JSON summary for
-  human review), not a gate.
+- No performance threshold is defined for this demo app; the k6 stage
+  is informational only and archives a JSON summary for review.
 
 ### Deployment notes
 
-- This release is expected to be the first to exercise the k6
-  performance-test stage for real (release-tag-gated,
-  `UTE_PERFORMANCE_TEST_ENABLED=true`) — see `ute-workspace` feature
-  F021 Stage 4.
+- Exercises the release-tag-gated k6 performance-test stage
+  (`PERFORMANCE_TEST_ENABLED=true`).
 
 ## Release v0.1.4
 
-Finishes the real Jenkins release-tag pipeline verification `v0.1.3`
-started. `v0.1.3`'s Semaphore delegation stage ran for the first time ever
-and correctly surfaced a real contract mismatch: `trigger_semaphore_deployment.py`
-built its Semaphore task payload assuming the target template ran
-`ansible-playbook` directly (`--extra-vars`), but the real "UTE - Deploy
-Compose Release" template invokes `ute-automation`'s
-`scripts/deploy-compose-release`, which deliberately rejects arbitrary
-Ansible extra vars/limits and accepts exactly six specific flags. `v0.1.4`
-carries the fixed script through a clean release tag.
+Fixes a Semaphore deployment payload mismatch: the trigger script sent
+Ansible-style flags that the deployment template does not accept.
 
 ### Added
 
@@ -201,9 +148,7 @@ carries the fixed script through a clean release tag.
 - `scripts/trigger_semaphore_deployment.py`: now sends
   `deploy-compose-release`'s actual accepted flags (`--deployment-id`,
   `--inventory-ref`, `--artifact-version`, `--image-ref`, `--source-ref`,
-  `--mode apply`) instead of `--extra-vars` — reproduced live as the first
-  real Semaphore delegation attempt from Jenkins, which failed with
-  `--extra-vars is not accepted`.
+  `--mode apply`) instead of `--extra-vars`.
 
 ### Changed
 
@@ -216,23 +161,15 @@ carries the fixed script through a clean release tag.
 
 ### Deployment notes
 
-- This release is expected to complete the first real, fully green
-  Jenkins release-tag pipeline: GHCR publish, inventory resolve, and
-  Semaphore-delegated deployment to `ute-sandbox-01` all succeeding in one
-  build — see `ute-workspace` feature F020.
+- Completes the Jenkins release-tag pipeline: GHCR publish, inventory
+  resolve, and Semaphore-delegated deployment to the sandbox host all
+  succeeding in one build.
 
 ## Release v0.1.3
 
-Re-cuts a release tag to finish proving the real Jenkins release-tag
-pipeline end-to-end. `v0.1.2`'s first Jenkins build (build #1) correctly
-surfaced two real infrastructure gaps — missing Jenkins Credentials
-entries and a malformed `UTE_INVENTORY_REPOSITORY` value in the shared
-Config File — both now fixed operationally (not code changes). Once
-fixed, `v0.1.2` did successfully publish to GHCR, but its own
-immutable-release guard then correctly refused to let a retry rebuild
-overwrite that already-published tag, blocking the still-unproven
-inventory-resolve/Semaphore-delegation stages. `v0.1.3` is a clean tag to
-carry that already-fixed configuration through those remaining stages.
+Re-cuts the release tag after fixing the Jenkins Credentials entries
+and Config File value that blocked `v0.1.2`'s inventory-resolve and
+Semaphore-delegation stages (operational configuration, not code).
 
 ### Added
 
@@ -240,9 +177,8 @@ carry that already-fixed configuration through those remaining stages.
 
 ### Fixed
 
-- Nothing in `src/`; the real fixes (Jenkins Credentials, Config File
-  value) were infrastructure/configuration, not code, and already apply
-  to this commit.
+- Nothing in `src/`; the fixes were infrastructure/configuration, not
+  code, and already apply to this commit.
 
 ### Changed
 
@@ -255,87 +191,73 @@ carry that already-fixed configuration through those remaining stages.
 
 ### Deployment notes
 
-- This release is expected to be the first to observe the Jenkins
-  release-tag pipeline's inventory-resolve and Semaphore
-  deployment-delegation stages succeed for real, completing the
-  verification `v0.1.2` started — see `ute-workspace` feature F020.
+- Exercises the Jenkins release-tag pipeline's inventory-resolve and
+  Semaphore deployment-delegation stages.
 
 ## Release v0.1.2
 
-Migrates this app's Jenkinsfile onto `ute-jenkins-library`'s shared
-`uteNodeContainerRelease` step (`ute-workspace` F020 — Jenkins as the
-mandatory CI/CD path, GitHub Actions as reserve) and fixes two real bugs
-that F020's live-infrastructure testing surfaced. This is the first
-release cut specifically to exercise the real Jenkins release-tag pipeline
-(GHCR publish, inventory resolve, Semaphore deployment delegation)
-end-to-end against `ute-sandbox-01`.
+Migrates the Jenkinsfile onto the shared `nodeContainerRelease`
+pipeline step; Jenkins is the CI/CD path, GitHub Actions is the
+fallback path. Fixes two bugs surfaced by exercising that pipeline
+against a real target host.
 
 ### Added
 
-- Nothing new in `src/`; this release packages CI/CD-path and monitoring
-  fixes already on `main` as the first release-tag build to run through
-  the real Jenkins controller.
+- Nothing new in `src/`; packages CI/CD-path and monitoring fixes
+  already on `main` as the first release-tag build to run through the
+  Jenkins controller.
 
 ### Fixed
 
 - `/api/monitoringdata`: container memory stats now read the cgroup v2
   unified hierarchy (`/sys/fs/cgroup/memory.current` /
   `memory.max`) first, falling back to the legacy cgroup v1 paths, and
-  falling back further to `os.totalmem()` when the limit is unset —
-  previously hardcoded the v1-only path, which silently failed on every
-  cgroup v2 host (never caught before because prior CI never ran the app
-  inside a plain container).
+  falling back further to `os.totalmem()` when the limit is unset --
+  previously used only the cgroup v1 path, which fails on cgroup v2
+  hosts.
 - `src/tests/health-tests.http`: removed quotes from httpyac string
   equality assertions (`?? body status == ok` /
-  `?? body status == ready`) — httpyac treats the RHS as a literal token,
-  so quoting it always failed the assertion regardless of the actual
-  response.
+  `?? body status == ready`) -- httpyac treats the RHS as a literal
+  token, so quoting it always failed the assertion regardless of the
+  actual response.
 
 ### Changed
 
-- `Jenkinsfile` now delegates to `ute-jenkins-library`'s
-  `uteNodeContainerRelease` shared step instead of an inline pipeline,
-  closing the template-ownership gap flagged in F020's audit; CI/CD
-  configuration values are now sourced from a Jenkins Config File
-  Provider entry (`ute-demo-nodejs-cicd-config`) rather than
-  folder/job-level environment variables (Environment Injector doesn't
-  support Multibranch Pipeline/Folder jobs).
+- `Jenkinsfile` now delegates to the shared `nodeContainerRelease`
+  step instead of an inline pipeline; CI/CD configuration values are
+  sourced from a Jenkins Config File Provider entry
+  (`ute-demo-nodejs-cicd-config`) instead of folder/job-level
+  environment variables (Environment Injector doesn't support
+  Multibranch Pipeline/Folder jobs).
 - `docker-compose.yml`: explicit `container_name` set to stop Compose's
-  double-prefixed auto-naming; dev-compose `node_modules` volume renamed
-  to the concise `<container>_<subcategory>_volume` convention.
+  double-prefixed auto-naming; dev-compose `node_modules` volume
+  renamed to the concise `<container>_<subcategory>_volume` convention.
 - `docs/ci-cd.md` rewritten to document the Config File Provider
   mechanism.
-- Docs prose neutralized of `UTE`-prefixed brand language per the
-  workspace-wide prefix-removal initiative (functional identifiers
-  unchanged).
+- Docs prose no longer uses the `UTE`-prefixed brand name (functional
+  identifiers unchanged).
 
 ### Known issues
 
-- None known beyond the pre-existing items already listed under `v0.1.0`/
-  `v0.1.1`.
+- None known beyond the pre-existing items already listed under
+  `v0.1.0`/`v0.1.1`.
 
 ### Deployment notes
 
-- This is the first release expected to actually exercise the Jenkins
-  release-tag pipeline's deploy-delegation stage (Semaphore Task Template
-  "UTE - Deploy Compose Release" against `ute-sandbox-01`) — see
-  `ute-workspace` feature F020 for the live verification record.
+- Exercises the Jenkins release-tag pipeline's deploy-delegation stage
+  against the sandbox host.
 
 ## Release v0.1.1
 
-Adds the `deploy/secrets/` SOPS-encrypted runtime secret convention (no
-application code change) so the image can carry a real `SESSION_SECRET`
-into production — `v0.1.0` was tagged before that convention existed, so
-its checkout never contains `deploy/secrets/runtime.env.sops`, which real
-`ute-workspace` F017 deployment attempts against `ute-sandbox-01` need at
-the pinned release tag.
+Adds the `deploy/secrets/` SOPS-encrypted runtime secret convention so
+the image can carry a real `SESSION_SECRET` into production. No
+application code change.
 
 ### Added
 
-- `deploy/secrets/README.md` and `deploy/secrets/runtime.env.sops`: the
-  SOPS-encrypted-file secret-delivery convention (`ute-workspace` F016
-  Mode B / Option B — the encrypted file lives in this repo, not
-  `ute-gitops`), including a mandatory rotation-on-handoff policy.
+- `deploy/secrets/README.md` and `deploy/secrets/runtime.env.sops`:
+  the SOPS-encrypted-file secret-delivery convention, including a
+  mandatory rotation-on-handoff policy.
 
 ### Fixed
 
@@ -350,50 +272,40 @@ the pinned release tag.
 
 ### Known issues
 
-- Still not deployed anywhere as of this release being cut — the actual
-  deploy attempt against `ute-sandbox-01` is `ute-workspace` F017,
-  tracked separately.
+- Not deployed anywhere yet.
 
 ### Deployment notes
 
-- Not applicable — no deployment performed as part of cutting this
+- Not applicable -- no deployment performed as part of cutting this
   release itself.
 
 ## Release v0.1.0
 
-First UTE-controlled release of this demo Node.js app. Version reset from
-the inherited upstream fork's `4.9.9` to `0.1.0`, since that number never
-reflected a real UTE release — this is the actual first one.
+First release of this demo app under this platform's release path.
+Version reset from the inherited upstream fork's `4.9.9` to `0.1.0`.
 
 ### Added
 
-- Nothing new in this release; it packages the UTE release-path
-  adaptations already present on `main` (see Changed) as the platform's
-  first real, tagged, published image.
+- Packages the release-path adaptations already on `main` (see
+  Changed) as the first tagged, published image.
 
 ### Fixed
 
-- Prettier/Lint formatting drift across 8 source files, which had been
-  the last blocker keeping every GitHub Actions run on `main` red since
-  CI was first stabilized.
+- Prettier/lint formatting drift across 8 source files that was
+  failing CI.
 
 ### Changed
 
-- Health/readiness endpoints (`/healthz`, `/readyz`) and proxy-aware,
-  secure production session/cookie configuration, adapting the original
-  demo app for the UTE release path.
+- Adds health/readiness endpoints (`/healthz`, `/readyz`) and
+  proxy-aware, secure production session/cookie configuration.
 
 ### Known issues
 
-- This image is built and published to
-  `ghcr.io/under-tree-e/ute-demo-nodejs:0.1.0`, but is **not deployed
-  anywhere yet** — provisioning/deployment to a real UTE-managed server is
-  separate, larger follow-up work (`ute-workspace` feature F010).
-- The Jenkins multibranch release path has not been independently
-  verified against a live Jenkins controller (no credentials available
-  during the CI-stabilization pass) — GitHub Actions is the only verified
-  path as of this release.
+- Built and published to `ghcr.io/under-tree-e/ute-demo-nodejs:0.1.0`
+  but not deployed anywhere yet.
+- The Jenkins multibranch release path has not been verified against a
+  live Jenkins controller; GitHub Actions is the only verified path.
 
 ### Deployment notes
 
-- Not applicable — no deployment performed as part of this release.
+- Not applicable -- no deployment performed as part of this release.
