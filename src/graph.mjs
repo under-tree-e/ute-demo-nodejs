@@ -1,7 +1,5 @@
 //
 // Graph helper module, far more lightweight than the massive Graph SDK
-// -------------------------------------------------------------------------
-// Ben C - Sept 2022
 //
 
 import axios from "axios";

@@ -1,7 +1,5 @@
 //
 // Routes used by login and account screen
-// ---------------------------------------------
-// Ben C, Nov 2020 - Updated Aug 2022
 //
 
 import express from "express";

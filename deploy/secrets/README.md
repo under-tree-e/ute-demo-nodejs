@@ -1,15 +1,11 @@
 # SOPS-encrypted runtime secrets
 
 This directory holds this application's SOPS-encrypted runtime secret
-file(s) — the no-Vault delivery path (`ute-workspace` F016 Mode B,
-`secret_delivery_mode: sops-encrypted-file`) for hosts that don't run
+file(s) — the no-Vault delivery path
+(`secret_delivery_mode: sops-encrypted-file`) for hosts that don't run
 Vault Agent.
 
 ## Why here, not `gitops` or `automation`
-
-Decided during `ute-workspace` feature
-[`F017-first-end-to-end-demo-deployment`](https://github.com/ute-homelab/ute-workspace/tree/main/features/F017-first-end-to-end-demo-deployment)
-(Option B):
 
 - **`gitops`** is Kubernetes/Kustomize-only and, per its own
   `README.md`/`SECURITY.md`, holds no secrets of any kind — not even
