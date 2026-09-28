@@ -1,8 +1,6 @@
 //
 // Adds Prometheus metrics to the /metrics endpoint
 // NOTE: Works a little differently to the other routes
-// --------------------------------------------------------
-// Ben C, Sept 2022
 //
 
 import PromMiddleware from "express-prometheus-middleware";

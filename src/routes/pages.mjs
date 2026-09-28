@@ -1,7 +1,5 @@
 //
 // HTML page routes, that render ejs templates
-// --------------------------------------------------
-// Ben C, Jan 2020
 //
 
 import express from "express";

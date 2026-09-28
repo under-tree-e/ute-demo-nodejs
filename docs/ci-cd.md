@@ -64,3 +64,24 @@ SonarQube server must also have a webhook configured back to this Jenkins
 controller (`<jenkins-url>/sonarqube-webhook/`) — without it,
 `waitForQualityGate()` blocks for its full timeout on every build before
 failing closed.
+
+## Local gates
+
+Commands that work without a running instance of the app:
+
+```bash
+make lint          # prettier --check, via src/
+```
+
+Commands that need the app already running (start it first with
+`make run` in a separate shell, or `npm run watch` in `src/`):
+
+```bash
+make test          # httpyac base-tests.http against TEST_BASE_URL (default http://127.0.0.1:3000)
+make test-health    # httpyac health-tests.http against TEST_BASE_URL
+```
+
+`make image` and `make image-smoke` build a local OCI image and verify its
+Docker healthcheck; both need Docker and do not need the app already
+running. `tests/load/smoke.js` (k6) needs a running app and is advisory
+only — it is not a merge gate.

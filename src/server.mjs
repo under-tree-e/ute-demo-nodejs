@@ -1,8 +1,6 @@
 //
-// Main Express server for nodejs-demoapp
-// ---------------------------------------------
-// UTE release-path adaptation: health/readiness, secure production sessions
-// and proxy-aware cookie configuration.
+// Main Express server for nodejs-demoapp: health/readiness endpoints,
+// secure production sessions, and proxy-aware cookie configuration.
 //
 
 import { readFileSync } from "fs";

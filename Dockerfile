@@ -1,14 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM node:22-alpine
 
-# Real gap found 2026-09-02 (v0.1.10 re-cut, CI's own Vulnerability
-# scan step): node:22-alpine is a floating tag -- its own bundled
-# libssl3/libcrypto3 packages drift over time, independent of anything
-# in this repo, and a rebuild picked up a real HIGH CVE
-# (CVE-2026-14456, OpenSSL DoS via unbounded QUIC-server memory
-# growth) already fixed upstream in Alpine's own package index. Same
-# "don't wait on an upstream base-image update" precedent as the npm
-# removal below -- upgrade Alpine's own packages at build time instead.
+# node:22-alpine is a floating tag; its bundled libssl3/libcrypto3
+# packages can drift from the upstream tag over time. Upgrade them at
+# build time so the image carries current Alpine package fixes.
 RUN apk --no-cache upgrade
 
 ARG VERSION=dev
@@ -31,10 +26,8 @@ RUN npm ci --omit=dev --no-audit --no-fund
 
 COPY --chown=node:node src/ ./
 
-# npm itself is never invoked at runtime (CMD calls node directly) -- removing
-# its own bundled internals here drops vulnerabilities in npm's own vendored
-# dependencies (unrelated to this app's own dependency tree) from the final
-# image entirely, rather than waiting on an upstream base-image update.
+# npm is not invoked at runtime (CMD calls node directly). Removing its
+# binaries and bundled dependencies keeps them out of the final image.
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 
 USER node

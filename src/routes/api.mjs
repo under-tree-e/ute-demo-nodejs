@@ -1,7 +1,5 @@
 //
 // API routes, that return JSON
-// ---------------------------------------------
-// Ben C, Jan 2020
 //
 
 import express from "express";
