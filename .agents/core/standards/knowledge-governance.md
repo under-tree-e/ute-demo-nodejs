@@ -78,7 +78,7 @@ every knowledge artifact below).
 | Why a technical/architectural approach was chosen | The description of the PR that changed `docs/architecture.md` (its `Why` section), found via the PR reference next to the statement |
 | How components/boundaries are structured, right now | `docs/architecture.md` (built by `project-discovery.md`, kept current by `architecture-review.md` + `docs-sync.md`) |
 | How an accepted change will be implemented | `features/FXXX-.../plan.md` (while open) |
-| Documented exceptions to a standard | `docs/architecture.md` "Exceptions" section |
+| Documented exceptions to a standard | `docs/architecture.md` "Exceptions" section, or one line in the document of the exempted area (see Architecture document) |
 | How something is deployed or operated | `docs/operations.md`, plus the `rollback-plan` skill output for risky changes |
 | What proves a change is complete | `spec.md` Acceptance criteria + the `test-strategy` skill output |
 | What changed, and when | Git history of the base branch (`git log --first-parent`); `CHANGELOG.md` for releases only |
@@ -94,20 +94,25 @@ that made the change.
 - **One document per area.** The architecture document is
   `docs/architecture.md`. A repository that already keeps its architecture
   elsewhere, or split by area, keeps that location; "Constraints" and
-  "Exceptions" may be sections of it or one dedicated file each within
-  the same set (for example a `rules.md` next to it). Never a second copy
+  "Exceptions", when the project uses them, may be sections of it or one
+  dedicated file each within the same set (for example a `rules.md` next to it). Never a second copy
   of the same area.
 - **Current state by section.** A change edits the section it belongs to.
   A new section is added only for a new topic. No "Updates", "Changes",
   or "History" sections.
 - **Constraints.** A decision that forbids or requires something is
-  recorded as a dry, checkable rule in a "Constraints" section, e.g.
-  "Destroy runs only on sandbox hosts. (#123)". That is enough to keep an
-  agent from undoing it; the reason is in the PR.
+  recorded as a dry, checkable rule, in one of two forms the project
+  chooses and uses throughout: a "Constraints" section, e.g. "Destroy runs
+  only on sandbox hosts. (#123)", or a descriptive statement in the
+  section that owns the topic, e.g. "Vault Agent starts with `docker
+  compose` before Salt." Either is enough to keep an agent from undoing
+  it; the reason is in the PR.
 - **Exceptions.** A documented exception to a standard (the kind
   `ci-cd.md`, `jenkins.md`, `release-readiness` and `project-discovery`
-  accept) is an entry in an "Exceptions" section: what is exempt, its
-  scope, the PR, and the condition for removing it. An exception whose
+  accept) states what is exempt, its scope, and the condition for
+  removing it: as an entry in an "Exceptions" section, or, in a project
+  without that section, as one line in the document of the area it
+  exempts (e.g. `docs/ci-cd.md` for a CI exception). An exception whose
   removal condition is met is deleted.
 - **PR references, latest only.** A statement carries the PR that last
   changed it — `(#123)`, or `(ansible#228)` across repositories. When the
@@ -209,8 +214,8 @@ disagreement before acting:
   references on one statement, in `docs/architecture.md`.
 - A documented exception without a removal condition, or one kept after
   its removal condition is met.
-- Citing a documented exception that has no entry in the
-  `docs/architecture.md` "Exceptions" section.
+- Citing a documented exception that is recorded nowhere (neither an
+  "Exceptions" entry nor a line in the exempted area's document).
 
 ## Agent Must Check
 
@@ -221,9 +226,9 @@ disagreement before acting:
 - Is agent memory, a prior conversation summary, or "most recent/most
   similar" search ranking being treated as the source of truth for
   something a repository document should own?
-- When a standard's exception clause is used, does the
-  `docs/architecture.md` "Exceptions" section have the entry, with scope,
-  PR, and removal condition?
+- When a standard's exception clause is used, is the exception recorded
+  (an "Exceptions" entry or a line in the exempted area's document) with
+  scope and removal condition?
 - When a change alters architecture, does `docs/architecture.md` change
   in the owning section in the same PR, with that PR as the statement's
   only reference?

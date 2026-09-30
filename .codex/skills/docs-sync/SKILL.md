@@ -25,8 +25,8 @@ Current git diff, existing `docs/*.md`.
 3. Update only the relevant docs. If none need updates, state why.
    `docs/architecture.md` follows `.agents/core/standards/knowledge-governance.md`
    "Architecture document": edit the owning section in place, record
-   decision outcomes as "Constraints" and exceptions in "Exceptions" (with
-   a removal condition), give each changed statement this PR as its only
+   decision outcomes and exceptions (with a removal condition) in the form
+   the project uses, give each changed statement this PR as its only
    reference, and never create decision-record files.
 4. Summarize documentation changes made.
 

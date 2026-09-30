@@ -78,8 +78,8 @@ the expected sections:
   Non-goals, Current status.
 - `docs/architecture.md` — Overview, Components, Data flow, External
   integrations, Environments, Security model, Deployment model,
-  Observability, Known limitations, Constraints, Exceptions — current
-  state only, updated per `.agents/core/standards/knowledge-governance.md`
+  Observability, Known limitations, and Constraints/Exceptions in the
+  form the project uses — current state only, updated per `.agents/core/standards/knowledge-governance.md`
   "Architecture document".
 - `docs/environments.md` — each real tier (Local/Dev/Stage/Production or the
   project's names), Secrets and configuration, Access model.
