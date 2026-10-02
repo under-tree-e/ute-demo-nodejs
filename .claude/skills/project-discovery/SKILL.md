@@ -63,8 +63,8 @@ Makefile/Taskfile/`package.json` build/deploy wrappers, `Dockerfile` /
 ```text
 CI/CD model: GitHub Actions | Jenkins | both | unknown | project-local exception
 Recommended pipeline owner: ci-templates | jenkins-library |
-  project-specific exception (must have an entry in docs/architecture.md
-  "Exceptions" — core/standards/knowledge-governance.md)
+  project-specific exception (recorded per
+  core/standards/knowledge-governance.md → "Architecture document")
 ```
 
 ## Required outputs
