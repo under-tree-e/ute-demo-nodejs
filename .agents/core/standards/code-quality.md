@@ -79,6 +79,19 @@ template names, labels, UI text).
 - A short inline comment is allowed only for a non-obvious fact about the
   code's behavior (a protocol constraint, an ordering requirement, a
   platform limitation). One line where possible.
+- In a file without functions (configuration, compose, Dockerfile, state
+  or template files), a header comment is allowed only when the file's
+  purpose is not clear from its path, and then as one line. A comment
+  never compares the file with another file ("same container as …").
+- A module docstring that is also a CLI's `--help` text states in one
+  sentence what the script does, then only what is needed to run it:
+  environment variables, inputs and outputs not visible from the flags,
+  behavior that changes the result. No examples, rationale, or advice.
+- Comments contain no run instructions ("Run from this directory: …",
+  "Run via …"); they belong in the runbook. Comments contain no
+  project-level design statements (which component manages, deploys, or
+  schedules what) and no pointers such as "Contract: docs/…"; the
+  architecture document owns those.
 - Comments and names MUST NOT contain: feature/ticket identifiers
   (`F037`, `platform#F041`), rollout phase/step/slice names, dates,
   author or operator names, decisions and their reasoning, rejected
@@ -86,8 +99,9 @@ template names, labels, UI text).
   fixed, incident or debugging stories, or cross-references to planning
   documents.
 - That content belongs in the commit message or the PR. A lasting rule
-  that follows from a decision goes into `docs/architecture.md` as a
-  constraint (`core/standards/knowledge-governance.md`).
+  that follows from a decision goes into the architecture document, in
+  the form the project uses (`core/standards/knowledge-governance.md` →
+  "Architecture document").
 - Existing comments that break these rules:
   - In code the team owns (written by the team or its agents): rewrite or
     delete them without asking, in the change that touches the file or in

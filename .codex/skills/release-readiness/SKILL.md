@@ -49,8 +49,8 @@ changes, existing rollback plan, release notes location.
 Pipeline ownership must be clear before release (`.agents/core/standards/ci-cd.md`):
 GitHub Actions via an approved `ci-templates` reusable workflow, Jenkins via
 an approved `jenkins-library` shared library, or a documented
-project-specific exception (an entry in the `docs/architecture.md` "Exceptions" section, see
-`.agents/core/standards/knowledge-governance.md`). Absent one of these, do not
+project-specific exception (recorded per
+`.agents/core/standards/knowledge-governance.md` → "Architecture document"). Absent one of these, do not
 return a plain "ready" verdict.
 
 ## Release versioning gate

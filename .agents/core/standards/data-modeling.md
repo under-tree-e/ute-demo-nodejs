@@ -30,9 +30,8 @@ non-sequential unique identifier does not.
 
 ## Source Documents
 
-- Operator decision (2026-08-03), recorded directly here — a strategic
-  rule drawn from prior migration incidents, not derived from an external
-  standards memo.
+- Project rule recorded directly in this standard, not derived from an
+  external standards memo.
 
 ## Required Rules
 

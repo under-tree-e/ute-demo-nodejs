@@ -150,8 +150,8 @@ deploy → release tag (if a release is needed).
   dependency checks, container scan, and coverage reporting as additional
   CI checks when the project's risk profile calls for them.
 - Treat any CI/CD bypass as an exceptional path, not routine — it needs a
-  named, accountable decision-maker and a documented reason: an entry in the `docs/architecture.md` "Exceptions" section
-  with its removal condition, or, while the feature is open, its `spec.md`
+  named, accountable decision-maker and a documented reason: a documented exception with its removal condition
+  (`core/standards/knowledge-governance.md` → "Architecture document"), or, while the feature is open, its `spec.md`
   Risks section (`core/standards/knowledge-governance.md`).
 
 ## Forbidden Patterns
@@ -219,7 +219,7 @@ Agents may:
 - Must not let duplicated pipeline logic in an application repo pass review
   silently — an application repo may embed its own pipeline logic instead
   of using `ci-templates`/`jenkins-library` only with an explicit,
-  documented exception (an entry in the `docs/architecture.md` "Exceptions" section),
+  documented exception (`core/standards/knowledge-governance.md` → "Architecture document"),
   never as a silent default.
 - Must not execute a production deployment, rollback, or infrastructure
   apply/destroy directly from an AI-agent process — that belongs to
@@ -263,7 +263,7 @@ Every consuming project must have a `docs/ci-cd.md` (produced/maintained by
   project-local exception.
 - **Recommended/actual pipeline owner** — `ci-templates`,
   `jenkins-library`, or the documented project-specific exception (with
-  its `docs/architecture.md` Exceptions entry).
+  its exception entry, per `core/standards/knowledge-governance.md`).
 - Build/test/deploy commands actually used, and where the deployment step
   hands off to `ansible`/`automation`/`infra`/`gitops`.
 - **Local gates** — the exact commands an agent runs before handing a
@@ -277,7 +277,7 @@ release gate, not a suggestion (see the `release-readiness` skill):
 
 - GitHub Actions via approved `ci-templates` reusable workflows, or
 - Jenkins via approved `jenkins-library` shared library steps, or
-- a documented project-specific exception (an entry in the `docs/architecture.md` "Exceptions" section).
+- a documented project-specific exception (`core/standards/knowledge-governance.md` → "Architecture document").
 
 Absent one of these, `release-readiness` must not return a plain "ready"
 verdict. In addition, a release must not be marked ready unless the merge

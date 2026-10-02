@@ -63,8 +63,8 @@ Makefile/Taskfile/`package.json` build/deploy wrappers, `Dockerfile` /
 ```text
 CI/CD model: GitHub Actions | Jenkins | both | unknown | project-local exception
 Recommended pipeline owner: ci-templates | jenkins-library |
-  project-specific exception (must have an entry in docs/architecture.md
-  "Exceptions" — core/standards/knowledge-governance.md)
+  project-specific exception (recorded per
+  core/standards/knowledge-governance.md → "Architecture document")
 ```
 
 ## Required outputs
@@ -78,8 +78,8 @@ the expected sections:
   Non-goals, Current status.
 - `docs/architecture.md` — Overview, Components, Data flow, External
   integrations, Environments, Security model, Deployment model,
-  Observability, Known limitations, Constraints, Exceptions — current
-  state only, updated per `.agents/core/standards/knowledge-governance.md`
+  Observability, Known limitations, and Constraints/Exceptions in the
+  form the project uses — current state only, updated per `.agents/core/standards/knowledge-governance.md`
   "Architecture document".
 - `docs/environments.md` — each real tier (Local/Dev/Stage/Production or the
   project's names), Secrets and configuration, Access model.

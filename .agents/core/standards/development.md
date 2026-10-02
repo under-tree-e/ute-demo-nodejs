@@ -39,9 +39,9 @@ for the stack in play.
 - Package & Module Standard (status: On Review) — module-vs-package
   decision principle and naming-clarity rules applied here to in-repo
   module organization.
-- Operator decision (2026-08-03), recorded directly here — import
-  grouping and explicit-typing conventions below, not derived from the two
-  source docs above.
+- Project rule recorded directly in this standard — import grouping and
+  explicit-typing conventions below, not derived from the two source docs
+  above.
 
 ## Required Rules
 
