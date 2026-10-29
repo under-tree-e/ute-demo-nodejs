@@ -28,9 +28,9 @@ npx httpyac tests/metrics-tests.http --tag public
 METRICS_TOKEN=local-test-token npm start
 npx httpyac tests/metrics-tests.http --tag protected --var metricsToken=local-test-token
 
-# Disabled
-DISABLE_METRICS=true npm start
-npx httpyac tests/metrics-tests.http --tag disabled
+# Disabled: the token stays set so the /info check can look for it
+DISABLE_METRICS=true METRICS_TOKEN=local-test-token npm start
+npx httpyac tests/metrics-tests.http --tag disabled --var metricsToken=local-test-token
 ```
 
-Add `--var baseUrl=<url>` when the app is not on `http://localhost:3000`. The protected tag sends missing, empty, malformed, wrong-scheme, same-length, shorter and longer credentials (all 401), the correct token (200, including `/metrics?probe=1`), and checks that `/healthz`, `/readyz` and `/` stay public.
+Add `--var baseUrl=<url>` when the app is not on `http://localhost:3000`. The protected tag sends missing, empty, malformed, wrong-scheme, same-length, shorter and longer credentials (all 401), the correct token (200, including `/metrics?probe=1`), and checks that `/healthz`, `/readyz`, `/` and `/info` stay public. The protected and disabled tags both check that `/info` contains neither `METRICS_TOKEN` nor its value.

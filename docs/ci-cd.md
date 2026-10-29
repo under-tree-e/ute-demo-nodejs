@@ -86,11 +86,15 @@ and is run from `src/` with the tag matching how the app was started:
 
 ```bash
 npx httpyac tests/metrics-tests.http --tag public --var baseUrl=http://127.0.0.1:3000      # METRICS_TOKEN unset or empty
-npx httpyac tests/metrics-tests.http --tag protected --var baseUrl=http://127.0.0.1:3000 --var metricsToken=<test-only value>  # METRICS_TOKEN=<same value>
-npx httpyac tests/metrics-tests.http --tag disabled --var baseUrl=http://127.0.0.1:3000    # DISABLE_METRICS=true
+npx httpyac tests/metrics-tests.http --tag protected --var baseUrl=http://127.0.0.1:3000 --var metricsToken=local-test-token  # METRICS_TOKEN=local-test-token
+npx httpyac tests/metrics-tests.http --tag disabled --var baseUrl=http://127.0.0.1:3000 --var metricsToken=local-test-token   # DISABLE_METRICS=true METRICS_TOKEN=local-test-token
 ```
 
 Do not pass `--all`; it runs every tag and the modes contradict each other.
+
+`local-test-token` is a disposable test-only value; never pass a real token.
+The protected and disabled tags also check that the public `/info` page
+contains neither `METRICS_TOKEN` nor its value.
 
 `make image` and `make image-smoke` build a local OCI image and verify its
 Docker healthcheck; both need Docker and do not need the app already

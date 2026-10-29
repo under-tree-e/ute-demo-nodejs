@@ -84,6 +84,10 @@ app starts and runs with none of them configured. See
   `Bearer <METRICS_TOKEN>`. Both values are hashed with SHA-256 and compared
   with `crypto.timingSafeEqual`, so length differences never throw or
   short-circuit. Only `/metrics` is guarded; the token is read at startup.
+- The public `/info` page lists environment variables except those whose
+  names contain `SECRET`, `PWD`, `PASSWORD`, `KEY`, `TOKEN`, `CONNSTR`,
+  `PATH` or `NPM_`. Redaction is by name only; a secret stored under any
+  other name is shown.
 - The container image drops the `npm`/`npx` binaries and npm's own
   bundled dependencies at build time; the running container never
   invokes `npm`.
