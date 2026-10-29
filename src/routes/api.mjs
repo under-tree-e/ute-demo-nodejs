@@ -9,6 +9,10 @@ import fs from "fs";
 import axios from "axios";
 import appInsights from "applicationinsights";
 
+const packageJson = JSON.parse(
+  fs.readFileSync(new URL("../package.json", import.meta.url)),
+);
+
 // =======================================================================
 // Get weather data as JSON
 // =======================================================================
@@ -124,6 +128,13 @@ router.get("/api/monitoringdata", async function (req, res, next) {
       message: e.toString(),
     });
   }
+});
+
+// =======================================================================
+// Application version from package.json as JSON
+// =======================================================================
+router.get("/api/version", function (req, res) {
+  res.status(200).json({ version: packageJson.version });
 });
 
 export default router;

@@ -32,3 +32,11 @@ GET {{baseUrl}}/api/monitoringdata
 ?? status == 200
 ?? body memUsedBytes isNumber
 ?? body cpuAppPercentage isNumber
+
+
+### Base - Version API
+GET {{baseUrl}}/api/version
+
+?? status == 200
+?? header content-type includes application/json
+?? body version isString

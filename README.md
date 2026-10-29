@@ -14,6 +14,7 @@ The app has several basic pages accessed from the top navigation menu, some of w
 - **'Weather'** - (Optional) Gets the location of the client page (with HTML5 Geolocation). The resulting location is used to fetch weather data from the [OpenWeather](https://openweathermap.org/) API
 - **'Todo'** - (Optional) This is a small todo/task-list app which uses MongoDB as a database.
 - **'User Account'** - (Optional) When configured with Azure AD (application client id) user login button will be enabled, and an user-account details page enabled, which calls the Microsoft Graph API
+- **`GET /api/version`** - Returns the running app version from `src/package.json` as JSON, e.g. `{"version": "<version>"}`.
 
 ![](https://img.shields.io/github/last-commit/benc-uk/nodejs-demoapp) ![](https://img.shields.io/github/release-date/benc-uk/nodejs-demoapp) ![](https://img.shields.io/github/v/release/benc-uk/nodejs-demoapp) ![](https://img.shields.io/github/commit-activity/y/benc-uk/nodejs-demoapp)
 
