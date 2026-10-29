@@ -1,6 +1,6 @@
 # F001 — Optional metrics bearer token
 
-Status: draft
+Status: in-audit
 Branch: feature/UND-7-metrics-bearer-token
 Repositories: under-tree-e/ute-demo-nodejs
 
@@ -15,7 +15,7 @@ Allow operators to require a bearer token for Prometheus scrapes while preservin
 - [NEW] `src/tests/metrics-tests.http` — requests for a public server and a token-protected server, including rejection cases.
 - [MODIFY] `src/tests/readme.md` — document starting and testing both configurations.
 - [MODIFY] `docs/architecture.md` — describe the metrics authorization boundary.
-- [MODIFY] `docs/ci-cd.md` — record executable local gates using the actual package scripts; its current make commands have no corresponding Makefile.
+- [MODIFY] `docs/ci-cd.md` — add the metrics request-test invocation to the local gates; the existing make targets are valid (`makefile` exists) and stay.
 - [EXISTS] `src/server.mjs` — keep DISABLE_METRICS and all other routes unchanged.
 - [EXISTS] `src/package.json` — reuse Node crypto, Express, httpyac, and Prettier; add no dependency.
 
@@ -51,10 +51,15 @@ Allow operators to require a bearer token for Prometheus scrapes while preservin
 
 ## Open questions
 
-None. Plan review is required before implementation by AGENTS.md.
+None.
 
 ## Decisions
 
 - Treat empty METRICS_TOKEN like unset, consistent with other optional environment configuration.
 - Read configuration when registering metrics; changes require restart.
 - Keep the PR draft and unmerged as explicitly requested.
+- The owner accepted this plan (revision 56705f32-86c9-4627-b43e-1e8d4cd3ff35) before implementation.
+- The 401 comes from a route guard on the main app, not the middleware's `authenticate` option, which answers 404 on failure.
+- The guard decodes the header as latin1 to recover the raw bytes Node received and compares them with the UTF-8 bytes of `Bearer <METRICS_TOKEN>`.
+- The `makefile` exists, so the make gates in `docs/ci-cd.md` stay; only the metrics invocation is added.
+- `README.md` and `deploy/env/runtime.env.example` are outside the approved file list and are not changed.

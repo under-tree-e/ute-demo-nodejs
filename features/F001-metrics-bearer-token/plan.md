@@ -12,32 +12,32 @@
 
 - [x] Inspect metrics registration, package scripts, request tests and project documentation.
 - [x] Create dedicated branch from current origin/main; confirm no tracked feature folders require cleanup and no historical feature numbers exist.
-- [ ] Push the first planning commit and open the one draft PR when GitHub API access is available.
-- [ ] Obtain review of this spec and plan before implementation.
-- [ ] Add HTTP requests for both modes and malformed/wrong credentials; run against the original server to confirm protected-mode assertions fail.
-- [ ] Inspect installed Prometheus middleware path handling; add the route guard with constant-time comparison and safe handling of different byte lengths.
-- [ ] Run metrics requests against unset, empty, configured, and disabled configurations; include a non-ASCII token check and unaffected routes.
-- [ ] Update .env.example, request-test instructions, architecture security model and actual local validation gates.
-- [ ] Run baseline HTTP tests and formatting check from src using the package scripts.
-- [ ] Apply change-audit and docs-sync, record audit.md, and update this draft PR with verification results and remaining review steps.
+- [x] Push the first planning commit and open the one draft PR when GitHub API access is available.
+- [x] Obtain review of this spec and plan before implementation.
+- [x] Add HTTP requests for both modes and malformed/wrong credentials; run against the original server to confirm protected-mode assertions fail.
+- [x] Inspect installed Prometheus middleware path handling; add the route guard with constant-time comparison and safe handling of different byte lengths.
+- [x] Run metrics requests against unset, empty, configured, and disabled configurations; include a non-ASCII token check and unaffected routes.
+- [x] Update .env.example, request-test instructions, architecture security model and actual local validation gates.
+- [x] Run baseline HTTP tests and formatting check from src using the package scripts.
+- [x] Apply docs-sync and update this draft PR with verification results; `audit.md` is written by the reviewer.
 
 ## Gates
 
-`docs/ci-cd.md` currently lists make targets, but the repository has no Makefile. Verified package scripts in `src/package.json` define:
+Run from `src/` against an app started with the matching configuration:
 
-- `cd src && npm run lint` — Prettier check.
-- `cd src && npm test` — httpyac base requests; requires a running app on the test base URL.
-- `cd src && npm start` — app startup; optional integrations must be unset for baseline tests.
+- `npm run lint` — Prettier check.
+- `npm test` — httpyac base requests against a default server.
+- `npx httpyac tests/metrics-tests.http --tag public|protected|disabled [--var metricsToken=<value>]` — metrics requests per mode.
 
-During implementation, document the installed httpyac CLI invocation for the new metrics request file and execute every acceptance Verify line. No deployment commands.
+No deployment commands.
 
 ## Docs impact
 
 - `.env.example` — optional METRICS_TOKEN; empty disables authentication; startup configuration.
 - `src/tests/readme.md` — run public and protected configurations using a disposable test-only value and supplied URLs.
 - `docs/architecture.md` — /metrics authorization and constant-time comparison.
-- `docs/ci-cd.md` — replace unavailable make gates with existing package scripts and document metrics test invocation.
+- `docs/ci-cd.md` — document the metrics test invocation next to the existing make gates.
 
 ## Next step
 
-Review the spec and plan. Implementation waits for explicit plan acceptance; GitHub draft creation additionally requires working GitHub API access.
+Audit by the review task (`change-audit`), which writes `audit.md`.
