@@ -5,7 +5,7 @@
 # Metrics tests, select one mode with --tag:
 #   public    - server started with METRICS_TOKEN unset or empty
 #   protected - server started with METRICS_TOKEN set; pass the same value with --var metricsToken=<value>
-#   disabled  - server started with DISABLE_METRICS=true
+#   disabled  - server started with DISABLE_METRICS=true and METRICS_TOKEN set; pass the same value with --var metricsToken=<value>
 # ===========================================================================================
 
 ### Public - Metrics without Authorization
@@ -160,8 +160,28 @@ GET {{baseUrl}}/
 ?? body contains Ben Coleman
 
 
+### Protected - Info page stays public without exposing the metrics token
+# @tag protected
+GET {{baseUrl}}/info
+
+?? status == 200
+?? js metricsToken.length > 0 == true
+?? js response.body.includes('METRICS_TOKEN') == false
+?? js response.body.includes(metricsToken) == false
+
+
 ### Disabled - Metrics not registered
 # @tag disabled
 GET {{baseUrl}}/metrics
 
 ?? status == 404
+
+
+### Disabled - Info page stays public without exposing the metrics token
+# @tag disabled
+GET {{baseUrl}}/info
+
+?? status == 200
+?? js metricsToken.length > 0 == true
+?? js response.body.includes('METRICS_TOKEN') == false
+?? js response.body.includes(metricsToken) == false
