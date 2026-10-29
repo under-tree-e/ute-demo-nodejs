@@ -1,0 +1,167 @@
+@baseUrl={{ this.baseUrl ?? 'http://localhost:3000' }}
+@metricsToken={{ this.metricsToken ?? '' }}
+
+# ===========================================================================================
+# Metrics tests, select one mode with --tag:
+#   public    - server started with METRICS_TOKEN unset or empty
+#   protected - server started with METRICS_TOKEN set; pass the same value with --var metricsToken=<value>
+#   disabled  - server started with DISABLE_METRICS=true
+# ===========================================================================================
+
+### Public - Metrics without Authorization
+# @tag public
+GET {{baseUrl}}/metrics
+
+?? status == 200
+?? body contains process_cpu_user_seconds_total
+
+
+### Public - Metrics with an arbitrary Authorization header
+# @tag public
+GET {{baseUrl}}/metrics
+Authorization: Bearer anything
+
+?? status == 200
+?? body contains process_cpu_user_seconds_total
+
+
+### Protected - Missing Authorization
+# @tag protected
+GET {{baseUrl}}/metrics
+
+?? status == 401
+?? header www-authenticate == Bearer
+
+
+### Protected - Missing Authorization with query string
+# @tag protected
+GET {{baseUrl}}/metrics?probe=1
+
+?? status == 401
+
+
+### Protected - Missing Authorization with trailing slash
+# @tag protected
+GET {{baseUrl}}/metrics/
+
+?? status == 401
+
+
+### Protected - Missing Authorization with different path case
+# @tag protected
+GET {{baseUrl}}/METRICS
+
+?? status == 401
+
+
+### Protected - Empty bearer credential
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Bearer
+
+?? status == 401
+
+
+### Protected - Token without scheme
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: {{metricsToken}}
+
+?? status == 401
+
+
+### Protected - Wrong scheme
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Basic {{metricsToken}}
+
+?? status == 401
+
+
+### Protected - Lowercase scheme
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: bearer {{metricsToken}}
+
+?? status == 401
+
+
+### Protected - Extra space after scheme
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Bearer  {{metricsToken}}
+
+?? status == 401
+
+
+### Protected - Incorrect token of the same length
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Bearer {{ metricsToken.slice(0, -1) + (metricsToken.endsWith('x') ? 'y' : 'x') }}
+
+?? status == 401
+
+
+### Protected - Shorter token
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Bearer {{ metricsToken.slice(0, -1) }}
+
+?? status == 401
+
+
+### Protected - Longer token
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Bearer {{metricsToken}}x
+
+?? status == 401
+
+
+### Protected - Correct token
+# @tag protected
+GET {{baseUrl}}/metrics
+Authorization: Bearer {{metricsToken}}
+
+?? status == 200
+?? body contains process_cpu_user_seconds_total
+
+
+### Protected - Correct token with query string
+# @tag protected
+GET {{baseUrl}}/metrics?probe=1
+Authorization: Bearer {{metricsToken}}
+
+?? status == 200
+?? body contains process_cpu_user_seconds_total
+
+
+### Protected - Liveness probe stays public
+# @tag protected
+GET {{baseUrl}}/healthz
+
+?? status == 200
+?? body status == ok
+
+
+### Protected - Readiness probe stays public
+# @tag protected
+GET {{baseUrl}}/readyz
+
+?? status == 200
+?? body status == ready
+
+
+### Protected - Root page stays public
+# @tag protected
+GET {{baseUrl}}/
+
+?? status == 200
+?? body contains Ben Coleman
+
+
+### Disabled - Metrics not registered
+# @tag disabled
+GET {{baseUrl}}/metrics
+
+?? status == 404
