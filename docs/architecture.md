@@ -78,6 +78,12 @@ app starts and runs with none of them configured. See
   executor and merged with non-secret values into the target host's
   `/opt/runtime/<service>.env`; the plaintext is never written to the
   target host's git checkout or to this repository.
+- `/metrics` is public unless `METRICS_TOKEN` is set and non-empty. Then a
+  route guard registered before the Prometheus middleware answers 401 with
+  `WWW-Authenticate: Bearer` unless the `Authorization` header is exactly
+  `Bearer <METRICS_TOKEN>`. Both values are hashed with SHA-256 and compared
+  with `crypto.timingSafeEqual`, so length differences never throw or
+  short-circuit. Only `/metrics` is guarded; the token is read at startup.
 - The container image drops the `npm`/`npx` binaries and npm's own
   bundled dependencies at build time; the running container never
   invokes `npm`.
@@ -116,7 +122,8 @@ Jenkins (build/test) → GHCR (immutable digest) → inventory request
 - `/readyz` — readiness; also reflects whether the configured session
   store (Redis) has connected.
 - `/metrics` — Prometheus endpoint (default Node.js process metrics plus
-  HTTP request duration/size histograms); disabled by `DISABLE_METRICS=true`.
+  HTTP request duration/size histograms); disabled by `DISABLE_METRICS=true`,
+  bearer-protected when `METRICS_TOKEN` is set (see Security model).
 - The container image defines a Docker `HEALTHCHECK` against `/healthz`.
 - Azure Application Insights, when configured, receives request
   telemetry, exceptions, and a small number of custom events/metrics

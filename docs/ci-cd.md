@@ -81,6 +81,17 @@ make test          # httpyac base-tests.http against TEST_BASE_URL (default http
 make test-health    # httpyac health-tests.http against TEST_BASE_URL
 ```
 
+`src/tests/metrics-tests.http` checks `/metrics` per startup configuration
+and is run from `src/` with the tag matching how the app was started:
+
+```bash
+npx httpyac tests/metrics-tests.http --tag public --var baseUrl=http://127.0.0.1:3000      # METRICS_TOKEN unset or empty
+npx httpyac tests/metrics-tests.http --tag protected --var baseUrl=http://127.0.0.1:3000 --var metricsToken=<test-only value>  # METRICS_TOKEN=<same value>
+npx httpyac tests/metrics-tests.http --tag disabled --var baseUrl=http://127.0.0.1:3000    # DISABLE_METRICS=true
+```
+
+Do not pass `--all`; it runs every tag and the modes contradict each other.
+
 `make image` and `make image-smoke` build a local OCI image and verify its
 Docker healthcheck; both need Docker and do not need the app already
 running. `tests/load/smoke.js` (k6) needs a running app and is advisory
