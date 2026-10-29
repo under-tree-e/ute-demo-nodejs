@@ -20,6 +20,11 @@
 - [x] Update .env.example, request-test instructions, architecture security model and actual local validation gates.
 - [x] Run baseline HTTP tests and formatting check from src using the package scripts.
 - [x] Apply docs-sync and update this draft PR with verification results; `audit.md` is written by the reviewer.
+- [x] Review round 1: add `/info` exposure requests to the protected and disabled tags; confirm they fail on d6f4223.
+- [x] Review round 1: exclude `TOKEN` names in `src/views/info.ejs`; rerun all tags, baseline tests and lint.
+- [x] Review round 1: replace the shell-invalid placeholder in `docs/ci-cd.md`; check `bash -n` and run the documented commands.
+- [x] Review round 1: commit the independent audit as `audit.md`.
+- [ ] Review round 2 (Reviewer and Security) against the new head.
 
 ## Gates
 
@@ -27,7 +32,7 @@ Run from `src/` against an app started with the matching configuration:
 
 - `npm run lint` — Prettier check.
 - `npm test` — httpyac base requests against a default server.
-- `npx httpyac tests/metrics-tests.http --tag public|protected|disabled [--var metricsToken=<value>]` — metrics requests per mode.
+- `npx httpyac tests/metrics-tests.http --tag public|protected|disabled [--var metricsToken=local-test-token]` — metrics requests per mode; protected and disabled need the token.
 
 No deployment commands.
 
@@ -40,4 +45,4 @@ No deployment commands.
 
 ## Next step
 
-Audit by the review task (`change-audit`), which writes `audit.md`.
+Round 2 independent review and security review of the remediation; the auditor updates `audit.md` with the new verdict.

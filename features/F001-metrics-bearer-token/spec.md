@@ -16,6 +16,7 @@ Allow operators to require a bearer token for Prometheus scrapes while preservin
 - [MODIFY] `src/tests/readme.md` — document starting and testing both configurations.
 - [MODIFY] `docs/architecture.md` — describe the metrics authorization boundary.
 - [MODIFY] `docs/ci-cd.md` — add the metrics request-test invocation to the local gates; the existing make targets are valid (`makefile` exists) and stay.
+- [MODIFY] `src/views/info.ejs` — exclude environment variables whose names contain `TOKEN` from the public `/info` page; `/info` stays public.
 - [EXISTS] `src/server.mjs` — keep DISABLE_METRICS and all other routes unchanged.
 - [EXISTS] `src/package.json` — reuse Node crypto, Express, httpyac, and Prettier; add no dependency.
 
@@ -63,3 +64,5 @@ None.
 - The guard decodes the header as latin1 to recover the raw bytes Node received and compares them with the UTF-8 bytes of `Bearer <METRICS_TOKEN>`.
 - The `makefile` exists, so the make gates in `docs/ci-cd.md` stay; only the metrics invocation is added.
 - `README.md` and `deploy/env/runtime.env.example` are outside the approved file list and are not changed.
+- The owner approved adding `src/views/info.ejs` to the scope (plan revision 235d364e-ac91-4c03-8cf1-ded8f34ec0af) after review round 1 found `/info` exposed `METRICS_TOKEN`. The fix extends the existing name filter; `process.env` is not modified.
+- The protected and disabled request tags check `/info` for both the `METRICS_TOKEN` name and the configured value, so the disabled tag is run with `METRICS_TOKEN` set and `--var metricsToken`.
